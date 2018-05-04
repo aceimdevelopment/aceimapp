@@ -1,0 +1,6 @@
+
+%h1 SummerNote
+= form_tag({:controller => "welcome", :action => "summer"},{:class => 'form'}) do
+
+	=text_area_tag :text, 'text',{'data-provider': :summernote}
+	= submit_tag 'Enviar', class: 'btn btn-primary'
