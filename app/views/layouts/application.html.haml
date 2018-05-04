@@ -11,8 +11,8 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
 
-  %body
-    %nav.navbar.navbar-expand-md.navbar-light.fixed-top{style: "background-color: #1b3a5b;"}
+  %body.container
+    %nav.navbar.navbar-expand-md.navbar-light{style: "background-color: #1b3a5b;"}
       =image_tag 'aceim.png', class: 'd-inline-block align-top w-auto p-3'
       .text-light
         Universidad Central de Venezuela
@@ -22,15 +22,9 @@
         Escuela de Idiomas Modernos
         %br
         ACEIM
-    
-
-    #banner
-      #banner_barra
-    #menubar
-      %nav#sitenav 
-        %ul
-          %li=link_to "Principal", root_path
-
+    %br
+    %br
+    %br
 
     = yield
 

@@ -1,0 +1,384 @@
+# Spanish translations for Rails
+# by Francisco Fernando García Nieto (ffgarcianieto@gmail.com)
+# contributors:
+#  - Tsutomu Kuroda - http://github.com/kuroda (t-kuroda@oiax.jp)
+# Corrected by Eloy Serra Labán: http://goo.gl/i9Kts, /nQ928, /XfKaX
+
+es:
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d de %b"
+      long: "%d de %B de %Y"
+      custom: '%a, %d de %B de %Y'
+
+    day_names:
+      - domingo
+      - lunes
+      - martes
+      - miércoles
+      - jueves
+      - viernes
+      - sábado
+    abbr_day_names:
+      - dom
+      - lun
+      - mar
+      - mié
+      - jue
+      - vie
+      - sáb
+
+    month_names:
+      - ~
+      - enero
+      - febrero
+      - marzo
+      - abril
+      - mayo
+      - junio
+      - julio
+      - agosto
+      - septiembre
+      - octubre
+      - noviembre
+      - diciembre
+    abbr_month_names:
+      - ~
+      - ene
+      - feb
+      - mar
+      - abr
+      - may
+      - jun
+      - jul
+      - ago
+      - sep
+      - oct
+      - nov
+      - dic
+    order:
+      - :day
+      - :month
+      - :year
+
+  time:
+    formats:
+      default: "%A, %d de %B de %Y %H:%M:%S %z"
+      short: "%d de %b %H:%M"
+      long: "%d de %B de %Y %H:%M"
+      custom: '%a, %d de %B de %Y a las %I:%M%P'
+      small: "%d/%b/%Y - %H:%M%P"
+      
+    am: "am"
+    pm: "pm"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " y "
+      last_word_connector: ", y "
+
+    select:
+      prompt: "Por favor seleccione"
+
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+      precision: 2
+      significant: false
+      strip_insignificant_zeros: false
+
+    currency:
+      format:
+        format: "%n %u"
+        unit: "Bs."
+        separator: ","
+        delimiter: "."
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+
+    percentage:
+      format:
+        delimiter: ""
+
+    precision:
+      format:
+        delimiter: ","
+
+    human:
+      format:
+        delimiter: ""
+        precision: 2
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: "mil"
+          million: "millón"
+          billion: "mil millones"
+          trillion: "billón"
+          quadrillion: "mil billones"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "medio minuto"
+      less_than_x_seconds:
+        one:  "menos de 1 segundo"
+        other: "menos de %{count} segundos"
+      x_seconds:
+        one:  "1 segundo"
+        other: "%{count} segundos"
+      less_than_x_minutes:
+        one:  "menos de 1 minuto"
+        other: "menos de %{count} minutos"
+      x_minutes:
+        one:  "1 minuto"
+        other: "%{count} minutos"
+      about_x_hours:
+        one:  "alrededor de 1 hora"
+        other: "alrededor de %{count} horas"
+      x_days:
+        one:  "1 día"
+        other: "%{count} días"
+      about_x_months:
+        one:  "alrededor de 1 mes"
+        other: "alrededor de %{count} meses"
+      x_months:
+        one:  "1 mes"
+        other: "%{count} meses"
+      about_x_years:
+        one:  "alrededor de 1 año"
+        other: "alrededor de %{count} años"
+      over_x_years:
+        one:  "más de 1 año"
+        other: "más de %{count} años"
+      almost_x_years:
+        one: "casi 1 año"
+        other: "casi %{count} años"
+    prompts:
+      year:   "Año"
+      month:  "Mes"
+      day:    "Día"
+      hour:   "Hora"
+      minute: "Minutos"
+      second: "Segundos"
+
+  helpers:
+    select:
+      prompt: "Por favor seleccione"
+
+    submit:
+      create: 'Crear %{model}'
+      update: 'Actualizar %{model}'
+      submit: 'Guardar %{model}'
+
+    links:
+      destroy: 'Eliminar'
+      confirm: '¿Está Seguro de Eliminar?, esta acción no podrá deshacerse.'
+
+  errors:
+    format: "%{attribute} %{message}"
+
+    messages: &errors_messages
+      inclusion: "no está incluido en la lista"
+      exclusion: "está reservado"
+      invalid: "no es válido"
+      confirmation: "no coincide con la confirmación"
+      accepted: "debe ser aceptado"
+      empty: "no puede estar vacío"
+      blank: "no puede estar en blanco"
+      too_long: "es demasiado largo (%{count} caracteres máximo)"
+      too_short: "es demasiado corto (%{count} caracteres mínimo)"
+      wrong_length: "no tiene la longitud correcta (%{count} caracteres exactos)"
+      not_a_number: "no es un número"
+      not_an_integer: "debe ser un entero"
+      greater_than: "debe ser mayor que %{count}"
+      greater_than_or_equal_to: "debe ser mayor que o igual a %{count}"
+      equal_to: "debe ser igual a %{count}"
+      less_than: "debe ser menor que %{count}"
+      less_than_or_equal_to: "debe ser menor que o igual a %{count}"
+      odd: "debe ser impar"
+      even: "debe ser par"
+
+  activerecord:
+    errors:
+      template:
+        header:
+          one:   "No se pudo guardar este/a %{model} porque se encontró 1 error"
+          other:  "No se pudo guardar este/a %{model} porque se encontraron %{count} errores"
+        # The variable :count is also available
+        body: "Se encontraron problemas con los siguientes campos:"
+
+      messages:
+        taken: "ya está en uso"
+        record_invalid: "La validación falló: %{errors}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "%{attribute} %{message}"
+
+  active_admin:
+    dashboard: Inicio
+    dashboard_welcome:
+      welcome: "Bienvenido a Active Admin. Esta es la página de inicio predeterminada."
+      call_to_action: "Para agregar secciones edite 'app/admin/dashboard.rb'"
+    view: "Ver"
+    edit: "Editar"
+    delete: "Eliminar"
+    delete_confirmation: "¿Está seguro de que quiere eliminar esto?"
+    new_model: "Añadir %{model}"
+    edit_model: "Editar %{model}"
+    delete_model: "Eliminar %{model}"
+    details: "Detalles de %{model}"
+    cancel: "Cancelar"
+    empty: "Vacío"
+    previous: "Anterior"
+    next: "Siguiente"
+    download: "Descargar:"
+    has_many_new: "Añadir %{model}"
+    has_many_delete: "Eliminar"
+    has_many_remove: "Quitar"
+    filters:
+      buttons:
+        filter: "Filtrar"
+        clear: "Quitar Filtros"
+      predicates:
+        contains: "Contiene"
+        equals: "Igual a"
+        starts_with: "Empieza con"
+        ends_with: "Termina con"
+        greater_than: "Mayor que"
+        less_than: "Menor que"
+    search_status:
+      headline: "Estado de la búsqueda:"
+      current_scope: "Alcance:"
+      current_filters: "Filtros actuales:"
+      no_current_filters: "Ninguno"
+    status_tag:
+      "yes": "Sí"
+      "no": "No"
+    main_content: "Por favor implemente %{model}#main_content para mostrar contenido."
+    logout: "Salir"
+    powered_by: "Funciona con %{active_admin} %{version}"
+    sidebars:
+      filters: "Filtros"
+      search_status: "Estado de la búsqueda"
+    pagination:
+      empty: "No se han encontrado %{model}"
+      one: "Mostrando <b>1</b> %{model}"
+      one_page: "Mostrando <b>un total de %{n}</b> %{model}"
+      multiple: "Mostrando %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> de un total de <b>%{total}</b>"
+      multiple_without_total: "Mostrando %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b>"
+      entry:
+        one: "registro"
+        other: "registros"
+    any: "Cualquiera"
+    blank_slate:
+      content: "No hay %{resource_name} aún."
+      link: "Añadir"
+    dropdown_actions:
+      button_label: "Acciones"
+    batch_actions:
+      button_label: "Acciones en masa"
+      default_confirmation: "¿Seguro que quieres hacer esto?"
+      delete_confirmation: "Eliminar %{plural_model}: ¿Está seguro?"
+      succesfully_destroyed:
+        one: "Se ha destruido 1 %{model} con éxito"
+        other: "Se han destruido %{count} %{plural_model} con éxito"
+      selection_toggle_explanation: "(Cambiar selección)"
+      link: "Añadir"
+      action_label: "%{title} seleccionados"
+      labels:
+        destroy: "Borrar"
+    comments:
+      created_at: "Fecha de creación"
+      resource_type: "Tipo de recurso"
+      author_type: "Tipo de autor"
+      body: "Cuerpo"
+      author: "Autor"
+      title: "Comentario"
+      add: "Comentar"
+      delete: "Borrar Comentario"
+      delete_confirmation: "¿Está seguro que desea borrar este comentario?"
+      resource: "Recurso"
+      no_comments_yet: "No hay comentarios aún."
+      author_missing: "Anónimo"
+      title_content: "Comentarios (%{count})"
+      errors:
+        empty_text: "El comentario no fue guardado, el texto estaba vacío."
+    devise:
+      username:
+        title: "Nombre de usuario"
+      email:
+        title: "Email"
+      subdomain:
+        title: "Subdominio"
+      password:
+        title: "Password"
+      sign_up:
+        title: "Registrarse"
+        submit: "Registrarse"
+      login:
+        title: "Iniciar Sesión"
+        remember_me: "Recordarme"
+        submit: "Iniciar Sesión"
+      reset_password:
+        title: "¿Olvidó su contraseña?"
+        submit: "Restablecer mi contraseña"
+      change_password:
+        title: "Cambie su contraseña"
+        submit: "Cambiar mi contraseña"
+      unlock:
+        title: "Reenviar instrucciones de desbloqueo"
+        submit: "Reenviar instrucciones de desbloqueo"
+      resend_confirmation_instructions:
+        title: "Reenviar instrucciones de confirmación"
+        submit: "Reenviar instrucciones de confirmación"
+      links:
+        sign_up: "Ingresar"
+        sign_in: "Registrarse"
+        forgot_your_password: "¿Olvidó su contraseña?"
+        sign_in_with_omniauth_provider: "Conéctate con %{provider}"
+        resend_unlock_instructions: "Reenviar instrucciones de desbloqueo"
+        resend_confirmation_instructions: "Reenviar instrucciones de confirmación"
+    unsupported_browser:
+      headline: "Por favor tenga en cuenta que Active Admin no soporta versiones de Internet Explorer menores a 8."
+      recommendation: "Recomendamos que actualice a la última versión de <a href=\"http://windows.microsoft.com/ie\">Internet Explorer</a>, <a href=\"https://chrome.google.com/\">Google Chrome</a>, o <a href=\"https://mozilla.org/firefox/\">Firefox</a>."
+      turn_off_compatibility_view: "Si está usando IE 9 o superior, asegúrese de <a href=\"http://windows.microsoft.com/es-es/windows7/webpages-look-incorrect-in-Internet-Explorer\">apagar la \"Vista de compatibilidad\"</a>."
+    access_denied:
+      message: "No está autorizado/a a realizar esta acción."
+    index_list:
+      table: "Tabla"
+      block: "Lista"
+      grid: "Grilla"
+      blog: "Blog"
+  will_paginate:
+    next_label: Siguiente
+    page_entries_info:
+      multi_page: Mostrando %{model} %{from} - %{to} de %{count} en total
+      multi_page_html: Mostrando %{model} <b>%{from}&nbsp;-&nbsp;%{to}</b> de <b>%{count}</b> en total
+      single_page:
+        one: Mostrando 1 %{model}
+        other: Mostrando en total %{count} %{model}
+        zero: No se encontraron %{model}
+      single_page_html:
+        one: Mostrando <b>1</b> %{model}
+        other: Mostrando en <b>total&nbsp;%{count}</b> %{model}
+        zero: No se encontraron %{model}
+    page_gap: "&hellip;"
+    previous_label: "Atrás"	  

@@ -1,6 +1,29 @@
+.container
+	%br
+	= raw @cartelera.value
 
-%h1 SummerNote
-= form_tag({:controller => "welcome", :action => "summer"},{:class => 'form'}) do
-
-	=text_area_tag :text, 'text',{'data-provider': :summernote}
-	= submit_tag 'Enviar', class: 'btn btn-primary'
+	.center
+		<div style="font-weight:bold;font-size:x-large">
+		<strong style="background-color:#ff3300;color:#ffffff">&nbsp;NO DEPOSITE SIN TENER LA PLANILLA DE INSCRIPCIÓN&nbsp;
+		</strong>
+		</div>
+		%br
+		<div>
+		<strong style="font-size:x-large;background-color:#ff3300;color:#ffffff">&nbsp;VERIFIQUE EL MONTO Y EL NÚMERO DE CUENTA EN&nbsp;SU&nbsp;PLANILLA&nbsp;DE INSCRIPCIÓN ANTES DE DEPOSITAR&nbsp;
+		</strong>
+		</div>
+		%br
+		<div>
+		<strong style="font-size:x-large;background-color:#ff3300;color:#ffffff">&nbsp;EL MATERIAL NO ESTÁ INCLUÍDO EN EL COSTO DE LA MATRÍCULA
+		</strong>
+		</div>
+		%br
+		%br
+		<div>
+		<strong style="font-size: 20px;line-height: 135%;color: #555555;font-weight: bold;">
+		&nbsp;*&nbsp;BIENVENIDOS *&nbsp;WELCOME *&nbsp;BEM-VINDO *&nbsp;BIENVENU *&nbsp;</strong>
+		</div>
+		<div>
+		<strong style="font-size: 20px;line-height: 135%;color: #555555;font-weight: bold;">&nbsp;* WILLKOMMEN *&nbsp;BENVENUTO *
+		</strong>
+		</div> 

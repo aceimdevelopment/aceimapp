@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
 	resources :welcome do
 		collection do
-			post 'summer'
+			post 'guardar_cartelera'
+			get 'cartelera'
 		end
 	end
 
