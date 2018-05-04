@@ -1,6 +1,7 @@
 
-%h1 SummerNote
+%h1.bd-title Cartelera
 = form_tag({:controller => "welcome", :action => "guardar_cartelera"},{:class => 'form'}) do
-
-	=text_area_tag :text, @cartelera.value, {'data-provider': :summernote}
-	= submit_tag 'Enviar', class: 'btn btn-primary'
+	.form-group
+		=text_area_tag :text, @cartelera.value, {'data-provider': :summernote, class: 'form-control'}
+		%br
+		= submit_tag 'Guardar', class: 'btn btn-primary'
