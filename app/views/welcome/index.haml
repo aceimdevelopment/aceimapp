@@ -1,29 +1,90 @@
-.container
-	%br
-	= raw @cartelera.value
+%h4 Seleccione el Idioma de su interés para ampliar la información:
 
-	.center
-		<div style="font-weight:bold;font-size:x-large">
-		<strong style="background-color:#ff3300;color:#ffffff">&nbsp;NO DEPOSITE SIN TENER LA PLANILLA DE INSCRIPCIÓN&nbsp;
-		</strong>
-		</div>
-		%br
-		<div>
-		<strong style="font-size:x-large;background-color:#ff3300;color:#ffffff">&nbsp;VERIFIQUE EL MONTO Y EL NÚMERO DE CUENTA EN&nbsp;SU&nbsp;PLANILLA&nbsp;DE INSCRIPCIÓN ANTES DE DEPOSITAR&nbsp;
-		</strong>
-		</div>
-		%br
-		<div>
-		<strong style="font-size:x-large;background-color:#ff3300;color:#ffffff">&nbsp;EL MATERIAL NO ESTÁ INCLUÍDO EN EL COSTO DE LA MATRÍCULA
-		</strong>
-		</div>
-		%br
-		%br
-		<div>
-		<strong style="font-size: 20px;line-height: 135%;color: #555555;font-weight: bold;">
-		&nbsp;*&nbsp;BIENVENIDOS *&nbsp;WELCOME *&nbsp;BEM-VINDO *&nbsp;BIENVENU *&nbsp;</strong>
-		</div>
-		<div>
-		<strong style="font-size: 20px;line-height: 135%;color: #555555;font-weight: bold;">&nbsp;* WILLKOMMEN *&nbsp;BENVENUTO *
-		</strong>
-		</div> 
+%ul#myTab.nav.nav-tabs{:role => "tablist"}
+  %li.nav-item
+    %a#ing-tab.nav-link.btn.btn-outline-primary.active{"aria-controls" => "ing", "aria-selected" => "true", "data-toggle" => "tab", :href => "#ing", :role => "tab"} INGLÉS
+  %li.nav-item
+    %a#teens-tab.nav-link.btn.btn-outline-info{"aria-controls" => "teens", "aria-selected" => "true", "data-toggle" => "tab", :href => "#teens", :role => "tab"} INGLÉS (Adolecentes)
+  %li.nav-item
+    %a#ita-tab.nav-link.btn.btn-outline-secondary{"aria-controls" => "ita", "aria-selected" => "false", "data-toggle" => "tab", :href => "#ita", :role => "tab"} ITALIANO
+  %li.nav-item
+    %a#fra-tab.nav-link.btn.btn-outline-success{"aria-controls" => "fra", "aria-selected" => "false", "data-toggle" => "tab", :href => "#fra", :role => "tab"} FRANCÉS
+  %li.nav-item
+    %a#ale-tab.nav-link.btn.btn-outline-danger{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", :href => "#ale", :role => "tab"} ALEMÁN
+  %li.nav-item
+    %a#por-tab.nav-link.btn.btn-outline-warning{"aria-controls" => "por", "aria-selected" => "false", "data-toggle" => "tab", :href => "#por", :role => "tab"} PORTUGUÉS
+#myTabContent.tab-content
+  #ing.tab-pane.fade.show.active{"aria-labelledby" => "ing-tab", :role => "tabpanel"} 
+    %br
+    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
+    = card_to_info 'Regulares', 'SABATINOS'
+    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+
+  #teens.tab-pane.fade{"aria-labelledby" => "teens-tab", :role => "tabpanel"}
+    %br
+    = card_to_info 'Regulares', 'SABATINOS'
+
+  #ita.tab-pane.fade{"aria-labelledby" => "ita-tab", :role => "tabpanel"}
+    %br
+    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
+    = card_to_info 'Regulares', 'SABATINOS'
+    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+
+  #fra.tab-pane.fade{"aria-labelledby" => "fra-tab", :role => "tabpanel"}
+    %br
+    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
+    = card_to_info 'Regulares', 'SABATINOS'
+    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+
+  #ale.tab-pane.fade{"aria-labelledby" => "ale-tab", :role => "tabpanel"}
+    %br
+    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
+    = card_to_info 'Regulares', 'SABATINOS'
+    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+
+  #por.tab-pane.fade{"aria-labelledby" => "por-tab", :role => "tabpanel"}
+    %br
+    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
+    = card_to_info 'Regulares', 'SABATINOS'
+    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+
+
+.container
+  %br
+  = raw @cartelera.value
+
+  #AL_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
+
+  #FR_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
+
+  #IN_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom{:style => "background-color:white;"}
+
+  #IN_TE.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
+
+  #IT_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
+
+  #PG_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
+
+
+
+
+  .center
+    %div{:style => "font-weight:bold;font-size:x-large"}
+      %strong{:style => "background-color:#ff3300;color:#ffffff"}
+         NO DEPOSITE SIN TENER LA PLANILLA DE INSCRIPCIÓN 
+    %br
+    %div
+      %strong{:style => "font-size:x-large;background-color:#ff3300;color:#ffffff"}
+         VERIFIQUE EL MONTO Y EL NÚMERO DE CUENTA EN SU PLANILLA DE INSCRIPCIÓN ANTES DE DEPOSITAR 
+    %br
+    %div
+      %strong{:style => "font-size:x-large;background-color:#ff3300;color:#ffffff"}
+         EL MATERIAL NO ESTÁ INCLUÍDO EN EL COSTO DE LA MATRÍCULA
+    %br
+    %div
+      %strong{:style => "font-size: 20px;line-height: 135%;color: #555555;font-weight: bold;"}
+         * BIENVENIDOS * WELCOME * BEM-VINDO * BIENVENU * 
+    %div
+    %br
+      %strong{:style => "font-size: 20px;line-height: 135%;color: #555555;font-weight: bold;"}
+         * WILLKOMMEN * BENVENUTO *

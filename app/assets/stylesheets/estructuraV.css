@@ -14,12 +14,9 @@ footer, header, nav, section, video, object, output {
 	display: block;
 }
 */
-.btn_idiomas{ margin: 3px;padding: 3px;font-size: 15px;}
 
-.culmino{background-color: rgba(169, 169, 169, 0.1);color: rgba(28, 148, 196, 0.41);}
-.well{padding: 10px;border-radius: 5px; border: 1px solid #cccccc;}
 
-#ALAD {  background-color: indigo;}
+#ALAD {  background-color: indigo; color: white}
 #FRAD {  background-color: orange;}
 #INAD {  background-color: chartreuse;}
 #INNI {  background-color: chartreuse;}
@@ -29,47 +26,14 @@ footer, header, nav, section, video, object, output {
 #NIV {  background-color: aquamarine;}
 
 
-.boton_commit{border-color: lightgreen !important;}
 
-.small{font-size: .8em !important;}
-.raw8{width: 80%;}
-.raw7{width: 70%;}
-.raw6{width: 60%;}
-.raw5{width: 50%;}
-.raw4{width: 40%;}
-.raw3{width: 30%;}
-.raw2{width: 20%;}
-.raw1{width: 10%;}
-.raw9{width: 90%;}
-.raw10{width: 99%;}
-
-.well {
-background-color: #f5f5f5;
-border: 1px solid #e3e3e3;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
--webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
--moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
-}
-
-.info{background-color: lightblue;border: 1px solid #AAA;}
-.cliente{
-	width: 98%;
-	margin: auto;
-	margin-bottom: 10px;
- }
-.factura{
-	background-color: #ffffff;
-	}
 
 #banner{
 	border-top: 2px solid black;
 	margin:0;
 	min-height:0;
 	height:115px;
-	background-image: url(encabezado_bg.gif)	 repeat-x center top;
+	background-image: url(../assets/encabezado_bg.gif) repeat-x center top;
 	text-decoration:none;
 	padding-right: 30px;
 	padding-left: 30px;
@@ -94,244 +58,16 @@ box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
 #menubar {
    background: url(barra_amarilla.png) repeat-x left; 
    padding-left: 38px;}
-#sitenav {font-family:Verdana;}
-#sitenav ul {margin: 0px;}
-#sitenav a {color:#444444;
-font-family:inherit;}
-#sitenav li {display:inline; }
-#sitenav li a {display:inline; float:center; height:33px; line-height:300%; padding:1.5% 2px;text-decoration:none;}
-#sitenav li a:hover { color: black;padding:2px 2px;}
-#sitenav li.current a {color:black;font-weight: bold;padding:14px 25px;}
-
-.cargar_sesion {
-	height: 65px;
-}
 
 
-.contenedor{
-	min-height:200px;
-	background: #e6e6e6;
-	border-top: 1px solid #bbb;
-	padding-bottom:20px;
-	border-bottom: 1px solid #bbb;
-	-webkit-box-shadow:rgba(0,0,0,.2) 0px 0px 5px;
-	-moz-box-shadow:rgba(0,0,0,.2) 0px 0px 5px;
-	-o-box-shadow:rgba(0,0,0,.2) 0px 0px 5px;
-	box-shadow:rgba(0,0,0,.2) 0px 0px 5px;
-	overflow: auto;
-}
-
-.subcontenedorderecho{
-	float:right;
-	width: 22%;
-	min-height:190px;
-	text-align: left;
-	padding: 0 1%;
-	letter-spacing: 1px;
-	font-size: 9px;
-  }
-
-
-.subcontenedorizquierdo{
-	float:left;
-	width: 60%;
-	border-right: 1px solid #bbb;
-	padding: 0px 10% 0px 4%;
-}
-
-.notaizquierda{
-	width: 80%;
-	height:200px;
-}
-#tituloIzq{
-    background-color: #005E85;
-    border: 2px solid #FFFFFF;
-    color: #FFFFFF;
-    font-size: 9px;
-    letter-spacing: 2px;
-    margin: 7px auto;
-    text-align: center;
-    height:30px;
-}
-
-#inicio_sesion{
-padding-left: 30px;
-margin-top: 10%;
-}
-
-
-#boton_iniciar_sesion{
-margin-left: 30%;
-}
 
 #pie {	
 	padding: 10px 0 10px 0;
 	display:block;
-	background: url(encabezado_bg.gif) repeat-x center bottom;
+	background: url(../assets/encabezado_bg.gif) repeat-x center bottom;
 	color: white;
 	font-size: 10px;
 	letter-spacing: 3px;
 	border-bottom: 2px solid black;
-}
-
-.center{text-align:center;}
-
-img, a img{
-	border:none;
-	-ms-interpolation-mode: bicubic;
-}
-* html #bottom{ 
-	_behavior: url(../assets/iepngfix.htc);
-}
-.hide, .cloak div, .cloak span, .likert.cloak tbody, .likert.cloak thead{
-	display:none !important;
-}
-.likert.cloak table{
-	border:none;
-}  
-
-#error-login{
-  background-color: red;
-  color: white;
-  padding: 3px 0px;
-}       
-           
-#interno p, #interno h1,#interno  h2, #interno  h3, #interno table {
-  margin: 10px;
-} 
-
-#interno{
-  margin: 10px;
-}    
-
-#mensaje-flash{
-  margin: 0px;
-  paddin: 0px;
-}
-
-#pie{
-  text-align: center;
-}                 
-
-fieldset {  
-  margin: 10px;
-}              
-  
-fieldset label{  
-  display: block;
-	font-weight:bold;
-}   
-
-form span.req{
-	display:inline;
-	color:red !important;
-	font-weight:bold;
-	margin:0;
-	padding:0;
-}
-    
-    
-/* ----- titulo ----- */
-
-.titulo{
-	display:inline-block; 
-	clear:both;
-	margin:0 0 5px 0;
-	padding:0 1% 1.1em 1%;
-	border-bottom:1px dotted #ccc;
-}
-.titulo[class]{
-	display:block;
-}
-.hideHeader .titulo, #payment.hideHeader li.primera{
-	display:none;
-}
-.titulo h2{
-	font-weight:normal;
-	font-size:160%;
-	margin:0 0 5px 0;
-	clear:left;
-}
-.titulo div{
-	font-size:95%;
-	line-height:135%;
-	color:#555555;
-}
-
-#error-explanation{
-  background-color: #FF0000;
-  margin: 20px;
-  padding: 10px;
-  color: #FFF;
-  border: 1px solid #FFF;
-}
-         
-.field_with_errors{
-  background-color: #FF0000;
-  margin: 5px;
-  padding: 5px;
-  display: inline;  
-}
-
-
-
-/*------- sexy drop down css ---------*/
-
-ul.topnav {
-	list-style: none;
-	margin: 0;
-	float: left;
-	font-size: 11px;
-	background: url(barra_amarilla.png) repeat-x;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-ul.topnav li {
-	float: left;
-	margin: 0;
-	padding: 0 10px 0 0;
-	position: relative; /*--Declare X and Y axis base for sub navigation--*/
-}
-ul.topnav li a{
-	padding: 5px 6px;
-	color: #000;
-	display: block;
-	text-decoration: none;
-	float: left;
-	font-weight: bold;
-}
-ul.topnav li span { /*--Drop down trigger styles--*/
-	width: 17px;
-	height: 15px;
-	float: left;
-	background: url(abajo.png) no-repeat center bottom;
-}
-ul.topnav li ul.subnav {
-	list-style: none;
-	position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
-	left: 0; top: 22px;
-	background: #333;
-	margin: 0; padding: 0;
-	display: none;
-	float: left;
-	border-bottom: 2px solid #FFC252; 
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-ul.topnav li ul.subnav li{
-	margin: 0; padding: 0;
-	clear: both;
-	width: 170px;
-}
-html ul.topnav li ul.subnav li a {
-	float: left;
-	width: 145px;
-	background: url(barra_amarilla.png) repeat-x;
-	padding-left: 20px;
-}
-html ul.topnav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/
-	background: #FCEA9A;
-	font-weight: bold;
+  	text-align: center;
 }
