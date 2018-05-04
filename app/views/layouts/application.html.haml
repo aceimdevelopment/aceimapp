@@ -2,15 +2,9 @@
 %html
   %head
     %title ACEIM - Escuela de Idiomas Modernos  
-    =#stylesheet_link_tag  "application"
-    =#javascript_include_tag "application"
+    =stylesheet_link_tag  "application"
+    =javascript_include_tag "application"
     =#javascript_include_tag "#{controller_name}"
-
-    = csrf_meta_tags
-    = csp_meta_tag
-
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   %body
     #banner
