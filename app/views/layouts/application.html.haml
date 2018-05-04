@@ -12,16 +12,20 @@
     = csrf_meta_tags
 
   %body
+    %nav.navbar.navbar-expand-md.navbar-light.fixed-top{style: "background-color: #1b3a5b;"}
+      =image_tag 'aceim.png', class: 'd-inline-block align-top w-auto p-3'
+      .text-light
+        Universidad Central de Venezuela
+        %br
+        Facultad de Humanidades y Educación
+        %br
+        Escuela de Idiomas Modernos
+        %br
+        ACEIM
+    
+
     #banner
       #banner_barra
-        #banner_contenido
-          Universidad Central de Venezuela
-          %br
-          Facultad de Humanidades y Educación
-          %br
-          Escuela de Idiomas Modernos
-          %br
-          ACEIM
     #menubar
       %nav#sitenav 
         %ul
