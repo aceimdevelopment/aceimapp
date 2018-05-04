@@ -1,0 +1,41 @@
+!!!
+%html
+  %head
+    %title ACEIM - Escuela de Idiomas Modernos  
+    =#stylesheet_link_tag  "application"
+    =#javascript_include_tag "application"
+    =#javascript_include_tag "#{controller_name}"
+
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  %body
+    #banner
+      #banner_barra
+        #banner_contenido
+          Universidad Central de Venezuela
+          %br
+          Facultad de Humanidades y Educación
+          %br
+          Escuela de Idiomas Modernos
+          %br
+          ACEIM
+    #menubar
+      %nav#sitenav 
+        %ul
+          %li=link_to "Principal", root_path
+
+
+    = yield
+
+
+    #pie
+      CIUDAD UNIVERSITARIA DE CARACAS - PATRIMONIO CULTURAL DE LA HUMANIDAD
+      %br/
+      Ciudad Universitaria de Caracas, Galpón 7, Frente a Farmacia. Telf.: (0212) 6052982
+      %br/
+      Cursos de Extensión EIM-UCV - 2011
+
