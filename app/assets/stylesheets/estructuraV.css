@@ -29,30 +29,29 @@ footer, header, nav, section, video, object, output {
 
 
 #banner{
-	border-top: 2px solid black;
 	margin:0;
-	min-height:0;
-	height:115px;
-	background-image: url(../assets/encabezado_bg.gif) repeat-x center top;
-	text-decoration:none;
+	height:105px;
+	background: url(encabezado_bg.gif) repeat-x center top;
 	padding-right: 30px;
 	padding-left: 30px;
 }
 
-#banner_barra{ 
-	background: url(barra_amarilla_ucv.png) no-repeat left;
+#banner_barra{
+  background: url(barra_amarilla_ucv.png) no-repeat left;
   background-position: 10px 20px;
   letter-spacing: 3px;
 }
 
-.detalle_derecha{
-  float: right;
-  letter-spacing: 2px;
-  padding-left: 3%; 
-  margin: 0px 10px;
-}
 
-#banner_contenido{padding-top: 25px;padding-left: 30px; background:url(../assets/aceim.png) no-repeat right; height:90px; font-size: 13px; text-align: left; color: white; font-weight: lighter;}
+#banner_contenido{
+	padding-top: 29px;
+	padding-left: 30px; 
+	background:url(aceim.png) no-repeat right; 
+	font-size: 13px; 
+	text-align: left; 
+	color: white; 
+	font-weight: lighter;
+}
 
 
 #menubar {
@@ -64,7 +63,7 @@ footer, header, nav, section, video, object, output {
 #pie {	
 	padding: 10px 0 10px 0;
 	display:block;
-	background: url(../assets/encabezado_bg.gif) repeat-x center bottom;
+	background: url(encabezado_bg.gif) repeat-x center bottom;
 	color: white;
 	font-size: 10px;
 	letter-spacing: 3px;
