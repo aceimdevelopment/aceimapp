@@ -7,7 +7,7 @@
 
 %ul#myTab.nav.nav-tabs{:role => "tablist"}
   %li.nav-item
-    %a#ing-tab.nav-link.btn.btn-outline-primary.active{"aria-controls" => "ing", "aria-selected" => "true", "data-toggle" => "tab", :href => "#ing", :role => "tab"} INGLÉS
+    %a#ing-tab.nav-link.btn.btn-outline-primary{"aria-controls" => "ing", "aria-selected" => "true", "data-toggle" => "tab", :href => "#ing", :role => "tab"} INGLÉS
   %li.nav-item
     %a#teens-tab.nav-link.btn.btn-outline-primary{"aria-controls" => "teens", "aria-selected" => "true", "data-toggle" => "tab", :href => "#teens", :role => "tab"} INGLÉS (Adolescentes)
   %li.nav-item
@@ -23,7 +23,7 @@
 
 
 #myTabContent.tab-content
-  #ing.tab-pane.fade.show.active{"aria-labelledby" => "ing-tab", :role => "tabpanel"} 
+  #ing.tab-pane.fade{"aria-labelledby" => "ing-tab", :role => "tabpanel"} 
     %br
     - arancel_unico = '1500000Bs.'
     - date = DateTime.new(2018, 05, 15, 06, 00, 00)
