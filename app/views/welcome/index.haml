@@ -4,15 +4,19 @@
   %li.nav-item
     %a#ing-tab.nav-link.btn.btn-outline-primary.active{"aria-controls" => "ing", "aria-selected" => "true", "data-toggle" => "tab", :href => "#ing", :role => "tab"} INGLÉS
   %li.nav-item
-    %a#teens-tab.nav-link.btn.btn-outline-info{"aria-controls" => "teens", "aria-selected" => "true", "data-toggle" => "tab", :href => "#teens", :role => "tab"} INGLÉS (Adolecentes)
+    %a#teens-tab.nav-link.btn.btn-outline-primary{"aria-controls" => "teens", "aria-selected" => "true", "data-toggle" => "tab", :href => "#teens", :role => "tab"} INGLÉS (Adolescentes)
   %li.nav-item
     %a#ita-tab.nav-link.btn.btn-outline-secondary{"aria-controls" => "ita", "aria-selected" => "false", "data-toggle" => "tab", :href => "#ita", :role => "tab"} ITALIANO
   %li.nav-item
-    %a#fra-tab.nav-link.btn.btn-outline-success{"aria-controls" => "fra", "aria-selected" => "false", "data-toggle" => "tab", :href => "#fra", :role => "tab"} FRANCÉS
+    %a#fra-tab.nav-link.btn.btn-outline-info{"aria-controls" => "fra", "aria-selected" => "false", "data-toggle" => "tab", :href => "#fra", :role => "tab"} FRANCÉS
   %li.nav-item
     %a#ale-tab.nav-link.btn.btn-outline-danger{"aria-controls" => "ale", "aria-selected" => "false", "data-toggle" => "tab", :href => "#ale", :role => "tab"} ALEMÁN
   %li.nav-item
     %a#por-tab.nav-link.btn.btn-outline-warning{"aria-controls" => "por", "aria-selected" => "false", "data-toggle" => "tab", :href => "#por", :role => "tab"} PORTUGUÉS
+  %li.nav-item
+    %a#niv-tab.nav-link.btn.btn-outline-success{"aria-controls" => "niv", "aria-selected" => "false", "data-toggle" => "tab", :href => "#niv", :role => "tab"} NIVELACIÓN
+
+
 #myTabContent.tab-content
   #ing.tab-pane.fade.show.active{"aria-labelledby" => "ing-tab", :role => "tabpanel"} 
     %br
@@ -68,7 +72,7 @@
 
 
 
-  .center
+  .text-center
     %div{:style => "font-weight:bold;font-size:x-large"}
       %strong{:style => "background-color:#ff3300;color:#ffffff"}
          NO DEPOSITE SIN TENER LA PLANILLA DE INSCRIPCIÓN 
