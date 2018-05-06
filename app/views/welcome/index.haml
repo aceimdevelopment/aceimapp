@@ -1,3 +1,8 @@
+
+.container
+  %br
+  = raw @cartelera.value
+
 %h4 Seleccione el Idioma de su interés para ampliar la información:
 
 %ul#myTab.nav.nav-tabs{:role => "tablist"}
@@ -20,58 +25,92 @@
 #myTabContent.tab-content
   #ing.tab-pane.fade.show.active{"aria-labelledby" => "ing-tab", :role => "tabpanel"} 
     %br
-    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
-    = card_to_info 'Regulares', 'SABATINOS'
-    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+    - arancel_unico = '1500000Bs.'
+    - date = DateTime.new(2018, 05, 15, 06, 00, 00)
+    
+    - regulares = card_to_info 'Regulares', 'SABATINOS', date, date+4.hours, date+2.hours+30.minutes,date+12.hours-30.minutes, arancel_unico
+    = regulares
+    - date += 1.day 
+    - repitientes = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS', date, date+4.hours, date+2.hours+30.minutes,date+12.hours-30.minutes, arancel_unico
+    = repitientes
+    - date += 1.day+1.hours
+    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS', date, date+2.hours+30.minutes, date+2.hours+30.minutes,date+12.hours-30.minutes , arancel_unico
 
   #teens.tab-pane.fade{"aria-labelledby" => "teens-tab", :role => "tabpanel"}
     %br
-    = card_to_info 'Regulares', 'SABATINOS'
+    - date = DateTime.new(2018, 05, 15, 07, 00, 00)
+    = card_to_info 'Regulares', 'SABATINOS', date, date+3.hours+30.minutes, date+3.hours,date+11.hours-30.minutes, arancel_unico
 
   #ita.tab-pane.fade{"aria-labelledby" => "ita-tab", :role => "tabpanel"}
     %br
-    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
-    = card_to_info 'Regulares', 'SABATINOS'
-    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+    = regulares
+    = repitientes
+    -# date = DateTime.new(2018, 05, 17, 09, 00, 00)
+    - date += 2.day+2.hours 
+    - ita_por = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS', date, date+2.hours+30.minutes, date+1.hours,date+8.hours+30.minutes , arancel_unico
+    = ita_por
 
   #fra.tab-pane.fade{"aria-labelledby" => "fra-tab", :role => "tabpanel"}
     %br
-    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
-    = card_to_info 'Regulares', 'SABATINOS'
-    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+    = regulares
+    = repitientes
+    -# date = DateTime.new(2018, 05, 17, 08, 00, 00)
+    - date -= 1.hours 
+
+    - ale_fra = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS', date, date+2.hours+30.minutes, date+1.hours,date+9.hours+30.minutes , arancel_unico
+    = ale_fra
 
   #ale.tab-pane.fade{"aria-labelledby" => "ale-tab", :role => "tabpanel"}
     %br
-    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
-    = card_to_info 'Regulares', 'SABATINOS'
-    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+    = regulares
+    = repitientes
+    = ale_fra
 
   #por.tab-pane.fade{"aria-labelledby" => "por-tab", :role => "tabpanel"}
     %br
-    = card_to_info 'Nuevos y Repitientes Básico I', 'SABATINOS'
-    = card_to_info 'Regulares', 'SABATINOS'
-    = card_to_info 'Repitientes Básico II en adelante, Reincorporaciones y Cambio de Horario', 'SABATINOS'
+    = regulares
+    = repitientes
+    = ita_por
+
+  #niv.tab-pane.fade{"aria-labelledby" => "niv-tab", :role => "tabpanel"}
 
 
-.container
+    .card
+      .card-header
+        %h5.text-center
+          %b Pruebas de nivelación para el período C-18 
+
+        %h5.text-center
+          %b (Cursos SABATINOS)   
+        %h6.text-center
+          %b (Esta prueba es opcional)
+      .card-body
+        %p.text-justify Los interesados en presentar la prueba de nivelación de inglés deben acudir a la oficina de  FUNDEIM en el horario indicado aquí para realizar primero la prueba oral. 
+
+        %p.text-justify 
+          %b Prueba oral de inglés: 
+          %b.text-success Unicamente el miércoles 09 de mayo de 2:30 pm hasta las 05:00 pm (CUPOS LIMITADOS).
+
+        %p.text-justify Los que aprueben la prueba oral deben tramitar su inscripción (cancelar el arancel de la prueba más el arancel del nivel) para presentar la prueba escrita en la fecha y hora indicada aquí.
+
+        %p.text-justify Los interesados en presentar la prueba de nivelación de los otros idiomas deben acudir a la oficina de los cursos en el horario indicado aquí para realizar su inscripción en la prueba. 
+
+        %p.text-justify
+          %b= '- Inscripción para las pruebas de nivelación de Alemán, Francés, Italiano y Portugués: '
+          %b.text-success= 'Únicamente el miércoles 09 de mayo de 8:30 am hasta las 05:00 pm (CUPOS LIMITADOS).'
+
+        %p.text-justify
+          %b= '- Prueba escrita de cada idioma: INGLÉS, ALEMÁN E  ITALIANO: '
+          %b.text-success= 'Unicamente el jueves 10 de mayo a las 3:00 pm.'
+
+        %p.text-justify
+          %b= 'FRANCÉS Y PORTUGUÉS : '
+          %b.text-success= 'Unicamente el lunes 14 de mayo  a las 3:00 pm.'
+
+
+
+
   %br
-  = raw @cartelera.value
-
-  #AL_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
-
-  #FR_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
-
-  #IN_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom{:style => "background-color:white;"}
-
-  #IN_TE.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
-
-  #IT_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
-
-  #PG_AD.ui-tabs-panel.ui-widget-content.ui-corner-bottom.ui-tabs-hide{:style => "background-color:white;"}
-
-
-
-
   .text-center
     %div{:style => "font-weight:bold;font-size:x-large"}
       %strong{:style => "background-color:#ff3300;color:#ffffff"}
