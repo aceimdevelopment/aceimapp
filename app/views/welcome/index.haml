@@ -25,7 +25,7 @@
 #myTabContent.tab-content
   #ing.tab-pane.fade{"aria-labelledby" => "ing-tab", :role => "tabpanel"} 
     %br
-    - arancel_unico = '1500000Bs.'
+    - arancel_unico = '1500000Bs. / 1500Bs.S'
     - date = DateTime.new(2018, 05, 15, 06, 00, 00)
     
     - regulares = card_to_info 'Regulares', 'SABATINOS', date, date+4.hours, date+2.hours+30.minutes,date+12.hours-30.minutes, arancel_unico
@@ -100,12 +100,16 @@
           %b.text-success= 'Únicamente el miércoles 09 de mayo de 8:30 am hasta las 05:00 pm (CUPOS LIMITADOS).'
 
         %p.text-justify
-          %b= '- Prueba escrita de cada idioma: INGLÉS, ALEMÁN E  ITALIANO: '
+          %b= '- Prueba escrita de cada idioma:'
+        %p
+          %b= 'INGLÉS, ALEMÁN E  ITALIANO: '
           %b.text-success= 'Unicamente el jueves 10 de mayo a las 3:00 pm.'
 
         %p.text-justify
           %b= 'FRANCÉS Y PORTUGUÉS : '
           %b.text-success= 'Unicamente el lunes 14 de mayo  a las 3:00 pm.'
+        %p.text-center  
+          %b ARANCEL: PRUEBA (Bs. 300.000 / Bs.S 300) + NIVEL (Bs1.500.000 / Bs.S 1.500) =  (Bs.1.800.000 / Bs.S 1.800)  
 
 
 
