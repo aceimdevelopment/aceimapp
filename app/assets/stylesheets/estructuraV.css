@@ -1,11 +1,10 @@
 html{
-		background: #ACCEF3;	
+	background: #ACCEF3;	
 }
 body{
 	text-align:left;
 	font-size:small;
 	font-family:"Lucida Grande", Tahoma, Geneva, Arial, Verdana, sans-serif;
-	
 }
 
 /*
@@ -15,7 +14,6 @@ footer, header, nav, section, video, object, output {
 }
 */
 
-
 #ALAD {  background-color: indigo}
 #FRAD {  background-color: orange;}
 #INAD {  background-color: chartreuse;}
@@ -24,9 +22,6 @@ footer, header, nav, section, video, object, output {
 #ITAD {  background-color: maroon;}
 #PGAD {  background-color: gold;}
 #NIV {  background-color: aquamarine;}
-
-
-
 
 #banner{
 	margin:0;
@@ -42,7 +37,6 @@ footer, header, nav, section, video, object, output {
   letter-spacing: 3px;
 }
 
-
 #banner_contenido{
 	padding-top: 29px;
 	padding-left: 30px; 
@@ -53,12 +47,10 @@ footer, header, nav, section, video, object, output {
 	font-weight: lighter;
 }
 
-
 #menubar {
    background: url(barra_amarilla.png) repeat-x left; 
-   padding-left: 38px;}
-
-
+   padding-left: 38px;
+}
 
 #pie {	
 	padding: 10px 0 10px 0;
