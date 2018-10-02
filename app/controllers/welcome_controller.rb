@@ -1,16 +1,16 @@
 class WelcomeController < ApplicationController
 
 	def index
-		@cartelera = GeneralParameter.find 'CARTELERA'
+		@cartelera = ParametroGeneral.find 'CARTELERA'
 	end
 
 	def cartelera
-		@cartelera = GeneralParameter.find 'CARTELERA'
+		@cartelera = ParametroGeneral.find 'CARTELERA'
 	end
 
 	def guardar_cartelera
-		cartelera = GeneralParameter.find 'CARTELERA'
-		cartelera.update(value: params[:text])
+		cartelera = ParametroGeneral.find 'CARTELERA'
+		cartelera.update(valor: params[:text])
 
 		redirect_to action: 'index'
 		

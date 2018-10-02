@@ -1,2 +1,0 @@
-class GeneralParameter < ApplicationRecord
-end

@@ -23,7 +23,7 @@ module Aceimapp
     config.autoload_paths += %W(#{config.root}/lib)
 
     config.assets.paths << Rails.root.join("assets", "fonts")
-
+    config.active_record.pluralize_table_names = false  
 
   end
 end

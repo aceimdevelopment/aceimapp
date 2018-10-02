@@ -1,0 +1,3 @@
+class ParametroGeneral < ApplicationRecord
+
+end
