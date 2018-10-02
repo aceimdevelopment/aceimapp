@@ -21,9 +21,15 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+production:
+  <<: *default
+  database: aceim_production
+  username: root
+  password: 123123 #<%= ENV['ACEIMAPP_DATABASE_PASSWORD'] %>
+
 development:
   <<: *default
-  database: aceim_development
+  database: aceim_production
   username: root
   password: 123123 
   # The specified database role being used to connect to postgres.
@@ -79,8 +85,3 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  # <<: *default
-  database: aceim_production
-  username: root
-  password: 123123 #<%= ENV['ACEIMAPP_DATABASE_PASSWORD'] %>
