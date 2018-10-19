@@ -1,0 +1,21 @@
+=form_for(@tipo_ubicacion,:url=>{:action => "nuevo_guardar"}) do |f|
+  = f.hidden_field :id
+  %fieldset
+    %legend Gestión de Tipo Ubicación
+    %p
+      Identificador: 
+      =f.text_field :id, {:style => 'width: 50px;'}
+      Ej.: CIE
+    %p
+      Descripcion: 
+      =f.text_field :descripcion
+      %br
+      Ej.: Facultad de Ciencias
+    %p
+      Descripcion Corta:
+      =f.text_field :descripcion_corta, {:style => 'width: 100px;'}
+      Ej.: Ciencias
+  %p
+    =submit_tag "Guardar"
+    |
+    =link_to_function "Cancelar","aceim.cerrar_modal()"

@@ -9,8 +9,9 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+    =# stylesheet_link_tag    '/open-iconic/font/css/open-iconic-bootstrap.css'
 
-  %body
+  %body.text-center
     #banner
       #banner_barra
         #banner_contenido
@@ -21,13 +22,16 @@
           Escuela de Idiomas Modernos
           %br
           ACEIM
-
+    / %nav.navbar.navbar-dark.bg-warning.fixed-top
     %nav.navbar.navbar-dark.bg-warning
       =#image_tag 'aceim.png', class: 'd-inline-block align-top w-auto p-3'
       .text-light
         =# link_to '#','Principal'
 
-    = yield
+    .container
+      = render 'cargar_sesion' if controller_name.eql? 'inicio' and action_name.eql? 'index'
+      = render 'layouts/message'
+      = yield
 
 
     #pie

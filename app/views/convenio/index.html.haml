@@ -1,0 +1,97 @@
+=button_to "Agregar nuevo convenio", :action=>"nuevo"
+%br/
+
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th{:width => "85%"}
+        Costo de la Planilla
+      %th{:width => "15%"}
+        Acción
+  %tbody
+    %tr
+      %td
+        =@precio_planilla
+      %td
+        =link_to_modal "Actualizar",{:action => "modificar_monto_planilla",:title =>"Modificar Monto Planilla",:width=>350}
+
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th{:width => "85%"}
+        Costo Examen
+      %th{:width => "15%"}
+        Acción
+  %tbody
+    %tr
+      %td
+        =@precio_examen
+      %td
+        =link_to_modal "Actualizar",{:action => "modificar_monto_examen",:title =>"Modificar Monto examen",:width=>350}
+
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th{:width => "85%"}
+        Costo Nuevos
+      %th{:width => "15%"}
+        Acción
+  %tbody
+    %tr
+      %td
+        =@precio_nuevos
+      %td
+        =link_to_modal "Actualizar",{:action => "modificar_monto_nuevos",:title =>"Modificar Monto nuevos",:width=>350}
+
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th{:width => "85%"}
+        Costo Niños
+      %th{:width => "15%"}
+        Acción
+  %tbody
+    %tr
+      %td
+        =@precio_ninos
+      %td
+        =link_to_modal "Actualizar",{:action => "modificar_monto_ninos",:title =>"Modificar Monto nuevos",:width=>350}
+
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th{:width => "10%"}
+        Id
+      %th{:width => "40%"}
+        Descripción
+      %th{:width => "10%"}
+        Descuento
+      %th{:width => "10%"}
+        Total
+      %th{:width => "15%"}
+        Total + Planilla
+      %th{:width => "15%"}
+        Acción
+  %tbody
+    -@precios.each do |h|
+      -if h.id != "REG"
+        -estilo = ""
+      -else
+        -estilo = "background-color: #4682B4; color: #FFFFFF; font-weight: bold"
+
+      %tr
+        %td{:style => "#{estilo}"}
+          =h.id
+        %td{:style => "#{estilo}"}
+          =h.descripcion
+        %td{:style => "#{estilo}"}
+          ="#{h.descuento}%"
+        %td{:style => "#{estilo}"}
+          -if h.id != "EXO"
+            =h.monto - @precio_planilla
+          -else
+            =h.monto
+        %td{:style => "#{estilo}"}
+          =h.monto 
+        %td{:style => "#{estilo}"}
+          =link_to_modal "Actualizar",{:action => "modificar",:title =>"Modificar Monto",:width=>600, :params => {:id => "#{h.id}"}}

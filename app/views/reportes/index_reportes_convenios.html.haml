@@ -1,0 +1,24 @@
+-i = 0
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th{:width => "10%"}
+        Id
+      %th{:width => "40%"}
+        Descripción
+      %th{:width => "35%"}
+        Cantidad de Alumnos
+      %th{:width => "15%"}
+        Detalle
+  %tbody
+  -@convenios.each do |h|
+    %tr
+      %td
+        =h.id
+      %td
+        =h.descripcion
+      %td
+        =@cantidades[i]
+      %td
+        =link_to "Ver Detalle", :action => "reportes_convenios_detalle", :id => h.id
+      -i = i + 1

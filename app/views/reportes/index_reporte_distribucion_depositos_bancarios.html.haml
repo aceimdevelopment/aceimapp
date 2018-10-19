@@ -1,0 +1,18 @@
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th
+        Cuenta Bancacaria
+      %th
+        Cantidad de Depositantes
+      %th
+        Detalle
+  %tbody
+  -@historiales.each do |h|
+    %tr
+      %td
+        =h.cuenta_bancaria.descripcion
+      %td
+        =h.cantidad
+      %td
+        =link_to "Ver Detalle", :action => "reporte_distribucion_depositos_detalle", :id => h.cuenta_bancaria_id

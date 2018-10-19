@@ -1,0 +1,22 @@
+
+%table.border
+	%thead
+		%tr.border
+			%th
+			%th
+				%b Verdadero
+			%th
+				%b Falso
+
+	%tbody
+		- @preguntas.each do |pregunta|
+			%tr.border
+				%td= "#{pregunta.clave}"
+				- if pregunta.respuesta.to_s.upcase.eql? 'V'
+					%td.center= "X"
+					%td
+				-else
+					%td
+					%td.center= "X"
+
+.division

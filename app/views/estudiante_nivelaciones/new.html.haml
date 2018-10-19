@@ -1,0 +1,8 @@
+%h3 Estudiante a Agregar
+=form_tag({:action => "buscar"}, :class => "formulario titulo") do
+  =label :usuario, :ci, "Cédula de Identidad"
+  %br/
+  =text_field :usuario, :ci, :autofocus => "true"
+  %br/
+  %br/
+  =submit_tag "Buscar"

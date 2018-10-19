@@ -1,0 +1,8 @@
+=form_tag({:action => "confirmacion_rapida"}, :class => "formulario titulo") do
+  =label_tag "Cédula de Identidad"
+  %br/
+  =text_field  :historial, :usuario_ci, :autofocus => "true"
+  %br/
+  %br/
+  =submit_tag "Buscar"
+  =javascript_tag "$('#historial_usuario_ci').focus();"

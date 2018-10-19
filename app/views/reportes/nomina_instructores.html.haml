@@ -1,0 +1,20 @@
+%p
+  = link_to "Generar PDF",:action => :nomina_instructores_pdf
+  |
+  = link_to "Generar Excel",:action => :nomina_instructores_excel
+%table.tablesorter
+  %thead
+    %tr
+      %th Nombre
+      %th Cantidad de secciones
+      %th Horarios
+  %tbody
+    -@instructores.each do |i|
+      %tr
+        %td= i.usuario.nombre_completo
+        %td= i.secciones_que_dicta(session[:parametros][:periodo_actual]).size
+        %td= i.horario_secciones_que_dicta(session[:parametros][:periodo_actual]).join(" // ")
+%p
+  = link_to "Generar PDF",:action => :nomina_instructores_pdf
+  |
+  = link_to "Generar Excel",:action => :nomina_instructores_excel

@@ -1,0 +1,13 @@
+- @preguntas = @segmento.preguntas
+- @preguntas.each_with_index do |pregunta,i|
+	%table
+		%tr
+			%td.derecha
+				%b= "#{i}.- "
+			%td
+				= pregunta.clave
+		%tr
+			%td.derecha
+				%b Respuesta
+			%td
+				= pregunta.respuesta

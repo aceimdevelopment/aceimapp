@@ -1,0 +1,21 @@
+%h1 Listing adjuntos
+
+%table
+  %tr
+    %th Archivo
+    %th Actividad
+    %th
+    %th
+    %th
+
+  - @adjuntos.each do |adjunto|
+    %tr
+      %td= adjunto.archivo
+      %td= adjunto.actividad_id
+      %td= link_to 'Show', adjunto
+      %td= link_to 'Edit', edit_adjunto_path(adjunto)
+      %td= link_to 'Destroy', adjunto, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Adjunto', new_adjunto_path

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Archivo:
+  = @adjunto.archivo
+%p
+  %b Actividad:
+  = @adjunto.actividad_id
+
+= link_to 'Edit', edit_adjunto_path(@adjunto)
+\|
+= link_to 'Back', adjuntos_path

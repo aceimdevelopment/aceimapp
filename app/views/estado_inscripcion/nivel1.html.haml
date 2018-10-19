@@ -1,0 +1,51 @@
+%table.tablesorter.likert
+  %thead
+    %tr
+      %th
+        =@nombre
+      %th
+        Preinscritos
+      %th
+        Inscritos
+      %th
+        Secciones_abiertas
+      %th
+        Promedio Estudiante por Secció      
+  -total_pre = 0
+  -total_ins = 0
+  -total_sec = 0
+  %tbody
+    -@tipo.each do |t|
+      -unless t.descripcion=="null"
+        %tr
+          %td
+            =link_to t.descripcion, :action=>"nivel2", :id => t.id
+          %td
+            =t.preinscritos
+          %td
+            =t.inscritos
+            -total_pre += t.preinscritos
+            -total_ins += t.inscritos  
+          %td
+            -total_sec += t.secciones_abiertas
+            =t.secciones_abiertas
+          %td
+            -unless t.secciones_abiertas == 0
+              =(t.inscritos/t.secciones_abiertas)
+    %tr
+      %th
+        TOTALES
+      %th
+        =total_pre
+      %th
+        =total_ins
+      %th
+        =total_sec
+      %th
+        -unless total_sec == 0 
+          =total_ins/total_sec
+
+
+=link_to "<Atrás", :action=>"index"
+|
+=link_to "Estado por #{@otro}", :action => "nivel1", :id=>@otro

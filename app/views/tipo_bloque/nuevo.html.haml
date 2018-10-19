@@ -1,0 +1,32 @@
+%br
+%h1
+  Nuevo Horario 
+%br
+=form_tag :action => "nuevo_guardar" do
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th
+          "Hora"
+        -@tipo_dias.each do |dia|
+          %th
+            =dia.descripcion
+    %tbody
+      %tr
+        %td 
+          %h3 Hora Inicial
+        -@tipo_dias.each do |dia|
+          %td
+            =time_select "tipo_hora_inicial", "#{dia.id}", :ampm => true, :prompt => 'Sel', :width => "10px;"
+      %tr
+        %td 
+          %h3 Hora Final
+        -@tipo_dias.each do |dia|
+          %td
+            =time_select "tipo_hora_final", "#{dia.id}", :ampm => true, :prompt => 'Sel', :width => "10px;"
+
+    =#f.collection_select :tipo_dia_id, TipoDia.where(["id NOT IN (?) ", ["null"] ]).order('orden'), :id, :descripcion, :prompt => true, :required => true
+  %p
+    =submit_tag "Guardar"
+  |
+  =#link_to "Cancelar", {:controller => "planificacion"}, {:class => 'ui-button ui-widget ui-state-default ui-corner-all'}

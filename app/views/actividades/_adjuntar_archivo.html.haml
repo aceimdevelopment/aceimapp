@@ -1,0 +1,34 @@
+-# @host = "http://fundeim.human.ucv.ve/aceim/assets/examenes/"
+- @host = "#{request.protocol}#{request.host_with_port}/aceim/assets/examenes/"
+
+- @actividad.adjuntos.each do |adjunto|
+	.factura.well{:style => 'color:black;'}
+		- ext = adjunto.archivo.split('.').last
+		- imagenes = ['png', 'jpeg', 'jpg']
+		- audios = ['mp3', 'mpeg', 'ogg', 'wav']
+		.well.small
+			- if imagenes.include? ext
+				- if @editable 
+					= link_to 'Eliminar Esta Imagen Adjunta', adjunto, :confirm => '¿Está Seguro?', :method => :delete, :class => 'btn_eliminar small flotar_derecha'
+				= image_tag @host+adjunto.archivo, :style => 'padding: 0 130px; width: 70%;' 
+
+			- elsif audios.include? ext
+				- if @editable
+					= link_to 'Eliminar Este Audio Adjunto', adjunto, :confirm => '¿Está Seguro?', :method => :delete, :class => ' btn_eliminar small flotar_derecha' 
+				= audio_tag @host+adjunto.archivo, :class => "audio-play", :controls => true
+
+			- else
+				%h2
+					= "Formato Desconocido: #{adjunto.archivo}"
+				- if @editable 
+					= link_to 'Eliminar Archivo Adjunto', adjunto, :confirm => '¿Está Seguro?', :method => :delete, :class => 'btn_eliminar small flotar_derecha'
+
+
+- if @editable
+	.well
+		= link_to 'Incluir Archivo (Audio/Imagen) Adjunto', 'javascript:void(0)' , :class => "btn_agregar small", :onclick => "$(form_archivo_#{@actividad.id}).show('slow'); $(this).remove();"
+
+		%div{:id => "form_archivo_#{@actividad.id}", :style => 'display:none;'}
+			= render 'adjuntos/importar'
+
+	%br

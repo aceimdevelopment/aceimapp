@@ -1,0 +1,56 @@
+%h3
+  Usted se ha inscrito en:
+%table.tablesorter
+  %thead
+    %tr
+      %th Período
+      %th Curso
+      %th Nivel
+      %th Horario
+      %th Sección
+      %th Aula
+  %tbody
+    %tr
+      %td= @historial.periodo_id
+      %td= @historial.tipo_curso.descripcion
+      %td= @historial.tipo_nivel.descripcion
+      %td= @historial.seccion.horario
+      %td= @historial.seccion_numero
+      %td= @historial.seccion.aula
+%br
+
+%div{:style => "border: 2px solid #AAA;border-radius: 3px;"}
+  %h3 
+    LEA CUIDADOSAMENTE LA SIGUIENTE INFORMACIÓN Y NORMATIVA DEL PROGRAMA
+  = raw @texto
+
+%p
+  #terminos.ui-state-highlight.ui-corner-all{ :style => "padding: 5px" }
+    = check_box_tag "aceptar", nil, nil, {:onclick => "habilitar_submit();"}
+    He leído y acepto las condiciones y normativas del programa.
+
+%h3
+  Recuerde obtener su planilla y depositar en el banco
+
+%p
+  #obtener-planilla.ui-state-highlight.ui-corner-all{ :style => "display: inline-block; margin: 0px 10px; padding: 5px" }
+
+    =button_to ">> Obtener Planilla <<", {:action => "planilla_inscripcion"}, :id => 'enviar', :disabled => true
+%br
+  =button_to "Finalizar Inscripción", {:action => "finalizar_inscripcion"}, :id => 'fin', :disabled => true
+
+
+:javascript
+  
+  $('#terminos').show('pulsate',{},'fast');
+  function habilitar_submit(){
+
+    var check = document.getElementById('aceptar');
+    var enviar = document.getElementById('enviar');
+    var fin = document.getElementById('fin');
+
+    fin.disabled = !check.checked;
+    enviar.disabled = !check.checked;
+    enviar.hide();
+    enviar.show('pulsate',{},'fast');
+  }

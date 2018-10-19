@@ -1,0 +1,52 @@
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th Id
+      %th Periodo
+      %th= 'Descripción de Curso'
+      %th Nivel
+      %th Examenes
+      %th Estado
+      %th{:style => 'width:18%;', :title => 'Totales/Iniciados/Completados/Pendientes'} Estudiantes
+      %th{:style => 'width:30%;'} Opciones
+  %tbody
+    -@examenes.each do |examen|
+      - prueba = 'prueba' if examen.es_prueba?
+      %tr{:class => prueba }
+        %td= examen.id
+        %td
+          = '*' if examen.es_prueba?
+          = examen.curso_periodo.periodo.ordenado
+
+        %td= examen.curso_periodo.descripcion_categoria
+        %td= examen.curso_periodo.tipo_nivel.descripcion
+        %td= examen.descripcion_completa
+        %td= examen.tipo_estado_examen.nombre if examen.tipo_estado_examen
+        %td
+          - estudiante_examenes = examen.estudiante_examenes
+          - total = estudiante_examenes.count
+          - total_iniciados = estudiante_examenes.where(:tipo_estado_estudiante_examen_id => 'INICIADO').count
+          - total_completados = estudiante_examenes.where(:tipo_estado_estudiante_examen_id => 'COMPLETADO').count
+          - total_pendientes = estudiante_examenes.where(:tipo_estado_estudiante_examen_id => 'PREPARADO').count
+
+          %p
+            = total
+            = "/ #{total_iniciados}"
+            = "/#{total_completados}"
+            = "/#{total_pendientes}"
+            - if total > 0 and (examen.tipo_estado_examen_id.eql? 'GENERADO' or examen.tipo_estado_examen_id.eql? 'LISTO')
+              = link_to 'Eliminar Examenes', {:action => 'eliminar_estudiante_examenes', :id => examen.id}, {:class => 'btn_eliminar small', :confirm => '¿Está Seguro?. Se eliminaran todos los exámenes. . Este proceso toma de 1 a 2 minutos', :disable_with => '...Por favor espere', :title => 'Eliminar los exámenes ya generados para todos los estudiantes de este curso'}
+              = link_to "Ver Detalle", {:controller => 'estudiante_examenes', :action => 'index', :id => examen.id}, :class => 'btn_agregar small'                
+            - else
+              = link_to 'Generar Examenes', {:action => 'generar_estudiante_examenes', :id => examen.id}, { :disable_with => '...Por favor espere', :class => 'btn_generar small', :confirm => '.Este proceso toma de 1 a 2 minutos. ¿Confirma la generación de los exámenes?', :title => 'Generar los exámenes para todos los estudiantes de este curso'}
+
+          
+
+        %td
+          = link_to 'Editar Actividades', {:action => 'wizard_paso2', :id => examen.id}, {:class => 'btn_editar small'}
+          |
+          = link_to 'Editar Parámetros Generales', edit_examen_path(examen), {:class => 'btn_editar small'}
+          |
+          = link_to 'Vista Previa', examen, {:class => 'btn_previsualizar small', :title => 'Previsualizar'}
+          |
+          = link_to 'Eliminar Examen', @examen, :confirm => '¿Está Seguro de Esta Acción?. Las actividades se mantendrán almacenadas pero se desvincularán de éste examen.', :method => :delete,  :class => "btn_eliminar small"

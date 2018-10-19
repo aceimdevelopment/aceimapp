@@ -1,0 +1,7 @@
+%tbody
+  %tr
+    %td= detalle_factura.curso_periodo.descripcion
+    %td Curso
+    %td= detalle_factura.cantidad
+    %td{:style=> "text-align: right;"}= detalle_factura.costo_unitario
+    %td{:style=> "text-align: right;"}= detalle_factura.total

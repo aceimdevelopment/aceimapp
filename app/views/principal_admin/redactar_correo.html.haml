@@ -1,0 +1,85 @@
+=javascript_include_tag "elrte.min.js"
+=javascript_include_tag "/aceim/assets/elrte.min"
+
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $().ready(function() {
+  var opts = {
+  lang         : 'es',
+  styleWithCSS : false,
+  height       : 400,
+  toolbar      : 'maxi',        // Se pueden usar las siguientes opciones: 'tiny', 'compact', 'normal', 'complete', 'maxi'
+  allowSource  : false,
+  };
+ 
+  var editor = new elRTE(document.getElementById('correo_contenido'), opts);
+
+  });
+
+=form_tag(url_for(:action => "enviar_correo", :controller => :estado_inscripcion),{:class => "formulario titulo", :id => "formu",:multipart=> true}) do
+  %br
+  %h3
+    Seleccione Instructores
+  %div.titulo
+    Filtrar Contenido:
+    =text_field_tag "filtro"
+    %table.tablesorter.tablefilter.liker
+      %thead
+        %tr
+          %th{:width => "20%"}
+            Instructor
+          %th{:width => "15%"}
+            Correo
+          %th{:width => "25%"}
+            Cursos
+          %th{:width => "15%"}
+            Horario
+          %th{:width => "15%"}
+            Ubicacion                        
+          %th{:width => "10%"}
+            Opciones
+
+      %tbody
+        -@instructor.each do |i|
+          %tr
+            %td
+              = "#{i.usuario.nombre_completo} (#{i.usuario.telefono_movil})"
+            %td
+              =i.usuario.correo
+            %td
+              -@idioma = ""
+              -@horario = ""
+              -@ubicacion = ""
+              
+              -i.seccion_periodo.each{|s| @idioma += "#{s.descripcion_sin_horario}"; @horario += s.horario; @seccion_horario = s.horario_seccion}
+              - @seccion_horario.each{|sh| @ubicacion += sh.ubicacion}
+              =@idioma
+            %td
+              =@horario
+            %td
+              =@ubicacion
+            %td
+              .check
+                =check_box :seleccion, i.id
+  
+  Título
+  %br
+  =text_field :correo, :titulo, {:autofocus => "true", :class => "k-textbox"}
+  %br
+  %br
+  Contenido
+  %br
+
+  =text_area :correo, :contenido#, :size => "110x20"
+  %br
+  Adjuntar un archivo
+  %br/
+  =file_field_tag :archivo_adjunto
+
+
+  - mensaje = "x"
+  - mensaje = mensaje + ", ¿está seguro?" if mensaje != ""
+  
+  
+  =hidden_field_tag :correo_para_instructores, "true"
+  %br
+  =submit_tag "enviar_correo", :id => "submit_correo", :class => "ui-button ui-widget ui-state-default ui-corner-all" # :confirm => "validar()"

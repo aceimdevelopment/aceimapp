@@ -1,0 +1,36 @@
+-if @historiales.size > 0
+  %p  
+    %b= "Curso:"
+    #{@curso}
+    %br
+    %b= "Nivel:" 
+    #{@nivel}
+    %br
+    %b= "Sección:" 
+    #{@seccion}
+    %br
+    %b= "Horario:"
+    #{@horario}
+    %br
+    %b= "Aula:"
+    #{@aula}
+    %br
+  Filtrar Contenido: 
+  =text_field_tag "filtro"
+  %table.tablesorter.tablefilter
+    %thead
+      %tr
+        %th{:align => :center} #
+        %th{:align => :center} Nombre
+        %th Cédula
+        %th Correo
+        %th Teléfono
+    %tbody
+      -@historiales.each_with_index do |h,i|
+        %tr
+          %td{:align => :center}= i+1
+          %td= h.usuario.nombre_completo 
+          %td= h.usuario_ci
+          %td= h.usuario.correo
+          %td= h.usuario.telefono_movil
+  =link_to "Obtener PDF", :action => "generar_pdf" 

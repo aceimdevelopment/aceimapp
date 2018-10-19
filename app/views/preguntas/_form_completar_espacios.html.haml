@@ -1,0 +1,44 @@
+%div.well.well_small{:id => "form_pregunta_#{@actividad.id}", :style => 'display:none;', :class => 'form'}
+	%h2= "Agregar Nueva Preguta"
+	= form_tag "/aceim/preguntas/agregar_completacion" do
+		=  hidden_field_tag :actividad_id, @actividad.id 
+		=  hidden_field_tag :examen_id, @examen.id if @examen
+		=  hidden_field_tag "pregunta[actividad_id]", @actividad.id 
+		%table
+			%tr.req
+				%td.derecha.separado
+					%b= "*Pregunta/Ítem:"
+				%td{:style => 'width: 100%;'}
+					= text_area_tag "pregunta[valor]", nil, {:style => 'width: 100%;', :required => true}
+			%tr.req
+				%td.separado
+					%b Respuestas:
+				%td
+					.div{:id => "input_fields_wrap_complete_#{@actividad.id}"}
+						%div
+							= text_field_tag nil, nil, {:placeholder => 'Respuesta', :name => "respuestas[][valor]", :style => 'width: 170px;', :required => true}
+							= text_field_tag nil, nil, {:placeholder => 'Respuesta Alternativa1', :name => "respuestas[][valor_alternativa1]", :style => 'width: 120px;'}
+							= text_field_tag nil, nil, {:placeholder => 'Respuesta Alternativa2', :name => "respuestas[][valor_alternativa2]", :style => 'width: 120px;'}							
+							%label Puntaje: 
+							= number_field_tag nil, 2, {:min => 1, :max => 20, :step => 0.5, :name =>  "respuestas[][puntaje]", :required => true}
+
+							= link_to " Respuesta" , 'javascript:void(0)' , :class => "btn_agregar small", :onclick => "agregar_respuesta_complete(#{@actividad.id});"
+
+
+
+		%table
+			%tr
+				%td
+					%input.btn_agregar.small{:type => 'submit', :value => 'Agregar Pregunta/Ítem', :name => 'commit'}
+	
+.division
+= link_to " Agregar Pregunta/Ítem" , 'javascript:void(0)' , :class => "btn_agregar small", :onclick => "$(form_pregunta_"+@actividad.id.to_s+").show('slow'); $(this).remove();" 
+
+
+:javascript
+
+	function agregar_respuesta_complete(actividad_id){
+
+		$("#input_fields_wrap_complete_"+actividad_id).append('<div><input name="respuestas[][valor]" placeholder="Respuesta" style="width: 120px;" required="required" type="text"><input name="respuestas[][valor_alternativa1]" placeholder="Respuesta Altarnativa1" style="width: 120px;" type="text"><input name="respuestas[][valor_alternativa2]" placeholder="Respuesta Alternativa2" style="width: 120px;" type="text"><label>Puntaje:</label><input max="20" min="1" name="respuestas[][puntaje]" step="0.5" value="2" type="number"></div>'); //add input box
+
+	};

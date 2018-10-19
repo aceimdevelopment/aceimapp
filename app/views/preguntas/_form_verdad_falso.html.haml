@@ -1,0 +1,25 @@
+= form_for([@segmento, @preguntas.build]) do |f|
+	%table
+		%tbody
+			%tr.req
+				%td.derecha.separado
+					%b= "*Pregunta/Ítem:"
+				%td
+					= f.text_field :clave
+
+				%td
+					%b= "*Opción Correcta:"
+				%td
+					.radio
+						= radio_button (:pregunta, :respuesta, 'V')
+						= f.label :respuesta_v, 'Verdadero'
+						= radio_button (:pregunta, :respuesta, 'F')
+						=# f.radio_button :respuesta, 2
+						= f.label :respuesta_f, "Falso"
+						=# f.radio_button :respuesta, 3
+						=# f.label :respuesta_3, "DOESN'T LIKE"
+
+			%tr
+				%td
+				%td
+					%input.btn.small{:type => 'submit', :value => 'Agregar Pregunta/Ítem', :name => 'commit'}

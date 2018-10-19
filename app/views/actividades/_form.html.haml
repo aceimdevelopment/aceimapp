@@ -1,0 +1,25 @@
+= form_for @actividad do |f|
+  -if @actividad.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@actividad.errors.count, "error")} prohibited this actividad from being saved:"
+      %ul
+        - @actividad.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :titulo
+    = f.text_field :titulo
+  .field
+    = f.label :tipo_segmento_id
+    = f.text_field :tipo_segmento_id
+  .field
+    = f.label :curso_idioma_id
+    = f.text_field :curso_idioma_id
+  .field
+    = f.label :curso_tipo_categoria_id
+    = f.text_field :curso_tipo_categoria_id
+  .field
+    = f.label :curso_tipo_nivel_id
+    = f.text_field :curso_tipo_nivel_id
+  .actions
+    = f.submit 'Save'

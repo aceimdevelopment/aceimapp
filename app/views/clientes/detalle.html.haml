@@ -1,0 +1,49 @@
+%br
+%br
+%p
+  %b Datos del cliente:
+  = @cliente.descripcion
+
+%p
+  %b Datos de contacto:
+  = @cliente.telefono_fijo
+  = "/"
+  = @cliente.telefono_movil
+  = "/"
+  = @cliente.correo_electronico
+
+%p
+  %b Domicilio:
+  = @cliente.domicilio
+- @facturas = @cliente.facturas
+%table.tablesorter.likert
+  %thead
+    %tr
+      %th Codigo
+      %th Numero control
+      %th Fecha
+      %th Cliente rif
+      %th Monto Total
+      %th Opciones
+
+
+  - @facturas.each do |factura|
+    %tbody
+      %tr
+        %td= factura.codigo
+        %td= factura.numero_control
+        %td= factura.fecha.strftime("%d/%m/%Y") if factura.fecha
+        %td= factura.cliente.descripcion if factura.cliente.descripcion
+        %td= number_to_currency factura.monto_total if factura.monto_total
+        %td
+          = link_to '+Detalle', :controller => 'facturas', :action => 'show', :id => factura.id
+          |
+          = link_to 'Editar', :controller => 'facturas', :action => 'editar', :id => factura.id
+          |
+          = link_to 'Imprimir', :controller => 'facturas',  :action => "imprimir_factura", :id => factura.id
+
+%br
+
+= button_to 'Nueva Factura', {:controller => 'facturas', :action => 'nueva'}, :class => 'ui-button ui-widget ui-state-default ui-corner-all'
+
+= link_to 'Regresar', :back

@@ -1,0 +1,33 @@
+%h1 Listing Actividades
+
+Filtrar Contenido: 
+=text_field_tag "filtro"
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th Id
+      %th{:style => 'width:40%;'} Instrucciones
+      %th Tipo Actividad
+      %th Partes
+      %th Curso
+      %th Opciones
+
+  %tbody
+    - @actividades.each do |actividad|
+      %tr
+        %td= actividad.id
+        %td= actividad.instrucciones
+        %td= actividad.tipo_actividad.descripcion
+        %td
+          - actividad.parte_examenes.each do |pe|
+            = pe.parte.nombre 
+        %td= actividad.curso.descripcion if actividad.curso
+        %td
+          = link_to 'Ver', actividad
+          |
+          =# link_to 'Editar', edit_actividad_path(actividad)
+          = link_to 'Eliminar', actividad, :confirm => '¿Está Seguro?', :method => :delete
+
+%br
+
+= link_to 'New Actividad', new_actividad_path

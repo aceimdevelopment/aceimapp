@@ -1,0 +1,8 @@
+=form_tag({:action => @accion}, :class => "formulario titulo") do
+  =collection_select :datos, :curso, @cursos, :id, :descripcion
+  %br/
+  %br/
+  =submit_tag "Continuar"
+  %br/
+  %br/
+  =link_to "<Atrás", :action=>"opciones_menu"

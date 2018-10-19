@@ -1,0 +1,65 @@
+#parte
+  %ul
+    - if session[:administrador].tipo_rol_id <= 3
+      %li= link_to "Datos Personales", "#personales"
+    - if @estudiante_curso.size > 0
+      %li= link_to "Cursos", "#cursos"
+    %li= link_to "Cursos en Períodos Actuales", "#periodo_actual"
+    %li= link_to "Historial Académico", "#historial"
+    -if @nivelaciones.size > 0
+      %li= link_to "Nivelaciones", "#nivelaciones"  
+
+  #cursos
+    - if session[:administrador].tipo_rol_id <= 3
+      %h3
+        =link_to "Inscribir Nuevo Curso", {:controller=> "inscripcion_admin", :action => "paso0"}, :class => 'btn small'
+
+    - if @estudiante_curso.size > 0
+      =render "convenios"
+
+  #periodo_actual
+    %h3 Estado de los Cursos en Períodos Actuales
+    %div.titulo
+      -if @historial_actual.size > 0
+        =render "curso_actual"
+        - if @estudiante_examenes.count > 0
+          %h3 Estado de los Exámenes en el Período Actual
+          =render "examenes"
+      -else
+        %h4{:style =>"color:#061D9E"}
+          El estudiante no dispone de cursos en actual período
+
+  #historial
+    %h3
+      Historial Académico
+    %div.titulo
+      -if @historial.size > 0
+        =render "cursos"
+      -else
+        %h4{:style =>"color:#061D9E"}
+          El estudiante no dispone de un historial académico
+
+  -if session[:administrador].tipo_rol_id <= 3
+    #personales
+      =render "personales"
+
+  -if @nivelaciones.size >0 
+    #nivelaciones
+      %h3
+        Nivelación
+      %div.titulo
+        %table.tablesorter
+          %thead
+            %tr
+              %th
+                Idioma
+              %th
+                Periodo
+          %tbody
+            -@nivelaciones.each do |ni|
+              %tr
+                %td
+                  =ni.tipo_curso.descripcion
+                %td
+                  =ni.periodo_id
+%p= link_to "Buscar otro estudiante", {:action => "index"}, {:class => 'btn_atras'}

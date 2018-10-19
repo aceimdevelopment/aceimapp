@@ -1,0 +1,11 @@
+= form_tag({:action => 'actualizar_pdf'}, :multipart => true) do
+
+	= link_to "Atrás", {:action => "index"}
+	%fieldset
+		%legend Carga de Archivo:
+
+		%label Seleccione el archivo a Importar (recuerde que el formato es Pdf):
+		= file_field 'archivo', 'datafile', {:required => true, :class => 'btn', :accept => 'application/pdf'}
+		= hidden_field_tag :idioma_id, @idioma_id 
+		= hidden_field_tag :nivel_id, @nivel_id
+		%p= submit_tag "Cargar", {:class => 'btn btn-success', :disable_with => "Cargando..."}

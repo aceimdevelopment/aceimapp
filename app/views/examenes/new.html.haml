@@ -1,0 +1,16 @@
+%h1 Parámetros Generales del Nuevo examen
+
+= render 'form'
+
+= link_to 'Atrás', examenes_path, :class => 'btn_atras'
+
+:javascript
+	$( ".btn" ).button();
+
+
+	$( ".btn_atras").button({
+		icons: {
+		primary: "ui-icon-carat-1-w"
+		}
+	});
+

@@ -1,0 +1,19 @@
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th
+        Idioma
+      %th
+        Cantidad de Alumnos
+      %th
+        Detalle
+
+  %tbody
+  -@historiales.each do |h|
+    %tr
+      %td
+        =h.tipo_curso.descripcion
+      %td
+        =h.cantidad
+      %td
+        =link_to "Ver Detalle", :action => "reporte_alumnos_por_idioma_detalle1", :idioma => h.idioma_id, :categoria => h.tipo_categoria_id

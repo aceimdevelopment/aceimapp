@@ -1,0 +1,91 @@
+.well
+  - @detalles_factura = @factura.detalle_facturas.order(:periodo_id, :idioma_id)
+  - model_class = Factura
+  = render 'form'
+  .cliente.well.factura
+    %h3 Detalles de la Factura
+    %table.likert.well   
+      %thead
+        %tr
+          %th N°
+          %th{:style=> "width: 50%;"} Descripción del Bien o Servicio
+          %th Unidad
+          %th Catidad
+          %th Costo Unitario
+          %th Total
+          %th Opc.
+      %tbody
+        - @detalles_factura.each_with_index do |detalle, i|
+          %tr
+            %td= i
+            - if detalle.descripcion.blank?
+              %td= detalle.curso_periodo.descripcion
+            - else
+              %td= detalle.descripcion
+
+            %td Curso
+            %td= detalle.cantidad
+            %td{:style=> "text-align: right;"}= "#{number_to_currency (detalle.costo_unitario)}"
+            %td{:style=> "text-align: right;"}= "#{number_to_currency (detalle.total)}"
+            %td{:style=> "text-align: right;"}
+              = link_to 'Eliminar', url_for(:controller => 'detalle_facturas', :action => 'eliminar', :id => detalle.id.to_s), :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => '¿Esta Seguro?')) }, :class => 'small'
+        
+        = form_for([@factura, @factura.detalle_facturas.build]) do |f|
+          %tr
+            %td 
+            %td
+              = f.collection_select :periodo_id, Periodo.all, :id, :id, {:prompt => 'Periodo'}, :required => true, :style => "width:20%;", :class => 'small'
+              = f.collection_select :idioma_id, @idiomas, :id, :descripcion, {:prompt => 'Idioma'}, :required => true, :style => "width:20%;", :class => 'small'
+              = f.collection_select :tipo_categoria_id, TipoCategoria.all, :id, :descripcion, {:prompt => 'Categoria'}, :required => true, :style => "width:20%;", :class => 'small'
+              = f.collection_select :tipo_nivel_id, @niveles, :id, :descripcion, {:prompt => 'Nivel'}, :required => true, :style => "width:20%;", :class => 'small'
+              %br
+              = f.text_field :descripcion, placeholder: "Descripción (Será sustituido por el valor de los cursos)", size: 50 
+            %td 
+            %td{:style=> "text-align: right;"}= f.number_field :cantidad, :min => 1, :style => "width:40px;", :class => "small"
+            %td{:style=> "text-align: right;"}
+              = f.number_field :costo_unitario, :min => 0, :step => 100, :style => "width:40px;", :class => "small"
+              Bs.S
+            %td
+            %td{:style=> "text-align: right;"}
+              = f.submit 'agregar', :class => 'ui-button ui-widget small ui-state-default ui-corner-all'
+    %table.well.cliente.factura
+      %thead
+        %tr
+          %th.raw8
+          %th.raw2
+      %tbody{:style=>"text-align:right;font-style:italic;"}
+        %tr
+          %td Sub-Total:
+          %td= number_to_currency(@factura.monto_total)
+        %tr
+          %td IVA___%
+          %td{:style => 'text-decoration: underline;'}= number_to_currency 0
+        %tr
+          %td Total General
+          %td= number_to_currency(@factura.monto_total)
+
+  =button_to ">> Imprimir sobre hoja formato <<", {:action => "imprimir_factura", :id => @factura.id}, {:style => "float: right;"}
+
+= link_to 'Regresar', :back
+
+
+:javascript
+
+
+  $(document).ready(function() {
+    return $("#detalle_factura_periodo_id").change(function() {
+      var estado_id = $(this).val()
+      $.get("actualizar_idioma_select/"+estado_id, 
+        function(data){ $("#detalle_factura_idioma_id").html(data); } );
+      
+    });
+  });
+
+
+  function PrintDiv() {    
+     var divToPrint = document.getElementById('divToPrint');
+     var popupWin = window.open('', '_blank', 'width=800,height=600');
+     popupWin.document.open();
+     popupWin.document.write('<html><body onload="window.print()">' + divToPrint.outerHTML + '</html>');
+      popupWin.document.close();
+          }

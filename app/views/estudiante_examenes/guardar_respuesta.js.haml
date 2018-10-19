@@ -1,0 +1,9 @@
+
+$(".mensaje").html("")
+$(".mensaje").removeClass("ui-state-highlight ui-corner-all")
+var ele = $("#respuesta_#{@respuesta_id}")
+ele.addClass('ui-state-highlight ui-corner-all')
+ele.html("Respuesta Guardada. Le faltan #{pluralize(@eers_restantes_count,'pregunta')} por responder en este examen")
+ele.parent().css({"background-color":"#b3ccff"})
+
+ele.parent().addClass('ui-corner-all')

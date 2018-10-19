@@ -1,0 +1,48 @@
+=link_to "Generar PDF", :action => "ver_pdf_convenio", :tipo_convenio => @historiales.first.tipo_convenio_id
+|
+=link_to "Generar Excel",:action => "ver_excel_convenio", :tipo_convenio => @historiales.first.tipo_convenio_id
+%br
+Filtrar Contenido:
+=text_field_tag "filtro"
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th
+        ="#"
+      %th
+        Nombres
+      %th
+        Cédula
+      %th
+        Horario
+      %th
+        Teléfono Móvil
+      %th
+        Idioma
+      %th
+        Nivel
+  %tbody
+    -@historiales.each_with_index do |h,i|
+      %tr
+        %td
+          =i+1
+        %td
+          =h.usuario.nombre_completo
+        %td
+          =h.usuario.ci
+        %td
+          =h.seccion.horario
+        %td
+          =h.usuario.telefono_movil
+        %td
+          =h.tipo_curso.descripcion
+        %td
+          =h.tipo_nivel.descripcion
+
+=link_to "Generar PDF", :action => "ver_pdf_convenio", :tipo_convenio => @historiales.first.tipo_convenio_id
+|
+=link_to "Generar Excel",:action => "ver_excel_convenio", :tipo_convenio => @historiales.first.tipo_convenio_id
+%br
+%br
+=link_to "<Atrás", :action => "index_reportes_convenios"
+

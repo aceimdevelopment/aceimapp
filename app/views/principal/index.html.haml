@@ -1,0 +1,61 @@
+ 
+/ -if (ParametroGeneral.inscripcion_ninos_abierta && session[:tipo_curso].tipo_categoria_id == "NI") || ((ParametroGeneral.inscripcion_regulares_abierta || ParametroGeneral.inscripcion_cambio_abierta)&& session[:tipo_curso].tipo_categoria_id != "NI")
+
+=render :partial => 'normativa'
+
+=render :partial => 'estudiante_examenes/cartelera'
+
+- if !@preinscrito
+	- if @curso_abierto_regular
+		%h3
+			= link_to "Preinscribirse: #{@curso_abierto_regular.descripcion}", :action => "paso1", :controller => "inscripcion", :id => @curso_abierto_regular.id
+		%div.titulo Preinscribirse en el periodo #{session[:parametros][:periodo_inscripcion]} como regular y obtener la Planilla
+
+	- if @curso_abierto_cambio
+		%h3
+			=link_to "Preinscribirse: #{@curso_abierto_cambio.descripcion}", :action => "paso1", :controller => "inscripcion", :id => @curso_abierto_cambio.id
+		%div.titulo Preinscribirse en el periodo #{session[:parametros][:periodo_inscripcion]} con cambio de horario y obtener la Planilla
+
+
+-if @preinscrito and @descargar_planilla_inscripcion.eql? "SI"
+	%h3
+		=link_to "Obtener Planilla de Preinscripción", :action => "planilla_inscripcion", :controller => "inscripcion"
+	%div.titulo Obtener de nuevo la planilla del periodo #{session[:parametros][:periodo_inscripcion]}
+
+-if @nivelaciones and @descargar_planilla_inscripcion.eql? "SI"
+	- @nivelaciones.each do |en|
+		%h3
+			=link_to "Obtener Planilla #{en.descripcion}", :controller => 'estudiante_nivelaciones',:action => "planilla_nivelacion", :id => en.id
+		%div.titulo Obtener planilla #{en.descripcion} del periodo #{en.periodo_id}
+%h3
+	=link_to "Consultar Historial de Cursos", :action => "cursos", :controller => "estudiante"
+%div.titulo Consulta el listado de tus Cursos Realizados
+
+- if false
+	- if @ha and @ha.seccion
+		- @nivel = @ha.tipo_nivel_id
+		- if @ha.idioma_id.eql? 'IN'
+			- @nivel += "-S" if ((@nivel.eql? "CB" or @nivel.eql? "CI") and @ha.seccion.bloque_horario.id.eql? 'H5')
+		- elsif @ha.idioma_id.eql? 'FR'
+			- @nivel += "-S" if (@ha.seccion.bloque_horario.id.eql? 'H5')
+
+		- elsif @ha.idioma_id.eql? 'PG'
+			- @nivel += "-S" if (@ha.seccion.bloque_horario.id.eql? 'H5' and (@nivel.eql? "BI" or @nivel.eql? "BII" or @nivel.eql? "CB" or @nivel.eql? "CI" or @nivel.eql? "MI" or @nivel.eql? "MII" or @nivel.eql? "CI"))
+
+		%h3
+			=link_to "Syllabus: #{@ha.tipo_nivel.descripcion}", :controller => 'descarga', :action => 'syllabus', :nivel => @nivel, :idioma_id => @ha.idioma_id 
+		%div.titulo Descarga syllabus correspondiente al curso actual
+
+	%h3
+		=link_to "Descargar Fechas", :controller => 'descarga', :action => 'fechas' 
+	%div.titulo Programación de los Cursos de Idiomas
+
+- if @ha and @archivos_disponibles and @archivos_disponibles.count > 0
+	%h3 Archivos disponibles para tu curso:
+	- @archivos_disponibles.each do |arch| 
+		%h3
+			=link_to arch.nombre, :controller => 'descarga', :action => 'archivo', :id => arch.id 
+
+
+
+

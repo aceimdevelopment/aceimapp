@@ -1,0 +1,16 @@
+¿Desea enviar el siguiente correo de confirmación?
+%br
+%br
+%table
+  %tr
+    %td Para:
+    %td=text_field_tag "para","aleidajave@yahoo.com",{:disabled => true,:size => 100}
+  %tr
+    %td Asunto: 
+    %td=text_field_tag "para","Notificación de Pago",{:disabled => true,:size => 100}
+  %tr
+    %td{:colspan => 2}
+      =text_area_tag "mensaje", "Estimada Aleida Jaimes,\nPor medio del presente correo le informamos que los profesores que aparecen en el listado pueden cobrar sus  honorarios correspondientes al segundo pago de los cursos de idiomas del periodo C-11. Asimismo le informamos que el pago del personal administrativo y del excedente neto también puede ser procesado.\n\nListado:\n #{@texto} \n\n\nSaludos\nCoordinación de los Cursos de Idiomas\n\nProf. Lucius Daniel\nDirector\n\nProf. Carlos Saavedra\nCoordinador Académico\n\nProf. Joyce Gutiérrez\nCoordinadora de los cursos",{:size => "108x20",:disabled => true}
+=link_to "Enviar Correo", :action => "enviar_correos"
+|
+=link_to_function "Cancelar","aceim.cerrar_modal()"

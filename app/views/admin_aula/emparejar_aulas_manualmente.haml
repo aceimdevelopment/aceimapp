@@ -1,0 +1,76 @@
+
+-if @mostrar_aulas_a_emparejar
+  %p Elija las aulas que forman pareja (de dos en dos) y presione el botón guardar para ir formando los pares de aulas.
+  %br
+  = form_tag "../admin_aula/emparejar_aulas_manualmente" do
+    = hidden_field_tag :campo, 1
+    %table.tablesorter.tablefilter.likert
+      %thead
+        %tr
+          %th
+            Aula
+          %th
+            Día
+          %th
+            Horario
+          %th
+            Pareja
+      
+      %tbody
+        -@aulas_sin_pareja.each do |asp|
+          %tr  
+            %td
+              ="("+asp.aula_id+")"
+              =asp.aula.descripcion
+            %td
+              =asp.tipo_dia.descripcion
+            %td
+              =asp.tipo_hora.descripcion_hora2
+            %td
+              =check_box_tag "pareja_aula[][#{asp.aula_id}][#{asp.tipo_dia_id}][#{asp.tipo_hora_id}]", 1
+
+    %p= submit_tag 'Guardar'
+
+%br/
+%br/
+
+-if(!@aulas_emparejadas.empty?)
+  %center
+    %b PAREJAS FORMADAS
+  %br/
+  %table.tablesorter.tablefilter.likert
+    %thead
+      %tr
+        %th
+          Aula
+        %th
+          Día 1
+        %th
+          Aula
+        %th
+          Día 2
+        %th
+          Horario
+        %th
+          Eliminar
+    %tbody
+      -i = 2
+      -@aulas_emparejadas.each do |ae|
+        -if i == 2
+          %tr
+          -i = 1
+        -else
+          -i = i + 1  
+        %td
+          ="("+ae.aula_id+")"
+          =ae.aula.descripcion
+        %td
+          =ae.tipo_dia.descripcion
+        -if i == 2
+          %td
+            =ae.tipo_bloque.tipo_hora.descripcion_hora2
+          %td
+            =link_to_modal "Eliminar Pareja",{:action => "confirmar_eliminar_pareja",:title =>"Confirmar Eliminación",:width=>600, :params=>{:pareja => ae.pareja}}
+%br/
+=button_to "Finalizar", :action => "index", :controller => "planificacion"
+

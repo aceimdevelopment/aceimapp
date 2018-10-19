@@ -1,0 +1,96 @@
+= @estudiantes_total
+#estudiantes.ui-tabs.ui-widget.ui-widget-content.ui-corner-all
+  %ul.ui-tabs-nav.ui-helper-reset.ui-helper-clearfix.ui-widget-header.ui-corner-all
+    %li
+      = text_field_tag "filtro_particular", nil, :placeholder => "Filtrar contenido..."
+    -@total_estudiantes.each do |id, descripcion|
+      -if @id == id
+        %li.ui-state-default.ui-corner-top.ui-tabs-selected.ui-state-active{:style => 'font-size: 80%;'}
+          = link_to descripcion, :action => 'estudiantes', :id => id
+      -else
+        %li.ui-state-default.ui-corner-top{:style => 'font-size: 80%;'}
+          = link_to descripcion, :action => 'estudiantes', :id => id 
+
+- if params[:id]
+  -if @estudiantes
+    %table.tablesorter.tablefilter.likert
+      %thead
+        %tr
+          %th
+            No.
+          %th
+            Nombre y Apellido
+          %th
+            Cédula
+          %th
+            Correo Electrónico
+          %th
+            Teléfono Móvil
+          %th
+            ="# Cursos Realizados"
+          %th
+            Opciones
+      %tbody
+        -@estudiantes.each_with_index do |estudiante,i|
+          %tr
+            %td
+              =i+1
+            %td
+              =estudiante.usuario.nombre_completo
+            %td
+              =estudiante.usuario.ci
+            %td
+              =estudiante.usuario.correo
+            %td
+              =estudiante.usuario.telefono_movil
+            %td
+              .detalle{:id => "detalle_#{estudiante.usuario_ci}"}
+                %table
+                  - estudiante.estudiante_cursos.each do |ec|
+                    %tr
+                      %th= ec.tipo_curso.descripcion
+                      %td= ec.historiales_academicos.count
+
+            %td
+              =link_to 'Eliminar', {:action => "eliminar_estudiante", :ci => estudiante.usuario_ci, :id => @each_with_index}, {'data-confirm' => " Esta acción es irreversible, Se eliminará todo historial y registro del usuario. ¿está completamente seguro?"}
+  -else
+    %table.tablesorter.tablefilter.likert
+      %thead
+        %tr
+          %th
+            No.
+          %th
+            Nombre y Apellido
+          %th
+            Cédula
+          %th
+            Correo Electrónico
+          %th
+            Teléfono Móvil
+          %th
+            ="# Cursos Realizados"
+          %th
+            Opciones
+      %tbody
+        -@estudiantes_cursos.each_with_index do |ec,i|
+          %tr
+            %td
+              =i+1
+            %td
+              =ec.estudiante.usuario.nombre_completo
+            %td
+              =ec.estudiante.usuario.ci
+            %td
+              =ec.estudiante.usuario.correo
+            %td
+              =ec.estudiante.usuario.telefono_movil
+            %td
+              .detalle{:id => "detalle_#{ec.estudiante.usuario_ci}"}
+                %table
+                  - ec.estudiante.estudiante_cursos.each do |ec_otros|
+                    %tr
+                      %td= ec_otros.tipo_curso.descripcion
+                      %td= ec_otros.historiales_academicos.count
+
+            %td
+              =link_to 'Eliminar', {:action => "eliminar_estudiante", :ci => ec.estudiante.usuario_ci}, {'data-confirm' => " Esta acción es irreversible, Se eliminará todo historial y registro del usuario. ¿está completamente seguro?"}

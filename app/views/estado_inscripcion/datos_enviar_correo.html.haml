@@ -1,0 +1,30 @@
+=form_tag((url_for :action => "enviar_correo"), :multipart => true) do
+  %table
+    %tr
+      %td Para:
+      %td= text_area_tag "para", @correos.join(","),{:disabled => true, :rows => 3, :cols => 85}
+      =hidden_field_tag :para,  @correos.to_a
+    %tr
+      %td De:
+      %td= text_field_tag "de","fundeim@ucv.ve",{:disabled => true,:size => 87}
+    %tr
+      %td Asunto:
+      %td= text_field_tag "asunto",nil,{:size => 87}
+    %tr
+      %td Adjuntar un archivo:
+      %td= file_field_tag :archivo_adjunto
+    %tr
+      %td
+      %td
+        =submit_tag :Enviar
+        ="-"
+        =button_to_function :Descartar, "aceim.cerrar_modal();"
+    %tr
+      %td Mensaje:
+      %td= text_area_tag "mensaje",nil,:cols => 85, :rows => 15
+    %tr
+      %td
+      %td
+        =submit_tag :Enviar
+        ="-"
+        =button_to_function :Descartar, "aceim.cerrar_modal();"

@@ -1,0 +1,44 @@
+
+-if @actividad.textos.count > 0
+	.factura.well{:style => 'color:black;'}
+		- @texto = @actividad.textos.first
+
+		.well	
+			%div
+				= raw @texto.contenido
+				- if @editable
+					= link_to 'Editar Texto', 'javascript:void(0)' , :class => "btn_editar small", :onclick => "return editar_texto(#{@actividad.id}, this);"
+		- if @editable
+			
+			%div{:id => "form_editar_texto_#{@actividad.id}", :style => 'display:none;'}
+				= form_tag({:controller => "textos", :action => "actualizar"},{:class => 'form'}) do
+					=hidden_field_tag "actividad_id", @actividad.id
+					=#hidden_field_tag "examen_id", @examen_id
+					=hidden_field_tag "texto_id", @actividad.textos.first.id
+
+					%table
+						%tr.req
+							%td.derecha.separado
+								%b= "*Contenido:"
+							%td
+								= text_area_tag :contenido, @actividad.textos.first.contenido, :style => 'width:600px;', :id => "contenido_texto_#{@actividad.id}"
+							%td
+								%input.btn_agregar.small{:type => 'submit', :value => 'Actualizar texto', :name => 'commit'}
+- elsif @editable
+	.well
+		= link_to 'Agregar Texto', 'javascript:void(0)' , :class => "btn_agregar small", :onclick => "$(form_texto_#{@actividad.id}).show('slow'); $(this).remove();"
+		%div{:id => "form_texto_#{@actividad.id}", :style => 'display:none;'}
+
+			= form_for(@actividad.textos.build, {:url=>{:controller => 'textos',:action => "create"},:html => {:class => 'form'}}) do |f|
+				=hidden_field_tag "actividad_id", @actividad.id
+				=#hidden_field_tag "examen_id", @examen_id
+				%table
+					%tr.req
+						%td.derecha.separado
+							%b= "*Contenido:"
+						%td
+							= f.text_area :contenido, :class => :texto, :required => true, :style => 'width:600px;'
+						%td
+							%input.btn_agregar.small{:type => 'submit', :value => 'Agregar Texto', :name => 'commit'}
+%br
+

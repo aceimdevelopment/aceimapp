@@ -1,0 +1,18 @@
+%p{:style => "color:red"}
+  =@alerta
+%h3
+  Se procederá a Eliminar definitivamente la sección:
+  %br/
+  =" - #{@seccion.descripcion}"
+  %br/
+  - unless @historiales.size==0
+    %br/
+    = "adicionalmente se procederá a eliminarle el curso a los siguientes estudiantes preinscritos y/o confirmados:"
+    %br/
+    - @historiales.each do |h|
+      = " - #{h.usuario.descripcion}"
+      %br/
+%br/
+%br/
+=link_to "Eliminar", :action=>"eliminar_seccion", :seccion => @seccion, :accion => @accion, :controlador => @controlador
+=link_to_function "Cancelar","aceim.cerrar_modal()"

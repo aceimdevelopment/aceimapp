@@ -47,6 +47,14 @@ footer, header, nav, section, video, object, output {
 	font-weight: lighter;
 }
 
+.contenido{
+	padding-top: 29px;
+	padding-left: 30px; 
+	font-size: 13px; 
+	text-align: left; 
+	font-weight: lighter;
+}
+
 #menubar {
    background: url(barra_amarilla.png) repeat-x left; 
    padding-left: 38px;

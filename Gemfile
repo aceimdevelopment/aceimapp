@@ -12,6 +12,10 @@ gem 'jquery-rails', '~> 4.3.1'
 # gem 'bootstrap', '~> 4.1.1'
 gem 'bootstrap', '~> 4.0.0'
 gem 'summernote-rails', '~> 0.8.10.0'
+gem 'pdf-writer', :git => 'git://github.com/metaskills/pdf-writer.git'
+gem 'spreadsheet' #, '0.6.8'
+gem 'composite_primary_keys', :git => 'https://github.com/composite-primary-keys/composite_primary_keys.git' #, '4.0.0'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'

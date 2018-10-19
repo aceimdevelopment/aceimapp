@@ -1,0 +1,8 @@
+%h3
+	= link_to "Bitácora del Estudiante (prototipo)", {:controller => 'usuario', :action => 'bitacora', :id => @ci}, :class => 'btn small'
+	= link_to "Modificar Datos Personales", {:action=>"modificar_datos_personales"}, {:class => 'btn_editar small'}
+	= link_to_modal_v2 "Reinicializar Contraseña",{:action => "confirmar_resetear",:title =>"Reinicializar Contraseña",:width=>400}, :class => 'btn_actualizar small'
+	- estado = @usuario.activo ? "Bloquear" : "Desbloquear"
+	- clase_estado = @usuario.activo ? "btn_bloquear" : "btn_desbloquear"
+	= link_to "#{estado} Estudiante", {:controller => 'usuario', :action => 'bloquear', :id => @usuario.ci, :activo => !@usuario.activo}, :class => "#{clase_estado} small"
+=render "estudiante/show"

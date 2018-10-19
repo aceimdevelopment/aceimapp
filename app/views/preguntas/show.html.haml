@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Clave:
+  = @pregunta.clave
+%p
+  %b Respuesta:
+  = @pregunta.respuesta
+%p
+  %b Siguiente pregunta:
+  = @pregunta.siguiente_pregunta_id
+
+= link_to 'Edit', edit_pregunta_path(@pregunta)
+\|
+= link_to 'Back', preguntas_path

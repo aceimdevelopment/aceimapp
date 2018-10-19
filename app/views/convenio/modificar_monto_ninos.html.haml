@@ -1,0 +1,28 @@
+=form_for(@precio_planilla,:url=>{:action => "guardar_monto_ninos", :controller => "convenio"}) do |a|
+  -if @precio_planilla.errors.any?
+    %div#error_explanation
+      %ul
+        -@precio_planilla.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg
+          
+  %fieldset
+    %legend Actualización del Monto de los niños
+
+    %p
+      =a.hidden_field :id
+
+    %p
+      %label 
+        Monto
+        %span.req *
+      =a.text_field :valor, :autofocus => "true"
+			
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =submit_tag "Modificar"
+    |
+    =link_to_function "Cancelar","aceim.cerrar_modal()"

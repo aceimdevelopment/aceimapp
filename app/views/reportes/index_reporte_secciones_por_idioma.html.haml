@@ -1,0 +1,19 @@
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th
+        Idioma
+      %th
+        Cantidad de Secciones
+      %th
+        Detalle
+
+  %tbody
+  -@secciones.each do |h|
+    %tr
+      %td
+        =h.tipo_curso.descripcion
+      %td
+        =h.cantidad
+      %td
+        =link_to "Ver Detalle", :action => "reporte_secciones_por_idioma_detalle1", :idioma => h.idioma_id, :categoria => h.tipo_categoria_id

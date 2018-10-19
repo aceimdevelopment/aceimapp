@@ -1,0 +1,116 @@
+.contenedor
+  %div
+    -if flash[:mensaje]
+      #mensaje-flash{:style => "display:none;"}
+        %p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+          %span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+          #{flash[:mensaje]}  
+      =javascript_tag "$(document).ready(function(){ $('#mensaje-flash').show('pulsate',{},'fast'); });" 
+  - if @cursos_abiertos_nuevo.count > 0 
+    %ul.center
+      %h3
+        %p
+          Inscripciones Nuevos
+          %b.label= @titulo  
+        -@cursos_abiertos_nuevo.each do |curso|
+          - secciones = curso.tipo_curso.secciones.where(:periodo_id => @periodo_inscripcion_id, :esta_abierta => true).reject{|s| s.curso.grado != 1}.reject{|s| !s.hay_cupo?}
+          - catidad_secciones = secciones.count
+          - cupo = 0
+          - @horarios = secciones.collect{|s| s.horario}.uniq
+          - secciones.each{|s| cupo += s.cupo}
+          %li{:style => "display:inline-block; margin-bottom:10px;"}
+            - if cupo <= 0
+              = button_to "Cupos agotados para #{curso.tipo_curso.descripcion}",nil ,{:disabled => true,  :class => 'ui-button'}
+            - else
+              = button_to "#{curso.tipo_curso.descripcion} - Cupos: #{cupo} (En #{catidad_secciones} Seccion(es))", {:action => "ingrese_ci", :controller => "inscripcion", :id => curso.id}, { :class => 'ui-button'}
+
+
+    / .titulo
+    /   -@secciones.each do |s|
+    /     = "cupo: #{s.cupo}, horario: #{s.horario}"
+  .titulo
+    =@content.html_safe
+  - @por_definir = 'Por definir'
+
+  #inscripciones
+    %h2 Seleccione el Idioma de su interés para ampliar la información:
+    %ul
+      %li=  link_to 'Inglés(Adultos)', "#IN_AD", :id => 'INTE', :class => 'btn_idiomas'
+      %li=  link_to 'Inglés(Adolescentes)', "#IN_TE", :id => 'INTE', :class => 'btn_idiomas'
+      %li=  link_to 'Alemán', "#AL_AD", :id => 'ALAD', :class => 'btn_idiomas'
+      %li=  link_to 'Francés', "#FR_AD", :id => 'FRAD', :class => 'btn_idiomas'
+      %li=  link_to 'Italiano', "#IT_AD", :id => 'ITAD', :class => 'btn_idiomas'
+      %li=  link_to 'Portugués', "#PG_AD", :id => 'PGAD', :class => 'btn_idiomas'
+
+
+    - @tipo_cursos.each do |tipo_curso|
+      -@inscripciones = tipo_curso.inscripciones.reject{|i| i.tipo_inscripcion_id.eql? 'NI'}.sort_by{|i| i.apertura}
+      %div{:id => tipo_curso.id.join("_"), :style => 'background-color:white;' }
+        - @inscripciones.each do |curso|
+
+          - @culmino = (curso.cierre and curso.cerrada? and !curso.post_cierre)
+          - @clase = "well"
+          - @clase += " abierta" if curso.abierta?
+          - @clase += " programada" if curso.programada?
+          - @clase += " culmino" if @culmino
+
+          %div{:class => @clase}
+            - if @culmino
+              %h2{:style => 'float:right;color:red;'} Culminó
+            %h2
+              %b
+                = "#{curso.tipo_inscripcion.descripcion}"
+                %i.label= @titulo
+
+
+            %ul{:style => "list-style-type: disc;"}
+              %li
+                Fecha y Hora de Inscripción:
+                %p
+                  %b= curso.fecha_inscripcion
+              %li
+                Fecha y Hora de Entrega de Planilla:
+                %p
+                  %b= curso.fecha_entrega_planilla                  
+              %li
+                - if curso.tipo_inscripcion_id.eql? 'NU'
+                  - @arancel = "#{ParametroGeneral.costo_nuevos_i}Bs.S" 
+                - else
+                  - @arancel = "#{TipoConvenio.find('REG').monto.to_i}Bs.S"  
+                Arancel por nivel:
+                %b= (curso.tipo_estado_inscripcion_curso_id.eql? 'PR' or curso.tipo_estado_inscripcion_curso_id.eql? 'AB') ? @arancel : @por_definir
+          %br
+
+
+  %br
+  %br
+  .center
+    <div style="font-weight:bold;font-size:x-large">
+    <strong style="background-color:#ff3300;color:#ffffff">&nbsp;NO PAGUE SIN TENER LA PLANILLA DE INSCRIPCIÓN&nbsp;
+    </strong>
+    </div>
+    %br
+    <div>
+    <strong style="font-size:x-large;background-color:#ff3300;color:#ffffff">&nbsp;VERIFIQUE EL MONTO Y EL NÚMERO DE CUENTA EN&nbsp;SU&nbsp;PLANILLA&nbsp;DE INSCRIPCIÓN ANTES DE PAGAR&nbsp;
+    </strong>
+    </div>
+    %br
+    <div>
+    <strong style="font-size:x-large;background-color:#ff3300;color:#ffffff">&nbsp;EL MATERIAL NO ESTÁ INCLUÍDO EN EL COSTO DE LA MATRÍCULA
+    </strong>
+    </div>
+    %br
+    %br
+    <div>
+    <strong style="font-size: 20px;line-height: 135%;color: #555555;font-weight: bold;">
+    &nbsp;*&nbsp;BIENVENIDOS *&nbsp;WELCOME *&nbsp;BEM-VINDO *&nbsp;BIENVENU *&nbsp;</strong>
+    </div>
+    <div>
+    <strong style="font-size: 20px;line-height: 135%;color: #555555;font-weight: bold;">&nbsp;* WILLKOMMEN *&nbsp;BENVENUTO *
+    </strong>
+    </div> 
+
+
+:javascript
+  $("#inscripciones").tabs();
+  $(".ui-button").button();

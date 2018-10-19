@@ -1,0 +1,21 @@
+%h1 Lista de Tipo de Actividades
+
+%table
+  %tr
+    %th Identificador
+    %th Descripcion
+    %th
+    %th
+    %th
+
+  - @tipo_actividades.each do |tipo_actividad|
+    %tr
+      %td= tipo_actividad.id
+      %td= tipo_actividad.descripcion
+      %td= link_to 'Detalle', tipo_actividad
+      %td= link_to 'Editar', edit_tipo_actividad_path(tipo_actividad)
+      %td= link_to 'Eliminar', tipo_actividad, :confirm => '¿Está Seguro?', :method => :delete
+
+%br
+
+= link_to 'Nueva Tipo Actividad', new_tipo_actividad_path

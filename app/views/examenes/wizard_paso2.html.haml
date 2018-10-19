@@ -1,0 +1,61 @@
+
+=link_to " Listado de Exámenes", examenes_path, {:class => 'btn_atras'}
+
+%h3
+	= @titulo
+	= link_to 'Vista Previa', @examen, {:class => 'btn_previsualizar small'}
+
+.well.factura
+	%h3= link_to 'Eliminar Examen', @examen, :confirm => '¿Está Seguro de Esta Acción?. Las actividades se mantendrán almacenadas pero se desvincularán de éste examen.', :method => :delete,  :class => "btn_eliminar small flotar_derecha"
+
+	=render :partial => 'plantilla_examen'
+
+:javascript
+	
+	$( ".btn" ).button();
+	
+	$( ".btn_editar").button({
+		icons: {
+		primary: "ui-icon-pencil"
+		}
+	});	
+	
+	$( ".btn_eliminar").button({
+		icons: {
+		primary: "ui-icon-trash"
+		}
+	});
+
+
+	$( ".btn_previsualizar").button({
+		icons: {
+		primary: "ui-icon-arrow-4-diag "
+		}
+	});
+
+	$( ".btn_atras").button({
+		icons: {
+		primary: "ui-icon-carat-1-w"
+		}
+	});
+
+	$( ".btn_agregar").button({
+		icons: {
+		primary: "ui-icon-circle-plus"
+		}
+	});
+	
+	$( ".btn_remover").button({
+		icons: {
+		primary: " ui-icon-circle-minus"
+		}
+	});	
+	
+	$( ".radio" ).buttonset();
+
+	$(".form").validate();
+
+	function eliminar_pregunta(id, actividad_id){
+		return $.get("/aceim/preguntas/"+"?data-method=delete",		
+			function(data){ alert("Data: " + data + "\nStatus: " + status);} );
+	};

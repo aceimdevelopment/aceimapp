@@ -1,0 +1,18 @@
+=link_to "Generar PDF", :action => "ver_pdf_distribucion_depositos", :tipo_cuenta => params[:id]
+|                                                                                                   
+=link_to "Generar Excel",:action => "ver_excel_distribucion_depositos", :tipo_cuenta => params[:id]
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th
+        Tipo de Ingreso
+      %th
+        Cantidad de Depositantes
+
+  %tbody
+  -@historiales.each do |h|
+    %tr
+      %td
+        =h.tipo_convenio.descripcion
+      %td
+        =h.cantidad

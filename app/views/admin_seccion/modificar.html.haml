@@ -1,0 +1,46 @@
+=form_for(@seccion,:url=>{:action => "modificar_guardar"}) do |s|
+  -if @seccion.errors.any?
+    %div#error_explanation
+      %ul
+        -@seccion.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg
+          
+  %fieldset
+    %legend Modificar Sección
+    
+    %p
+      %label
+        Idioma:
+        =@seccion.tipo_curso.descripcion
+
+        =s.hidden_field :idioma_cat, :value => @idioma_cats
+        =s.hidden_field :periodo, :value => @periodo_id
+        =s.hidden_field :idioma, :value => @idioma_id
+        =s.hidden_field :categoria, :value => @tipo_categoria_id
+        =s.hidden_field :nivel, :value => @tipo_nivel_id
+        =s.hidden_field :num_seccion, :value => @seccion_numero
+        =s.hidden_field :bloque_horario_id, :value => @bloque_horario_id
+
+    %p
+      %label
+        Nivel:
+        =collection_select :tipo_nivel, nil, TipoNivel.select("curso.*, tipo_nivel.*").joins(:curso).where(["curso.idioma_id = ? AND curso.tipo_categoria_id = ? AND curso.tipo_nivel_id != 'NI' AND curso.tipo_nivel_id != 'BBVA' ", "#{@seccion.idioma_id}", "#{@seccion.tipo_categoria_id}"]).order("grado"), :id, :descripcion, {:selected => @seccion.tipo_nivel_id}
+
+    %p
+      %label 
+        Horario:
+        =select("horario", nil, @horarios.collect{|h| [h["total"], h["dias"]]}, {:selected => @horario_secciones})
+
+    %p
+      %label 
+        Número de Sección:
+        =@seccion_numero
+
+       
+
+  %p
+    =submit_tag "Modificar", :disable_with => "Por favor espere..."
+    |
+    =link_to_function "Cancelar","aceim.cerrar_modal()"

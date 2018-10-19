@@ -1,0 +1,19 @@
+- @preguntas.each_with_index do |pregunta,i|
+	%table.likert
+		%tr
+			%thead
+				%th #
+				%th Pregunta/Ítem
+				%th Respuesta
+				%th Opciones
+		%tr
+			%td
+				%b= "#{i}"
+			%td
+				= pregunta.clave
+			%td
+				= pregunta.respuesta
+			%td
+				= link_to 'Eliminar pregunta', {:action => 'eliminar_pregunta',:id => pregunta.id}, :data =>  { :confirm => '¿Está seguro?' }, :class => "btn small", :style => 'background-color: lightsalmon;'
+.division
+				

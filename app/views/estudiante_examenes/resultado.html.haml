@@ -1,0 +1,23 @@
+= render :partial => 'totales'
+
+.well
+  %h2 Detalles de las respuestas incorrectas:
+  %table.likert
+    %thead
+      %tr
+        %th Parte
+        %th.raw3 Actividad
+        %th Pregunta
+        %th Tu respuesta
+        %th Respuesta Correcta
+
+    - @estudiante_examen.estudiante_examen_respuestas.each do |eer|  
+      - unless eer.es_correcta?
+        %tr
+          - pregunta = eer.respuesta.pregunta
+          %td.well= pregunta.actividad.parte_examenes.collect{|pe| pe.parte.nombre}[0].to_s
+          %td.well= pregunta.actividad.descripcion
+          %td.well= eer.respuesta.pregunta.valor
+          %td.well{:style => 'text-decoration: underline;'}= eer.valor
+          %td.well{:style => 'text-decoration: underline;'}= eer.respuesta.valor
+=# QUEDA PENDIENTE RESOLVER LO DE LAS PREGUNTAS NO RESPONDIDAS. NO APARECEN Y DEBERIAN

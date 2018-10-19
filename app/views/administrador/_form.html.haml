@@ -1,0 +1,25 @@
+=form_for(@administrador,:url=>{:action => @accion}) do |f|
+  %fieldset
+    %legend Gestión de Administrador
+    -if @accion.eql? 'editar_guardar'
+      = f.hidden_field :usuario_ci
+      %p
+        = @administrador.usuario.descripcion
+      %p
+        Rol Actual:
+        -if @administrador.tipo_rol.blank?
+          = "Sin rol asignado"
+        -else
+          = @administrador.tipo_rol.nombre
+    -else
+      %p
+        %label
+          Cédula Usuario:
+        = f.text_field :usuario_ci
+    %p
+      Nuevo Rol: 
+      =f.collection_select :tipo_rol_id, TipoRol.where("id <> ?", 2), :id, :nombre, {:include_blank => 'Seleccione...'}
+  %p
+    =submit_tag "Guardar"
+    |
+    =link_to_function "Cancelar","aceim.cerrar_modal()"

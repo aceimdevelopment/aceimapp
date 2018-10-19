@@ -1,0 +1,56 @@
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th{:width => "15%"}
+        Idioma
+      %th{:width => "15%"}
+        Nivel
+      %th{:width => "20%"}
+        Horario
+      %th{:width => "10%"}
+        Período
+      %th{:width => "25%"}
+        Convenio
+      %th{:width => "15%"}
+        Calificación
+
+  %tbody
+    -@historial.each do |h|
+      %tr
+        %td
+          =h.tipo_curso.descripcion
+        %td
+          =h.tipo_nivel.descripcion
+        %td
+          =h.seccion.horario
+        %td
+          =h.periodo_id
+        %td
+          =h.tipo_convenio.descripcion
+        %td
+          -if h.nota_final == -2
+            -if h.tipo_estado_calificacion_id == "CO"
+              CONGELADO
+            -else
+              SIN CALIFICAR
+              -if (session[:administrador].tipo_rol_id <= 3) #& (session[:parametros][:periodo_actual]!=h.periodo_id)
+                
+
+                =#link_to_modal_v2 ".",{:action => "cambiar_nota",:title =>"Modificar Nota",:width=>500, :params => {:usuario_ci => h.usuario_ci, :idioma_id => h.idioma_id,:tipo_categoria_id => h.tipo_categoria_id, :tipo_nivel_id => h.tipo_nivel_id, :periodo_id => h.periodo_id, :seccion_numero => h.seccion_numero} }, {:class => 'btn_editar small tool_tip', :title => 'Editar calificación'}
+                =link_to_modal_v2 ".",{:action => "cambiar_nota",:title =>"Modificar Nota",:width=>500, :params => {:historial_id => h.id}}, {:class => 'btn_editar small tool_tip', :title => 'Editar calificación'}
+          -elsif h.nota_final == -1
+            PERDIDA POR INASISTENCIA
+            -if session[:administrador].tipo_rol_id <= 3#(session[:administrador].usuario_ci != "aceim") 
+              =link_to_modal_v2 ".",{:action => "cambiar_nota",:title =>"Modificar Nota",:width=>500, :params => {:historial_id => h.id}}, {:class => 'btn_editar small tool_tip', :title => 'Editar calificación'}
+          -else
+            =h.nota_final.to_i
+            -if session[:administrador].tipo_rol_id <= 3
+              =link_to_modal_v2 ".",{:action => "cambiar_nota",:title =>"Modificar Nota",:width=>500, :params => {:historial_id => h.id}}, {:class => 'btn_editar small tool_tip', :title => 'Editar calificación'}
+              \- 
+              =link_to_modal_v2 ".",{:action => "ver_detalle_nota",:title =>"Detalle Nota",:width=>500, :params => {:historial_id => h.id} }, {:class => 'btn_previsualizar small tool_tip', :title => 'Ver detalle de la calificación'}
+                
+            
+
+
+
+

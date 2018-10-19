@@ -1,0 +1,36 @@
+
+#siempre_tope.well.small{:style => 'background-color: black; color: greenyellow; margin-top:-2px; position: fixed ; z-index: 1;'}
+  = hidden_field_tag 'tiempo', @estudiante_examen.tiempo, :class => 'tiempo'
+  %p
+    %h3
+      = 'El examen se termina en'
+      %span#time= @estudiante_examen.tiempo
+      = 'minutos'
+
+:javascript
+
+  function startTimer(duration, display) {
+      var timer = duration, minutes, seconds;
+      setInterval(function () {
+          minutes = parseInt(timer / 60, 10)
+          seconds = parseInt(timer % 60, 10);
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = minutes + ":" + seconds;
+          $('.tiempo').val(minutes)
+          if (--timer == 0) {
+              alert ('Terminó su tiempo');
+              $(location).attr('href', '/aceim/principal/tiempo_agotado');
+          }
+      }, 1000);
+  }
+
+  window.onload = function () {
+      var fiveMinutes,
+      display = document.querySelector('#time');
+      valor = $('#tiempo').val()
+      minutes = 60 * valor
+      startTimer(minutes, display);
+  };      

@@ -1,0 +1,24 @@
+.well.factura
+	%h3= "Agregar Datos del Esquema General de la Actividad:"
+	=# form_for([:action => 'registrar_actividad', parte_examen.actividades.build]) do |f|
+	= form_for(parte_examen.actividades.build,{:url=>{:action => "registrar_actividad"}, :html => {:class => 'form'}}) do |f|
+		= f.hidden_field :curso_idioma_id, :value => @examen.curso_idioma_id
+		= f.hidden_field :curso_tipo_categoria_id, :value => @examen.curso_tipo_categoria_id
+		= f.hidden_field :curso_tipo_nivel_id, :value => @examen.curso_tipo_nivel_id
+		= hidden_field_tag 'parte_examen[parte_id]', parte_examen.parte_id
+		= hidden_field_tag 'parte_examen[examen_id]', parte_examen.examen_id	
+		%table
+			%tr.req
+				%td.derecha.separado
+					%b= "*Instrucciones:"
+				%td
+					= f.text_field :instrucciones, :style => 'width: 700px;', :required => true
+			%tr.req
+				%td.derecha.separado
+					%b= "*Tipo de Actividad:"
+				%td
+					= f.collection_select :tipo_actividad_id, TipoActividad.all, :id, :descripcion, :prompt => true
+			%tr
+				%td
+				%td
+					%input.btn.small{:type => 'submit', :value => 'Agregar actividad', :name => 'commit'}

@@ -1,0 +1,35 @@
+=link_to_function "Regresar", "history.back()", :class => 'btn_atras'
+%br
+%br
+.well
+	%p
+		= text_field_tag "filtro_particular", nil, :placeholder => "Filtrar Exámenes..."
+
+	%table.likert.tablefilter.tablesorter
+		%thead
+			%tr
+				%th #
+				%th Fecha
+				%th Descripción
+				%th Usuario
+				%th Estudiante
+				%th Administrador
+				%th IP Remota
+		%tbody
+			- @bitacoras.each_with_index do |bitacora,i|
+				%tr
+					%td= i+1
+					%td= bitacora.fecha.strftime("%d/%m/%Y - %I:%M %p")
+					%td.raw3= bitacora.descripcion
+					%td= bitacora.usuario_ci
+					%td= bitacora.estudiante_usuario_ci
+					%td= bitacora.administrador_usuario_ci
+					%td= bitacora.ip_origen
+
+:javascript
+
+	$( ".btn_atras").button({
+		icons: {
+			primary: "ui-icon-carat-1-w"
+		}
+	});

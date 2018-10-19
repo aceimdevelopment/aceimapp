@@ -1,0 +1,8 @@
+.row.border-bottom.white-bg.dashboard-header
+	.col-12.bd-content
+		%h1.d-flex.justify-content-center
+			%span.oi.oi-pencil
+			%span.btn-outline-primary.btn.btn-sm.btn-primary.align-middle{href: "/cartelera/edit"} Editar 
+			Cartelera
+
+		.border.border-primary=raw @cartelera.contenido

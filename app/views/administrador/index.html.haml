@@ -1,0 +1,25 @@
+- modelo = Administrador
+%h1.titulo
+	Administrar Usuarios
+=button_to "Nuevo Administrador", {:action => 'nuevo', :controlador => 'administrador'}, :accion => 'index', :class => 'ui-button ui-widget ui-state-default ui-corner-all'
+
+=button_to_modal "Agregar Administrador a Usuario Existente", {:action => "agregar",:title => "Agregar Administrador",:width => 500}, 'ui-button ui-widget ui-state-default ui-corner-all'
+%table.tablesorter.likert
+	%thead
+		%tr
+			%th 
+				=Usuario.human_attribute_name(:nombre)
+			%th 
+				=modelo.human_attribute_name(:tipo_rol)
+			%th 
+				Opciones
+	%tbody
+		- @administradores.each do |administrador|
+			%tr
+				%td= administrador.usuario.descripcion
+				%td= administrador.tipo_rol.nombre if administrador.tipo_rol
+				%td
+					=link_to_modal "Modificar",{:action => "editar",:title =>"Modificar Rol",:width=>500, :params => {:id => administrador.usuario_ci}}
+					|
+					=link_to t('.destroy', :default => t("helpers.links.destroy")), {:action => "eliminar", :ci => administrador.usuario_ci}, :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => '¿Está Seguro?'))}
+

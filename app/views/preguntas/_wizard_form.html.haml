@@ -1,0 +1,17 @@
+= form_for([@segmento, @preguntas.build]) do |f|
+	%table
+		%tr.req
+			%td.derecha.separado
+				%b= "*Pregunta:"
+			%td
+				= f.text_field :clave
+
+		%tr.req
+			%td.derecha.separado
+				%b= "*Respuesta:"
+			%td
+				= f.text_field :respuesta				
+		%tr
+			%td
+			%td
+				%input.btn.small{:type => 'submit', :value => 'Agregar Pregunta', :name => 'commit'}

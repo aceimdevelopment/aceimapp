@@ -1,0 +1,15 @@
+.contenedor
+  #interno
+    -if flash[:mensaje]
+      #mensaje-flash{:style => "display:none;"}
+        %p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+          %span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+          #{flash[:mensaje]}  
+      =javascript_tag "$(document).ready(function(){ $('#mensaje-flash').show('pulsate',{},'fast'); });"
+    %p 
+      Roles disponibles para ingresar al sistema:
+    %ul
+      -@roles.each do |rol|
+        %li
+          =link_to rol[:descripcion], :action => "un_rol", :tipo => rol[:tipo], :idioma_id => rol[:idioma_id], :tipo_categoria_id => rol[:tipo_categoria_id]
+        

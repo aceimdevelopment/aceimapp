@@ -1,0 +1,49 @@
+-tam = @aulas_disponibles.size
+-cont = 0
+- @ubicaciones.each do |ubicacion|
+  = check_box_tag ubicacion.id, false, false, :class => "ubicaciones"
+  = ubicacion.desc
+  %br
+
+= form_tag "../admin_aula/guardar_horario_aulas_planificacion" do
+  %br
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th{:width => "15%",:style=> "text-align:center"}
+          Aula
+        -@tipo_dias.each do |dia|
+          %th{:width => "17%",:style=> "text-align:center"}
+            =dia.descripcion
+
+    %tbody
+      -@aulas_disponibles.each do |ad|
+        -cant = 1
+        -cont = cont + 1
+        %tr{:class => "#{ad.tipo_ubicacion_id}", :style=> "display: none;"}
+          %td{:width => "15%", :style=> "vertical-align:middle;text-align:center;"}
+            =ad.id
+            %br
+            =ad.descripcion
+
+
+          -@tipo_dias.each do |dia|
+            -if dia.id.eql? 'LU' or dia.id.eql? 'MI'
+              -color = '#9AF5A9'
+            -elsif dia.id.eql? 'MA' or dia.id.eql? 'JU'
+              -color = '#A0C0F0'
+            -else
+              -color = '#F3F781'
+
+            %td
+              -horas = ad.bloque_aula_disponible.where(:tipo_dia_id => dia.id)
+              -horas.each do |hora|
+                .div{:style => "background-color: #{color}"}
+                  =check_box_tag "horario_aula_disponible[][#{hora.aula_id}][#{hora.tipo_dia_id}][#{hora.tipo_hora_id}]", 1, (hora.asignada != 0)
+                  =hora.tipo_hora.descripcion_hora
+                  %br
+
+  %p= submit_tag 'Guardar'
+    
+%br/
+%br/

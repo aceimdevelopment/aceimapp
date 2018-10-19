@@ -1,0 +1,8 @@
+=form_tag url_for(:action => "cambiar_capacidad_curso", :controller => "parametros_generales") do
+  %h4 Ingrese el número de la Capacidad de los Cursos
+  =number_field_tag 'capacidad', @capacidad, {:in => 1..40}
+  %br  
+  %br
+  %br
+  =submit_tag :Aceptar
+  =button_to_function "Cancelar","aceim.cerrar_modal();"

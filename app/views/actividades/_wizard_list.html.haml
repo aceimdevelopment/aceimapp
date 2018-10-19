@@ -1,0 +1,26 @@
+-#@editable = action_name!='presentar' or (controller_name.eql? 'examenes' and action_name!='show')
+-@editable = (action_name.eql? 'wizard_paso2' or (controller_name.eql? 'actividades' and action_name.eql? 'show'))
+
+.division_actividad
+	%p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+		%span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+		%b="#{pluralize(@actividad.total_respuestas_esperadas, 'Respuesta esperada', 'Respuestas esperadas')} en esta actividad."
+	%p
+		%b{:style => 'color:yellow;'}= "#{@i} .- "
+		%b= @actividad.descripcion_sin_tipo
+
+	- if @editable
+		%p
+			=link_to 'Editar Actividad', 'javascript:void(0)' , :class => "small btn_editar", :onclick => "$(actualizar_actividad_#{@actividad.id}).show('slow'); $(this).parent().remove();"
+			=link_to 'Eliminar Actividad', @actividad, :confirm => '¿Está Seguro?', :method => :delete, :class => "btn_eliminar small flotar_derecha"
+			=render :partial => '/actividades/form_actualizar_actividad'
+
+	=render :partial => '/actividades/incluir_texto'
+
+	=render :partial => '/actividades/adjuntar_archivo'
+
+	.factura.well{:style => 'color:black;'}
+		=#Preguntas
+		=render :partial => '/actividades/preguntas'
+.division
+%br

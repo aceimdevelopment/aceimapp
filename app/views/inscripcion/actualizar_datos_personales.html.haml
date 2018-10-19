@@ -1,0 +1,91 @@
+=form_for(@usuario,:url=>{:action => "guardar_datos_personales"}) do |f|
+  -if @usuario.errors.any?
+    %p
+      %div#error-explanation
+        %b
+          =pluralize(@usuario.errors.count, "error") 
+          en el formulario impiden que éste usuario sea registrado:
+        %ul
+          -@usuario.errors.full_messages.each do |msg|
+            %li
+              =msg
+  -unless session[:nuevo]
+    %fieldset
+      %legend Actualización de Contraseña
+      %p Debe colocar una nueva contraseña con la que va a entrar a partir de ahora.
+      %p
+        %label
+          Contraseña
+          %span.req *
+        =f.password_field :contrasena, :autofocus => "true"      
+      %p
+        %label 
+          Confirmación
+          %span.req *
+        =f.password_field :contrasena_confirmation
+  %fieldset
+    %legend Datos Personales
+    %p
+      %label
+        Cédula de Identidad
+      =@usuario.ci
+      =f.hidden_field :ci 
+    %p
+      %label 
+        Nombres
+        %span.req *
+      =f.text_field :nombres
+      Ejemplo: Maria del Carmen
+    %p
+      %label
+        Apellidos
+        %span.req *
+      =f.text_field :apellidos
+      Ejemplo: Da Silva
+    %p
+      %label
+        Sexo
+        %span.req *
+      =f.radio_button :tipo_sexo_id, "F"
+      Femenino  
+      %br/
+      =f.radio_button :tipo_sexo_id, "M"
+      Masculino    
+    -if true#unless session[:nuevo]
+      %p
+        %label
+          Fecha de Nacimiento
+          %span.req *
+        =f.text_field :fecha_nacimiento, :class=>"datepicker_nac"
+        Ejemplo: 1990-03-21
+  %fieldset
+    %legend Datos de Contacto
+    %p
+      %label
+        Correo Electrónico  
+        %span.req *
+      =f.text_field :correo
+      Ejemplo: pedroperez@gmail.com
+    %p
+      %label
+        Teléfono Móvil
+        %span.req *
+      =f.text_field :telefono_movil
+      Ejemplo: 04261234567
+    -unless session[:nuevo]
+      %p
+        %label
+          Teléfono de Habitación
+        =f.text_field :telefono_habitacion
+        Ejemplo: 02121234567
+      %p
+        %label
+          Dirección de Habitación
+        =f.text_area :direccion, :size => "60x4"
+        Ejemplo: La Candelaria. Edificio A, Piso 1, Apto 11.
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =f.submit "Siguiente"
+%br/    

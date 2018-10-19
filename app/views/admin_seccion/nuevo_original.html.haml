@@ -1,0 +1,101 @@
+<script src="http://www.appelsiini.net/download/jquery.chained.mini.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+function(){ $("#aula_id").chainedTo("#ubicacion_id"); });
+</script>
+
+=form_for(@seccion,:url=>{:action => "nuevo_guardar"}) do |s|
+  -if @seccion.errors.any?
+    %div#error_explanation
+      %ul
+        -@seccion.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg
+            
+  %fieldset
+    %legend Registro de Nueva Sección para el período #{@periodo}
+    %p
+      %label
+        Idioma
+        %span.req *
+      -if (@idioma_id=="IN")
+        =@idioma.descripcion + " - " + @categoria.descripcion
+      -else
+        =@idioma.descripcion
+
+      =s.hidden_field :periodo, :value => @periodo
+      =s.hidden_field :idioma, :value => @idioma_id
+      =s.hidden_field :categoria, :value => @categoria_id
+
+    %p
+      %label
+        Nivel
+        %span.req *
+      =s.collection_select :tipo_nivel_id, TipoNivel.select("curso.*, tipo_nivel.*").joins(:curso).where(["curso.idioma_id = ? AND curso.tipo_categoria_id = ? AND curso.tipo_nivel_id != 'NI' AND curso.tipo_nivel_id != 'BBVA' ", @idioma_id, @categoria_id]).order("grado"), :id, :descripcion
+
+
+
+    %p
+      %label
+        Horario
+        %span.req *
+      =select("horario","id", @horarios.collect{|h| [h["total"], h["dias"]]} )
+
+
+    %p
+      %label
+        Ubicación
+        %span.req *
+      =collection_select :ubicacion, :id, TipoUbicacion.where(["id != ? and id != ? and id != ? and id != ? and id != ?", "nul", "TOR", "CER", "N/A", "PD"]), :id, :descripcion, {:include_blank => 'Seleccione una ubicación...'}
+
+
+    %p
+      %label
+        Aulas
+        %span.req *
+      =select("aula","id", @bloques.collect{|x| x.aula_id}, {:prompt => 'Seleccione un aula...'} )
+
+
+
+
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =s.submit "Registrar"
+
+%br/
+%br/
+
+-if(!@secciones.empty?)
+  %table.tablesorter.tablefilter.likert
+    %thead
+      %tr
+        %th{:width => "25%"}
+          Idioma
+        %th
+          Categoría
+        %th
+          Nivel
+        %th
+          Número de Sección
+        %th
+          Aula
+
+    %tbody
+
+      -@secciones.each do |sec|
+        %tr
+          %td
+            =sec.idioma_id
+          %td
+            =@categoria.descripcion
+          %td
+            =sec.tipo_nivel_id
+          %td
+            =sec.seccion_numero
+
+
+%br/
+%br/
+=link_to "<Atrás", :action => "index"

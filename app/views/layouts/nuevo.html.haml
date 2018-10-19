@@ -1,0 +1,102 @@
+!!!
+%html
+  %head
+    %title ACEIM - Escuela de Idiomas Modernos  
+    =stylesheet_link_tag  "/aceim/assets/application"
+    =javascript_include_tag "/aceim/assets/application"
+    =javascript_include_tag "/aceim/assets/#{controller_name}"
+  %body
+    #banner
+      #banner_barra
+        #banner_contenido
+          Universidad Central de Venezuela
+          %br/
+          Facultad de Humanidades y Educación
+          %br/
+          Escuela de Idiomas Modernos
+          %br/
+          ACEIM
+          %br/
+    #menubar
+      %b.detalle_derecha
+        :javascript
+          var mydate=new Date()
+          var year=mydate.getYear()
+          if (year < 1000) year+=1900
+          var day=mydate.getDay()
+          var month=mydate.getMonth()
+          var daym=mydate.getDate()
+          if (daym<10)
+            daym="0"+daym
+          var dayarray=new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado")
+          var montharray=new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre")
+          document.write("<small><font color='000000' face='Arial'>"+dayarray[day]+", "+daym+" de "+montharray[month]+" de "+year+"</font></small>")
+
+          function updateClock ( )
+            {
+            var currentTime = new Date ( );
+              var currentHours = currentTime.getHours ( );
+              var currentMinutes = currentTime.getMinutes ( );
+              var currentSeconds = currentTime.getSeconds ( );
+
+              // Pad the minutes and seconds with leading zeros, if required
+              currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
+              currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+
+              // Choose either "AM" or "PM" as appropriate
+              var timeOfDay = ( currentHours < 12 ) ? "AM" : "PM";
+
+              // Convert the hours component to 12-hour format if needed
+              currentHours = ( currentHours > 12 ) ? currentHours - 12 : currentHours;
+
+              // Convert an hours component of "0" to "12"
+              currentHours = ( currentHours == 0 ) ? 12 : currentHours;
+
+              // Compose the string for display
+              var currentTimeString = "- " + currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
+              
+              
+              $("#clock").html(currentTimeString);
+                  
+           }
+
+          $(document).ready(function()
+          {
+             setInterval('updateClock()', 1000);
+          });
+
+        %b#clock
+
+      %nav#sitenav 
+        %li.current
+          =link_to "Principal", :controller => "principal", :action => "principal"
+        %li
+          =link_to "Contacto", "mailto:fundeimucv@gmail.com"
+    .contenedor
+      #interno 
+        %h2
+          =@titulo_pagina
+        -if @subtitulo_pagina
+          .titulo
+            =@subtitulo_pagina
+        -if flash[:mensaje]
+          #mensaje-flash{:style => "display:none;"}
+            %p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+              %span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+              #{flash[:mensaje]}  
+          =javascript_tag "$(document).ready(function(){ $('#mensaje-flash').show('pulsate',{},'fast'); });"
+        =yield
+        -if (controller_name != "principal" || action_name != "index") && (controller_name != "principal_admin" || action_name != "index") && (controller_name != "principal_instructor" || action_name != "index")
+          %p 
+            =link_to "<< Regresar a principal", :controller => "principal", :action => "principal"
+    #pie
+      CIUDAD UNIVERSITARIA DE CARACAS - PATRIMONIO CULTURAL DE LA HUMANIDAD
+      %br/
+      Ciudad Universitaria de Caracas, Galpón 7, Frente a Farmacia. Telf.: (0212) 6052982
+      %br/
+      Cursos de Extensión EIM-UCV - 2011
+      %br/
+    =#image_tag "bottom.png"
+    #ventana-modal 
+    %div{ :id => "action_#{action_name}" }   
+    

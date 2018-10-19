@@ -1,0 +1,10 @@
+%h3
+  Se procederá a Congelar el Curso:
+  %br/
+  %br/
+  ="#{@historial.tipo_curso.descripcion} - #{@historial.tipo_nivel.descripcion} (Período #{@historial.periodo_id})" 
+%br/
+%br/
+=link_to "Congelar", :action=>"congelar_curso", :tipo_curso=>"#{@historial.tipo_curso.id}", :usuario_ci=> "#{@historial.usuario_ci}"
+|
+=link_to_function "Cancelar","aceim.cerrar_modal()"

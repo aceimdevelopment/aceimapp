@@ -1,0 +1,82 @@
+=link_to "Generar Excel",:action => "ver_excel_estadisticas_generales", :idioma_id => @idi, :tipo_categoria_id => @cate
+%br/
+%br/
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th{:width => "13%"}
+        Nivel
+      %th{:width => "15%"}
+        Horario
+      %th{:width => "14%"}
+        Total Inscritos
+      %th{:width => "9%"}
+        Aprobados
+      %th{:width => "10%"}
+        Reprobados
+      %th{:width => "10%"}
+        Perdida por Inasistecia
+      %th{:width => "9%"}
+        Sin Calificar
+      %th{:width => "24%"}
+        Alumnos Estimados / Recomendación
+
+  %tbody
+    -@historiales.each do |h|
+            
+
+      %tr
+        %td
+          =h.descnivel
+        %td
+          =h.desc_hor
+        %td
+          =h.total.to_i
+        %td
+          =h.aprobados.to_i
+        %td
+          =h.reprobados.to_i
+        %td
+          =h.pi.to_i
+        %td
+          =h.sc.to_i
+        %td
+          -if h.tipo_nivel_id != "BI" && h.tipo_nivel_id != "BE"
+            -horario = h.bloque_horario_id
+            -nivel = h.nivel_anterior(@idi, h.tipo_categoria_id, h.grado)    
+  
+            -reprobados = h.reprobados.to_i
+            -aprobados = h.aprobados_nivel_anterior(horario, nivel, @idi, @peri, h.tipo_categoria_id).to_i
+            -cantidad_estudiantes_estimados = reprobados + aprobados 
+
+            =cantidad_estudiantes_estimados.to_s+" ("+aprobados.to_s+" ap niv ant + "+reprobados.to_s+" rep niv act)"
+            ="<br>".html_safe
+            -if @idi == "IN"
+              -divisor = 18
+              -resto = 0.43
+            -else
+              -divisor = 12
+              -resto = 0.6   
+         
+            -recomendacion_parte_entera = (cantidad_estudiantes_estimados / divisor).to_i
+            -recomendacion_parte_decimal = (cantidad_estudiantes_estimados / divisor.to_f) - recomendacion_parte_entera.to_f
+
+            -if recomendacion_parte_entera >= 1
+
+              -if recomendacion_parte_decimal < resto 
+                -if recomendacion_parte_entera == 1
+                  =recomendacion_parte_entera.to_s+" Sección"
+                -else                
+                  =recomendacion_parte_entera.to_s+" Secciones"
+              -else
+                -recomendacion_parte_entera2 = recomendacion_parte_entera + 1
+                ="Entre "+recomendacion_parte_entera.to_s+" y "+recomendacion_parte_entera2.to_s+" Secciones"         
+            -else
+              -if recomendacion_parte_decimal >= resto
+                ="1 Sección"
+              -else
+                ="0 Secciones"
+          -else
+            ="---"
+
+=link_to "Generar Excel",:action => "ver_excel_estadisticas_generales", :idioma_id => @idi, :tipo_categoria_id => @cate

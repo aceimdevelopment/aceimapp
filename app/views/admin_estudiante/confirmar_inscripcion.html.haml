@@ -1,0 +1,32 @@
+-if flash[:mensaje]
+  =flash[:mensaje]
+=form_tag({:action => "confirmar_inscripcion_guardar"}, :class => "formulario titulo") do
+  =hidden_field :historial, :idioma_id
+  =hidden_field :historial, :tipo_categoria_id
+  =hidden_field :historial, :tipo_nivel_id
+  =hidden_field :historial, :usuario_ci       
+  =hidden_field :historial, :periodo_id       
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th{:width => "150px"} Curso
+        %th{:width => "150px"} Nivel
+        %th{:width => "150px"} Numero de Transacción
+        %th Tipo 
+        %th Cuenta
+
+    %tbody
+      %tr
+        %td= @historial.tipo_curso.descripcion
+        %td= @historial.tipo_nivel.descripcion 
+        %td
+          = text_field :historial, :numero_deposito, :autofocus => true, :required => true 
+          = javascript_tag "$('#historial_numero_deposito').focus();"
+        %td= collection_select(:historial, :tipo_transaccion_id, TipoTransaccion.all, :id, :descripcion, {prompt: "Seleccione"}, {required: true})
+        %td= collection_select(:historial, :cuenta_bancaria_id, CuentaBancaria.all, :id, :id, {prompt: "Seleccione"}, {required: true})
+
+  %br/
+  %br/
+  =submit_tag "Confirmar"
+  |
+  =link_to_function "Cancelar","aceim.cerrar_modal()"

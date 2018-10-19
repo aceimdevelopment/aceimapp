@@ -1,0 +1,38 @@
+.well.info
+	%h3 
+		%u INFORMACIÓN Y NORMATIVA DEL PROGRAMA
+
+	%ul
+		%li La inscripción es válida UNICAMENTE para el período indicado. NO SE CONGELAN CUPOS POR NINGÚN MOTIVO.
+		%li 
+			La asistencia a clases es obligatoria: 
+			%ul 
+				%li 
+					Cursos 
+					%b LUN-MIE:
+					Con 3 inasistencias se pierde el curso. 
+				%li 
+					Cursos 
+					%b MAR-JUE:
+					Con 3 inasistencias se pierde el curso. 
+				%li
+					Cursos
+					%b SÁBADOS:
+					Con 2 inasistencias se pierde el curso.
+		%li La nota mínima aprobatoria es de 15 puntos. El cupo mínimo es de 15 participantes
+		%li NO SE PERMITEN CAMBIOS DE SECCIÓN.
+		%li El horario, sección y aula se reserva hasta la fecha indicada.
+		%li Pago únicamente DEPOSITOS en EFECTIVO (NO CHEQUES, NI TRANSFERENCIAS).    
+
+	-if session[:tipo_curso].tipo_categoria_id.eql? 'TE' or session[:tipo_curso].tipo_categoria_id.eql? 'NI'
+		%h3 
+			%u NORMATIVA PARA ADOLESCENTES Y NIÑOS
+
+		%h3 Estimado representante:
+		%h3 Le informamos que para poder inscribir a su representado en los cursos, debe apegarse a las siguientes condiciones:
+
+		%ul
+			%li Traer su merienda para hacer el receso en el salón de clase. Sólo podrán ir al cafetín con una autorización escrita de su representante por cada sesión de clase.
+			%li Cumplir el horario de entrada y salida de clase. Si necesitan ausentarse y/o retirarse antes de la clase deben presentar una autorización escrita de su representante o presentarse y hablar directamente con el profesor.
+			%li No llevar pelotas, patinetas, videojuegos u objetos similares al salón de clase.
+		%h4{:style => 'color:crimson;'} **** Es importante que usted conozca al profesor y a los coordinadores del curso de su representado y esté en comunicación con los mismos ****

@@ -1,0 +1,7 @@
+%ol
+	- @preguntas.each_with_index do |pregunta,i|
+
+		%li
+			%p{:style=> 'text-decoration: underline;'}= "R= #{pregunta.respuesta.to_s.ljust(50, '_')}"		
+			%p= "#{pregunta.clave}"
+.division

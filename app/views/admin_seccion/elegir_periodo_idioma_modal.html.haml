@@ -1,0 +1,12 @@
+=form_tag url_for(:action => "nuevo", :controller => "admin_seccion") do
+  %h4 Período de Creación:
+  ="Período: " + @periodo_actual
+  =hidden_field_tag :periodo, @periodo_actual
+  %br
+  %h4 Seleccione un Idioma
+  Idiomas:
+  =collection_select :idioma,nil, @idiomas,:id, :descripcion
+  %br
+  %br
+  =submit_tag :Aceptar
+  =button_to_function "Cancelar","aceim.cerrar_modal();"

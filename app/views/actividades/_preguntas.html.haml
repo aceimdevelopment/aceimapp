@@ -1,0 +1,13 @@
+- @preguntas = @actividad.preguntas
+- #if @preguntas.count > 0   
+%h2= "Preguntas/Ítems:"
+- case @actividad.tipo_actividad_id 
+  - when 'SEL_MULTIPLE' 
+    =render :partial => '/preguntas/lista_sel_multiple'
+    =render :partial => '/preguntas/form_sel_multiple' if @editable
+  - when 'COMPLETE_ESPACIO'
+    =render :partial => '/preguntas/lista_completar_espacios'
+    =render :partial => '/preguntas/form_completar_espacios' if @editable
+  -else
+    =render :partial => '/preguntas/lista_general'
+    =render :partial => '/preguntas/form_general' if @editable

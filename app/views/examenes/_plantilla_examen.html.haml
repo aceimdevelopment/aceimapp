@@ -1,0 +1,55 @@
+-@editable = (action_name!='presentar' and action_name!= 'show')
+- if @editable 
+	=javascript_include_tag "elrte.min.js"
+	=javascript_include_tag "/aceim/assets/elrte.min"
+
+.well
+	%b{:style => 'float:left;'}= "Duración: #{@examen.duracion} minutos"
+	.center
+		%h2= @examen.descripcion_simple
+		%h3#puntaje_total= "Puntaje Total: #{@examen.puntaje_total} / 80" unless action_name.eql? 'presentar'
+	#parte
+		%ul
+			- @parte_examenes.each do |parte_examen|
+				- if parte_examen.actividades.count > 0 or @editable 
+					%li=  link_to parte_examen.descripcion_parte_con_actividades, "##{parte_examen.parte_id}", :class => 'btn_idiomas'
+		- @parte_examenes.each do |parte_examen|
+			- if parte_examen.actividades.count > 0 or @editable
+				%div{:id => parte_examen.parte_id}
+					=#Actividades
+					- if action_name.eql? 'presentar'
+						- @actividades = parte_examen.actividades.order("RAND()")
+					- else
+						- @actividades = parte_examen.actividades
+					- @actividades.each_with_index do |actividad,i|
+						- @actividad = actividad
+						- @i = i+1
+						= render :partial => '/actividades/wizard_list', :locals => {:parte_examen => parte_examen}
+					- if @editable
+						%div{:id => "form_actividad_#{parte_examen.parte_id}", :style => 'display:none;'}
+							=render :partial => '/actividades/wizard_form', :locals => {:parte_examen => parte_examen}
+						.division
+						= link_to "Agregar Actividad en Bloque de #{parte_examen.parte.nombre}" , 'javascript:void(0)' , :class => "btn_agregar small", :onclick => "$(form_actividad_"+parte_examen.parte_id+").show('slow'); $(this).remove();"
+
+:javascript
+	
+	$("#parte").tabs();
+
+- if @editable 
+	function editar_texto(actividad_id, div){
+	var opts = {
+		absoluteURLs: false,
+		cssClass : 'el-rte',
+		lang     : 'es',
+		width    : 600,
+		height   : 350,
+		toolbar  : 'maxi' // Se pueden usar las siguientes opciones: 'maxi',tiny', 'compact', 'normal'
+	}
+
+	$('#form_editar_texto_'+actividad_id).show('slow');
+	$('#form_editar_texto_'+actividad_id).addClass('well');
+
+	$('#contenido_texto_'+actividad_id).elrte(opts);
+	$(div).parent().parent().remove();
+
+	};

@@ -1,0 +1,73 @@
+%div{:id => "actividad_#{@actividad.id}"}
+	%ol{:type => 'A'}
+		- @preguntas.each_with_index do |pregunta,i|
+			- respuesta = pregunta.respuestas.first.valor if pregunta.respuestas.first 
+			%li
+				.well
+					- if action_name.eql? 'wizard_paso2' 
+						= link_to 'Eliminar pregunta', {:action => 'eliminar_pregunta',:id => pregunta.id}, :data =>  { :confirm => '¿Está seguro?' }, :class => "btn_eliminar small flotar_derecha", :style => 'background-color: lightsalmon;'
+						%br
+						%div
+							= form_tag({:controller => 'preguntas',:action => "actualizar_valor_pregunta"}, {:class => "inline", :remote => true} ) do
+								= hidden_field_tag :id, pregunta.id
+								= hidden_field_tag :examen_id, @examen.id						
+								= text_field_tag :valor, pregunta.valor, :placeholder => "Pregunta", :class => 'raw6', :required => true
+								= submit_tag "Actualizar Pregunta", :id => "submit", :name => "submit", :class => "btn small", :disable_with => "Actualizando..."
+							.span1{:id => "pregunta_#{pregunta.id}", :style => 'padding:3px 3px; margin:2px 0px;'}
+
+					- else
+						= raw pregunta.valor
+					- @respuestas = pregunta.respuestas
+					%ol	
+						- @respuestas.each do |respuesta|
+							%li
+								- if action_name.eql? 'wizard_paso2'
+									%p
+										= form_tag({:controller => 'preguntas',:action => "actualizar_respuesta"}, {:class => "inline", :remote => true} ) do
+
+											= hidden_field_tag :id, respuesta.id
+											= hidden_field_tag :examen_id, @examen.id if @examen 
+											= text_field_tag "respuesta[valor]", respuesta.valor, :placeholder => "Respuesta", :required => true, :style => 'text-decoration: underline;'									
+											="/"
+											= text_field_tag "respuesta[valor_alternativa1]", respuesta.valor_alternativa1, :placeholder => "Respuesta Alternativa 1", :class => 'raw2', :style => 'text-decoration: underline;'  
+											="/"
+											= text_field_tag "respuesta[valor_alternativa2]", respuesta.valor_alternativa2, :placeholder => "Respuesta Alternativa 2", :style => 'text-decoration: underline;'
+											="."
+
+											= number_field_tag "respuesta[puntaje]", respuesta.puntaje, {:min => 1, :max => 20, :step => 0.5}
+											= submit_tag "Actualizar Respuesta", :id => "submit", :name => "submit", :class => "btn small", :disable_with => "Actualizando..."
+										.span2{:id => "respuesta_#{respuesta.id}", :style => 'padding:3px 3px; margin:2px 0px;'}
+								- elsif action_name.eql? 'presentar'
+
+									- @eer = @estudiante_examen.estudiante_examen_respuestas.where(:respuesta_id => respuesta.id).limit(1).first
+									- @eer = @eer.valor if @eer
+
+									= form_tag({:controller => 'estudiante_examenes', :action => 'guardar_respuesta'}, {:class => "inline", :remote => true} ) do
+
+										= hidden_field_tag 'eer[estudiante_ci]', @estudiante_examen.estudiante_ci
+										= hidden_field_tag 'eer[examen_id]', @estudiante_examen.examen_id
+										= hidden_field_tag 'eer[respuesta_id]', respuesta.id
+										= hidden_field_tag 'tiempo', nil, :class => 'tiempo'									
+										= text_field_tag 'eer[valor]', @eer, :class => 'raw4', :required => true, :style => 'text-decoration: underline;'
+										= submit_tag "Guardar respuesta", :id => "submit", :name => "submit", :class => "btn small flotar_derecha", :disable_with => "Guardando..."
+									.mensaje{:id => "respuesta_#{respuesta.id}", :style => 'padding:3px 3px; margin:2px 0px;'}
+
+								- elsif controller_name.eql? 'estudiante_examenes'
+
+									- @eer = @estudiante_examen.estudiante_examen_respuestas.where(:respuesta_id => respuesta.id).limit(1).first
+									- @eer = @eer.valor if @eer
+									
+									= text_field_tag 'eer[valor]', @eer, :class => 'raw4', :disabled => true, :style => 'text-decoration: underline;'
+								- else
+									= form_tag({:controller => 'preguntas', :action => 'validar_respuesta'}, {:class => "inline", :remote => true} ) do
+										%p{:style => 'color: grey;'} 
+											= text_field_tag 'respuesta[valor]', nil, :class => 'raw4', :required => true, :placeholder => respuesta.valor, :class => 'raw4', :style => 'text-decoration: underline;'
+											=" / #{respuesta.valor_alternativa1}" unless respuesta.valor_alternativa1.blank?
+											=" / #{respuesta.valor_alternativa2}" unless respuesta.valor_alternativa2.blank?
+										= hidden_field_tag 'respuesta[id]', respuesta.id
+
+										= submit_tag "Validar respuesta", :id => "submit", :name => "submit", :class => "btn small flotar_derecha", :disable_with => "Guardando..."
+									.mensaje{:id => "respuesta_#{respuesta.id}", :style => 'padding:3px 3px; margin:2px 0px;'}
+
+
+			%p.division

@@ -1,0 +1,19 @@
+-if @seccion.size > 0
+  Filtrar Contenido: 
+  =text_field_tag "filtro"
+  %table.tablesorter.tablefilter.likert
+    %thead
+      %tr
+        %th{:align => :center} #
+        %th{:align => :center} Curso
+        %th Nivel
+        %th Horario
+        %th Sección
+    %tbody
+      -@seccion.each_with_index do |s,i|
+        %tr
+          %td{:align => :center}= i+1
+          %td= enlace("#{Seccion.idioma(s.idioma_id)} (#{Seccion.tipo_categoria(s.tipo_categoria_id)})","buscar_estudiantes",controller_name,s)   
+          %td= enlace(s.tipo_nivel.descripcion,"buscar_estudiantes",controller_name,s)
+          %td= enlace(s.horario,"buscar_estudiantes",controller_name,s)
+          %td{:align => :center}= enlace(s.seccion_numero,"buscar_estudiantes",controller_name,s)

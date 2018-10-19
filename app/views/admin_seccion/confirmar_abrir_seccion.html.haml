@@ -1,0 +1,10 @@
+%h3
+  Se procederá a abrir la sección:
+  %br/
+  =" - #{@seccion.descripcion}"
+
+%br/
+%br/
+
+=link_to "Abrir Sección", :action=>"abrir", :seccion => @p, :horario => @bloque_horario_id, :accion => @accion, :controlador => @controlador
+=link_to_function "Cancelar","aceim.cerrar_modal()"

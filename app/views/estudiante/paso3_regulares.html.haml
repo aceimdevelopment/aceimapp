@@ -1,0 +1,27 @@
+%br/
+=form_for(@historial,:url=>{:action => "paso3_generar_comprobante"}, :class => "formulario titulo" ) do |f|
+  %div.titulo
+    %h2 Emitir comprobante de Preinscripción: Paso 3 de 3
+    %div Preinscripción Curso de Extensión de Idiomas Modernos
+  %ul
+    %li.likert.col5
+      %table{:cellspacing => "0"}
+        %thead
+          %tr
+            %td Idioma
+            %td Nivel
+            %td Horario
+        %tbody
+          %tr
+            %td 
+              =@historial.idioma.descripcion
+            %td 
+              =@historial.tipo_nivel.descripcion
+            %td 
+              =@horario
+  %div
+    =f.submit "Finalizar", :class=>"btTxt"
+    
+=link_to "Inicio", :action=>"index" 
+|
+=link_to "Regresar", :action=>"paso2"

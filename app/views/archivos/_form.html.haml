@@ -1,0 +1,48 @@
+= form_for @archivo do |f|
+  -if @archivo.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@archivo.errors.count, "error")} prohibited this archivo from being saved:"
+      %ul
+        - @archivo.errors.full_messages.each do |msg|
+          %li= msg
+
+  %fieldset
+    %legend Carga de Archivo:
+    .field
+      = f.label :nombre
+      %p
+        = f.text_field :nombre, required: true
+
+    #agregar_url
+      Banco de Archivos:
+      - root_files = "#{Rails.root}/attachments/archivos/"
+      - dir = Dir.glob("#{root_files}**/*").sort
+      - dir.each{|d| d.slice! root_files}
+      = f.select :url, dir
+      %br
+      = link_to 'Nuevo Archivo', 'javascript:void(0)', class: 'btn', onclick: "$('#nuevo_archivo').show(200);$('#agregar_url').hide();"
+    #nuevo_archivo{style: 'display:none'}
+      %label Seleccione el archivo a importar:
+      = f.file_field 'upload_file', { :class => 'btn'}
+
+  %fieldset
+    %legend ¿Quienes verán este archivo?
+
+    .field
+    .field
+      = f.label :bloque_horario
+      = f.collection_select :bloque_horario_id, BloqueHorario.all, :id, :descripcion
+    .field
+      = f.label :idioma
+      = f.collection_select :idioma_id, Idioma.all, :id, :descripcion_idioma    
+    .field
+      - @niveles = TipoNivel.includes("curso").where("curso.grado !=0 AND tipo_nivel.id != 'BBVA'").order("curso.grado")
+
+      = f.label 'Nivel'
+      = f.collection_select :tipo_nivel_id, @niveles, :id, :descripcion    
+  .actions
+    = f.submit 'Guardar', class: 'ui-button'
+%br
+
+:javascript
+  $(".ui-button").button();

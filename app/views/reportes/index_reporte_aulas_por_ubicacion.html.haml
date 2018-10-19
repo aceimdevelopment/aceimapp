@@ -1,0 +1,35 @@
+-peri = @periodo
+%br/
+%br/
+%table.tablesorter.likert
+  %thead
+    %tr
+      %th{:width => "17%"}
+        Ubicación
+
+      -@horarios.each do |h|
+        %th{:width => "13%"}
+          =h.descripcion
+  
+  %tbody
+    -@ubicaciones.each do |u|
+
+      -total_secciones = 0
+
+      %tr
+        %td
+          =u.descripcion_corta
+
+        -total_secciones = 0
+
+        -@horarios.each do |h|
+          %td
+            -aulas_libres = BloqueAulaDisponible.joins("LEFT JOIN horario_seccion hs ON hs.aula_id = bloque_aula_disponible.aula_id AND hs.tipo_hora_id = bloque_aula_disponible.tipo_hora_id AND hs.tipo_dia_id = bloque_aula_disponible.tipo_dia_id AND hs.periodo_id = '#{peri}'").where("hs.periodo_id is null AND bloque_aula_disponible.tipo_dia_id = '#{h.tipo_dia_id1}' AND bloque_aula_disponible.tipo_hora_id = '#{h.tipo_hora_id}' AND bloque_aula_disponible.asignada = 1").collect{|a| a.aula_id} 
+
+            -cant_aulas = Aula.where("tipo_ubicacion_id = ? AND conjunto_disponible = ? AND usada = ? AND id IN (?)", u.id, 1, 1, aulas_libres).count  
+            =cant_aulas
+
+          
+%br/
+%br/
+

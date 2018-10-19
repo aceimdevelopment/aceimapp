@@ -1,0 +1,10 @@
+.form-row.align-items-center
+	=form_tag({:action => "validar"}) do
+		-if flash[:mensaje_login]
+			#error-login
+			=flash[:mensaje_login]
+		.form-row.align-items-center
+			.col-auto=text_field :usuario, :cedula, size: 8, autofocus: "true", placeholder: " Cédula", class: "form-control mb-2"
+			.col-auto=password_field :usuario, :clave, :size => 8, :placeholder => " Contraseña", class: "form-control mb-2"
+			.col-auto=submit_tag "Ingresar", class: "btn btn-primary mb-2"
+	%h6.text-center= link_to "¿Olvidó su clave?", :action => "olvido_clave", :style => "float: right;"

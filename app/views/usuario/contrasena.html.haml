@@ -1,0 +1,34 @@
+=form_for(@usuario,:url=>{:action => "contrasena_guardar"}) do |f|
+  -if @usuario.errors.any?
+    %p
+      %div#error-explanation
+        %b
+          =pluralize(@usuario.errors.count, "error") 
+          en el formulario impiden que la contraseña sea actualizada:
+        %ul
+          -@usuario.errors.full_messages.each do |msg|
+            %li
+              =msg
+
+  %fieldset
+    %legend Actualización de Contraseña
+    %p
+      =hidden_field_tag "controlador", "#{@controlador}"
+      =hidden_field_tag "accion", "#{@accion}"
+      =@usuario.nombre_completo
+    %p Debe colocar una nueva contraseña con la que va a ingresar al sistema a partir de ahora.
+    %p  
+      %label
+        Contraseña
+        %span.req *
+      =f.password_field :contrasena, :autofocus => "true"      
+    %p
+      %label 
+        Confirmación
+        %span.req *
+      =f.password_field :contrasena_confirmation
+  %br/
+  %br/
+  =f.submit "Modificar"
+  |
+  =link_to "<Atrás", :controller=>"#{@controlador}", :action=>"#{@accion}"

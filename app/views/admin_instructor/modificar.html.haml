@@ -1,0 +1,85 @@
+=form_for(@usuario,:url=>{:action => "modificar_guardar"}) do |f|
+  -if @usuario.errors.any?
+    %p
+      %div#error-explanation
+        %b
+          =pluralize(@usuario.errors.count, "error") 
+          en el formulario impiden que éste usuario sea registrado:
+        %ul
+          -@usuario.errors.full_messages.each do |msg|
+            %li
+              =msg
+  -disabled = 'disabled' if session[:administrador].tipo_rol_id > 3
+  %fieldset
+    %legend Datos Personales
+    %p
+      %label
+        =link_to "Reinicializar Contraseña", url_for(:controller => "usuario", :action => "resetear_contrasena", :ci => @usuario.ci), :confirm => "¿Confirma reinicio de la Contraseña para #{@usuario.descripcion}?"
+    %p
+      %label
+        Cédula de Identidad
+      =@usuario.ci
+      -if session[:administrador].tipo_rol_id <= 3
+        =link_to_modal "Cambiar_Cedula", {:controller => :usuario, :action => :cambiar_cedula, :title => "Cambiar cédula", :params => {:controlador => controller_name, :accion => action_name}}
+        =f.hidden_field :ci
+      - if session[:administrador].tipo_rol_id < 3
+        %label
+          Contraseña
+          = @usuario.contrasena
+    %p
+      %label 
+        Nombres
+        %span.req *
+      =f.text_field :nombres, {:autofocus => "true", :disabled => disabled }
+    %p
+      %label
+        Apellidos
+        %span.req *
+      =f.text_field :apellidos, :disabled => disabled
+    %p
+      %label
+        Sexo
+        %span.req *
+      =f.radio_button :tipo_sexo_id, "F", :disabled => disabled
+      Femenino  
+      %br/
+      =f.radio_button :tipo_sexo_id, "M", :disabled => disabled
+      Masculino    
+    %p
+      %label
+        Fecha de Nacimiento
+        %span.req *
+      =f.text_field :fecha_nacimiento, :class=>"datepicker_nac#{disabled}", :disabled => disabled
+      Ejemplo: 1990-03-21
+  %fieldset
+    %legend Datos de Contacto
+    %p
+      %label
+        Correo Electrónico  
+        %span.req *
+      =f.text_field :correo, :disabled => disabled
+      Ejemplo: pedroperez@gmail.com
+    %p
+      %label
+        Teléfono Móvil
+        %span.req *
+      =f.text_field :telefono_movil, :disabled => disabled
+      Ejemplo: 04261234567
+    %p
+      %label
+        Teléfono de Habitación
+      =f.text_field :telefono_habitacion, :disabled => disabled
+      Ejemplo: 02121234567
+    %p
+      %label
+        Dirección de Habitación
+      =f.text_area :direccion, :size => "60x4", :disabled => disabled
+      Ejemplo: La Candelaria. Edificio A, Piso 1, Apto 11.
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =f.submit "Siguiente"
+%br/
+%br/
+=link_to "<Atrás", :action => "index"

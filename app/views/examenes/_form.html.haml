@@ -1,0 +1,67 @@
+
+= form_for @examen do |e|
+  = e.hidden_field :tipo_estado_examen_id, :value => 'GENERADO'
+  -if @examen.errors.any?
+    
+    #error_explanation
+      -flash[:mensaje] = "#{pluralize(@examen.errors.count, "error")} impiden que el examen sea registrado:"
+      %ul
+        - @examen.errors.full_messages.each do |msg|
+          %li= msg      
+
+  %table
+    %tr.req
+      %td.derecha.separado
+        %b= "*Seleccione el Curso:"
+      %td
+        =e.collection_select :curso_idioma_id, @idiomas, :id, :descripcion, :prompt => 'Sel. Idioma', :class => 'select'
+        =e.collection_select :curso_tipo_categoria_id, @categorias, :id, :descripcion, :prompt => 'Sel. Categoria', :class => 'select'
+        =e.collection_select :curso_tipo_nivel_id, @niveles, :id, :descripcion, :prompt => 'Sel. Nivel', :class => 'select'
+        =e.collection_select :periodo_id, @periodos, :id, :ordenado, :prompt => 'Sel. Periodo', :class => 'select'
+    %tr
+      %td.derecha.separado
+        %b= "Descripción:"
+      %td
+        = e.text_field :descripcion
+        = "(para futuras búsquedas)"
+
+    %tr.req
+      %td.derecha.separado
+        %b= "*Duración:"
+      %td
+        = e.number_field :duracion
+        = "(minutos)"
+    %tr.req
+      %td.derecha.separado
+        %b= "*Orden:"
+      %td
+        =e.select :orden, ['primero', 'segundo']
+    %tr.req
+      %td.derecha.separado
+        %b= "Fecha y hora de Inicio:"
+      %td
+        =e.datetime_select  :inicio_aplicacion
+    %tr.req
+      %td.derecha.separado
+        %b= "Fecha y hora de Cierre:"
+      %td
+        =e.datetime_select  :cierre_aplicacion
+    %tr
+      %td.derecha.separado
+        %b= "¿Examen de prueba?:"
+      %td
+        = e.check_box :prueba
+
+    %tr.req
+      %td
+      %td
+        %b= "* Requeridos" 
+    %tr.acciones
+      %td
+      %td
+        = e.submit "Guardar", :disable_with => 'Guardando...', :class => 'btn'
+
+
+:javascript
+  $( ".btn" ).button();
+

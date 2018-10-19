@@ -1,0 +1,9 @@
+%p.box
+	- @preguntas.each do |p|
+		= "#{p.respuesta} - "
+%ol
+	- @preguntas.each_with_index do |pregunta,i|
+		%li
+			= "#{pregunta.clave} (#{pregunta.respuesta})"
+			= link_to 'Eliminar Pregunta/Ítem', {:action => 'eliminar_pregunta',:id => pregunta.id}, :data =>  { :confirm => '¿Está seguro?' }, :class => "btn small", :style => 'background-color: lightsalmon;'
+.division			

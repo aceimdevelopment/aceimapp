@@ -1,0 +1,35 @@
+%table.tablesorter.likert
+  %thead
+    %tr
+      %th
+        Preinscritos
+      %th
+        Inscritos
+      %th
+        Nivel
+      %th
+        Curso
+      %th
+        Horario
+      %th
+        Instructor
+      %th
+        Seccion
+  %tbody
+    -@seccion.each do |s|
+      %tr
+        %td
+          =s.preinscritos
+        %td
+          =s.inscritos
+        %td
+          =s.curso.grado
+        %td
+          ="#{s.tipo_nivel.descripcion} (#{s.tipo_categoria.descripcion})"
+        %td
+          =s.horario
+        %td
+          =s.instructor.usuario.descripcion
+        %td
+          =link_to s.seccion_numero, :action=>"nivel4", :seccion => s
+=link_to "<atrás", :action=>"nivel2", :id => @tipo1
