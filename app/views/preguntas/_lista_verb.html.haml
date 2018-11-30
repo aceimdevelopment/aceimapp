@@ -1,0 +1,11 @@
+%p
+	- @preguntas.each_with_index do |pregunta,i|
+		= pregunta.clave
+		= link_to '-', {:action => 'eliminar_pregunta',:id => pregunta.id}, :data =>  { :confirm => '¿Está seguro?' }, :class => "btn small", :style => 'background-color: lightsalmon;'
+
+%ol
+	- @preguntas.each_with_index do |pregunta,i|
+		%li
+			= pregunta.respuesta
+			= link_to 'Eliminar Pregunta/Ítem', {:action => 'eliminar_pregunta',:id => pregunta.id}, :data =>  { :confirm => '¿Está seguro?' }, :class => "btn small", :style => 'background-color: lightsalmon;'
+.division

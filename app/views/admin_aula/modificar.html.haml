@@ -1,0 +1,41 @@
+=form_for(@aula,:url=>{:action => "modificar_guardar"}) do |a|
+  -if @aula.errors.any?
+    %div#error_explanation
+      %ul
+        -@aula.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg
+          
+  %fieldset
+    %legend Registro de Aula
+    
+    %p
+      %label
+        Código del Aula:
+        =@aula.id
+        =a.hidden_field :id
+    %p
+      %label
+        Ubicación
+        %span.req *
+      =a.collection_select :tipo_ubicacion_id, TipoUbicacion.all, :id, :descripcion
+    %p
+      %label 
+        Descripción
+        %span.req *
+      =a.text_field :descripcion, :autofocus => "true"
+      Ejemplo: Escuela Básico - Aula 404
+      
+    %p
+      %label 
+        Disponible:
+        %span.req *
+      =a.check_box :conjunto_disponible
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =submit_tag "Modificar"
+    |
+    =link_to_function "Cancelar","aceim.cerrar_modal()"

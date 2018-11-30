@@ -1,0 +1,10 @@
+%table.tablesorter
+  %thead
+    %tr
+      %th Ubicación
+      %th Cantidad de Alumnos
+  %tbody
+  -@ubicaciones.each do |u|
+    %tr
+      %td= link_to_modal u.descripcion, {:action => :modal_horarios_alumnos_por_edificio,:width => 450,:title =>"Seleccionar Filtros", :params=>{:id => u.id}}
+      %td= link_to_modal u.cantidad_alumnos_por_ubicacion(session[:parametros][:periodo_actual]),{:action => :modal_horarios_alumnos_por_edificio,:width => 450,:title =>"Seleccionar Filtros", :params => {:id => u.id}}

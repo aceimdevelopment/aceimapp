@@ -1,0 +1,66 @@
+
+%h1= @titulo
+
+= link_to 'Nuevo Examen', new_examen_path, :class => 'btn' 
+%br
+.well
+
+  %p
+    = text_field_tag "filtro_particular", nil, :placeholder => "Filtrar Exámenes..."
+    %b.prueba * Exámenes de Prueba
+
+  .tabs
+    %ul
+      -@idiomas.each do |idioma|
+        %li= link_to idioma.descripcion.capitalize, "#"+idioma.id
+    -@idiomas.each do |idioma|
+      %div{:id => idioma.id}
+        .tabs
+          %ul
+            %li= link_to "Período actual", "#actual"
+            %li= link_to "Períodos anteriores", "#anteriores"
+
+          #actual
+            - @examenes = Examen.joins(:curso_periodo).where(:curso_idioma_id => idioma.id, :periodo_id => @periodo_actual.id).order("curso_periodo.periodo_id ASC")
+            .tabs
+              %ul
+                %li= link_to "Primeros Exámenes", "#primeros"
+                %li= link_to "Segundos Exámenes", "#segundos"
+                %li= link_to "Exámenes de Prueba", "#pruebas"
+                - @primeros = @examenes.where(:orden => 'primero')
+                - @segundos = @examenes.where(:orden => 'segundo')
+                - @pruebas = @examenes.where(:prueba => true)
+
+              #primeros
+                -@examenes = @primeros
+                = render :partial => 'tabla_examenes'
+              #segundos
+                -@examenes = @segundos
+                = render :partial => 'tabla_examenes'                
+              #pruebas
+                -@examenes = @pruebas
+                = render :partial => 'tabla_examenes'
+          #anteriores
+            - @examenes = Examen.joins(:curso_periodo).where(:curso_idioma_id => idioma.id, :periodo_id => @periodo_anteriores.collect{|pes| pes.id}).order("curso_periodo.periodo_id ASC")
+            .tabs
+              %ul
+                %li= link_to "Primeros Exámenes", "#primeros"
+                %li= link_to "Segundos Exámenes", "#segundos"
+                %li= link_to "Exámenes de Prueba", "#pruebas"
+                - @primeros = @examenes.where(:orden => 'primero')
+                - @segundos = @examenes.where(:orden => 'segundo')
+                - @pruebas = @examenes.where(:prueba => true)
+
+              #primeros
+                -@examenes = @primeros
+                = render :partial => 'tabla_examenes'
+              #segundos
+                -@examenes = @segundos
+                = render :partial => 'tabla_examenes'                
+              #pruebas
+                -@examenes = @pruebas
+                = render :partial => 'tabla_examenes'
+
+:javascript
+  $(".tabs").tabs();
+  $(".ui-button").button();

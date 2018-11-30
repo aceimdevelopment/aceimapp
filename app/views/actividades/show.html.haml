@@ -1,0 +1,78 @@
+=javascript_include_tag "elrte.min.js"
+=javascript_include_tag "/aceim/assets/elrte.min"
+
+=link_to "Regresar", actividades_path, :class => 'btn_atras'
+
+=render :partial => 'wizard_list'
+%br
+=link_to "Regresar", actividades_path, :class => 'btn_atras'
+
+:javascript
+  
+  $("#parte").tabs();
+
+  $( ".btn" ).button();
+  
+  $( ".btn_editar").button({
+    icons: {
+    primary: "ui-icon-pencil"
+    }
+  }); 
+  
+  $( ".btn_eliminar").button({
+    icons: {
+    primary: "ui-icon-trash"
+    }
+  });
+
+
+  $( ".btn_previsualizar").button({
+    icons: {
+    primary: "ui-icon-arrow-4-diag "
+    }
+  });
+
+  $( ".btn_atras").button({
+    icons: {
+    primary: "ui-icon-carat-1-w"
+    }
+  });
+
+  $( ".btn_agregar").button({
+    icons: {
+    primary: "ui-icon-circle-plus"
+    }
+  });
+  
+  $( ".btn_remover").button({
+    icons: {
+    primary: " ui-icon-circle-minus"
+    }
+  }); 
+  
+  $( ".radio" ).buttonset();
+
+  $(".form").validate();
+
+  function eliminar_pregunta(id, actividad_id){
+    return $.get("/aceim/preguntas/"+"?data-method=delete",   
+      function(data){ alert("Data: " + data + "\nStatus: " + status);} );
+  };
+
+  function editar_texto(actividad_id, div){
+    var opts = {
+      absoluteURLs: false,
+      cssClass : 'el-rte',
+      lang     : 'es',
+      width    : 600,
+      height   : 350,
+      toolbar  : 'maxi' // Se pueden usar las siguientes opciones: 'maxi',tiny', 'compact', 'normal'
+    }
+
+    $('#form_editar_texto_'+actividad_id).show('slow');
+    $('#form_editar_texto_'+actividad_id).addClass('well');
+
+    $('#contenido_texto_'+actividad_id).elrte(opts);
+    $(div).parent().parent().remove();
+
+  };

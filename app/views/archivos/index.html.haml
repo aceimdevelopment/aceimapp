@@ -1,0 +1,41 @@
+%h1 Lista de archivos
+
+.well.tabs
+  %ul
+    -@idiomas = Idioma.all.delete_if{|i| i.id.eql? "OR"}
+    -@idiomas.each do |idioma|
+      %li= link_to idioma.descripcion.capitalize, "#"+idioma.id
+  -@idiomas.each do |idioma|
+    %div{:id => idioma.id}
+      - @archivos = idioma.archivos
+      %table.tablesorter.likert
+        %thead
+          %tr
+            %th Nombre
+            %th Nombre del Archivo en Disco
+            %th Horario
+            %th Nivel
+            %th
+
+        %tbody
+          - @archivos.each do |archivo|
+            %tr
+              %td= archivo.nombre
+              %td= archivo.url.split("/").last
+              %td= archivo.bloque_horario.descripcion
+              %td= archivo.tipo_nivel.descripcion
+              %td
+                = link_to 'Detalle', archivo
+                |
+                = link_to 'Editar', edit_archivo_path(archivo)
+                |
+                = link_to 'Descargar', :controller => 'descarga', :action => 'archivo', :id => archivo.id 
+                |
+                = link_to 'Eliminar', archivo, :confirm => '¿Está seguro de esta acción?', :method => :delete
+
+%br
+
+= link_to 'Nuevo Archivo', new_archivo_path, :class => 'ui-button' 
+:javascript
+  $(".tabs").tabs();
+  $(".ui-button").button();

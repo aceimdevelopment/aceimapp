@@ -1,0 +1,13 @@
+%table
+  %tr
+    %td Para:
+    %td= text_field_tag "para", "para",{:disabled => true,:size => 100}
+  %tr
+    %td De:
+    %td= text_field_tag "de","fundeim@ucv.ve",{:disabled => true,:size => 100}
+  %tr
+    %td Asunto:
+    %td= text_field_tag "asunto"
+  %tr
+    %td Mensaje:
+    %td= text_area_tag "mensaje"

@@ -1,0 +1,202 @@
+%br
+%h1.center Instrucciones generales exámenes ACEIM
+
+.well{:style => 'text-align: justify;'}
+
+
+	#mensaje-flash{:style => "display:none;"}
+		%p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+			%span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+			%b= 'Es importante leer atentamente las siguientes indicaciones:'
+		=javascript_tag "$(document).ready(function(){ $('#mensaje-flash').show('pulsate',{},'fast'); });"
+
+	%ul
+
+		%li
+			= 'Recuerde tomar el examen de práctica, el cual no es evaluado.'
+		%br
+		%li
+			= 'El examen deberá realizarse en forma individual.'
+		%br
+		%li
+			= 'Utilice una computadora actualizada y en óptimas condiciones. Recuerde disponer de audiculares o dispositivos de salida de audio. Recomendamos los navegador web Firefox o Google Chrome'
+		%br
+		%li
+			= 'El examen cuenta con una cantidad de preguntas fijas y un límite de tiempo para realizarlo.'
+		%br
+		%li
+			= raw '<b><i>IMPORTANTE:</i></b> Una vez comenzado el examen, deberá completarlo en su totalidad. Si cancela o abandona el sitio en medio del examen, el resultado del mismo será el que había obtenido hasta la última pregunta respondida. Podrá ver el tiempo restante para completar el examen en la esquina inferior izquierda.'
+		%br
+		%li
+			= 'Si tiene problemas mientras presenta el examen (fallas de electricidad o de internet), envíenos un correo a fundeimucv@gmail.com con sus datos personales (Nombres, Apellidos, Idioma, Nivel, Sección, Problema y Captura de pantalla) de manera inmediata o más tardar el día posterior a la presentación del examen.'
+		%br
+		%li
+			= 'Asegúrese de guardar la respuesta de cada ítem. Las respuestas contestadas serán visualmente marcadas en su pantalla. Podrá cambiar su respuesta mientras se encuentres dentro de los límites de tiempo establecidos.'
+		%br
+		%li
+			= raw 'Recuerde hacer click en el botón <b>He Terminado El Examen</b>.'
+		%br
+		%li			
+			= 'Recuerde que debe seleccionar cada pestaña que diga AUDIO, LECTURA, GRAMÁTICA Y VOCABULARIO.'
+		%br
+		%li
+			= 'Recuerde utilizar adecuadamente los signos de puntuación. Tenga mucho cuidado a la hora de escribir sus respuestas.'
+		%br
+		%li= 'Combinaciones de Teclas para caracteres especiales:'
+		%ul
+			%li= "Alt + 39 = ' (Apóstrofe)"
+			%li= "Alt + 45 = - (Guión)"
+		%br
+		%li= 'Para laptops, tiene que presionar juntas las teclas FN y Alt y los números que se encuentran en algunas teclas dedicadas. Revise cuáles son las teclas que ejecutan y bloquean los números del teclado de su laptop.'
+		%br
+		%li= raw "Es <b><i>MUY IMPORTANTE</i></b> que haga el apóstrofe sin ningún tipo de inclinación ( ' )."
+		%br
+		- case @estudiante_examen.examen.curso_idioma_id
+			- when 'FR'
+				%li= 'Caracteres especiales francés:'
+
+				%table{:style => 'border:1px solid;'}
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 156 
+						%td = œ
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 171 
+						%td = «
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 187 
+						%td = »
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 192
+						%td = À
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 200
+						%td = È
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 201
+						%td = É
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 202
+						%td = Ê
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 212
+						%td = Ô
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 224
+						%td = à
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 232
+						%td = è			
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 233
+						%td = é
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 234
+						%td = ê
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 235
+						%td = ë
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 238
+						%td = î
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 244
+						%td = ô
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 249
+						%td = ù
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 251
+						%td = û
+			- when 'IT'
+
+				%li= 'Caracteres especiales italiano:'
+
+				%table{:style => 'border:1px solid;'}
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 133 
+						%td = à
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 138 
+						%td = è
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 141 
+						%td = ì
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 149
+						%td = ò
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 151
+						%td = ù
+
+			- when 'AL'
+
+				%li= 'Caracteres especiales alemán:'
+
+				%table{:style => 'border:1px solid;'}
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 225
+						%td = ß
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 132
+						%td = ä
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 142 
+						%td = Ä
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 148
+						%td = ö
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 153
+						%td = Ö						
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 129
+						%td = ü						
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 154
+						%td = Ü
+
+			- when 'PG'
+				%li= 'Caracteres especiales Portugués:'
+
+				%table{:style => 'border:1px solid;'}
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 94
+						%td = ^
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 96
+						%td = `
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 195
+						%td = Ã
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 213
+						%td = Õ
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 224
+						%td = à					
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 226
+						%td = â					
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 227
+						%td = ã
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 231
+						%td = ç
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 199
+						%td = Ç
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 234
+						%td = ê
+					%tr
+						%td{:style => 'border:1px solid;'} Alt + 234
+						%td = õ
+	.center
+		= link_to 'He leído las indicaciones y deseo comenzar el examen', {:action => 'presentar', :id => @estudiante_examen.examen.id}, {:class => 'btn', :target => '_blank'}
+
+
+:javascript
+	
+	$( ".btn" ).button();
+

@@ -29,7 +29,7 @@ production:
 
 development:
   <<: *default
-  database: aceim_production
+  database: aceim_development
   username: root
   password: 123123 
   # The specified database role being used to connect to postgres.

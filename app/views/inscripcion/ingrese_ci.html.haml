@@ -1,0 +1,12 @@
+
+=form_tag(:action => "ingrese_ci_guardar") do 
+  %p
+    %label
+      Cédula de Identidad
+    %br/
+    =hidden_field_tag "inscripcion_id", @inscripcion.id   
+    =text_field :usuario, :ci, :autofocus => true
+    =submit_tag "Siguiente"  
+
+  %p Ejemplo: 19123321
+%br/  

@@ -1,0 +1,23 @@
+%h1 Listing preguntas
+
+%table
+  %tr
+    %th Clave
+    %th Respuesta
+    %th Siguiente pregunta
+    %th
+    %th
+    %th
+
+  - @preguntas.each do |pregunta|
+    %tr
+      %td= pregunta.clave
+      %td= pregunta.respuesta
+      %td= pregunta.siguiente_pregunta_id
+      %td= link_to 'Show', pregunta
+      %td= link_to 'Edit', edit_pregunta_path(pregunta)
+      %td= link_to 'Destroy', pregunta, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Pregunta', new_pregunta_path

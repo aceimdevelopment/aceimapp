@@ -1,0 +1,26 @@
+-if @consulta.size > 0
+  %p
+    =link_to "Generar PDF", :action => :generar_listado_alumnos_por_edificio_pdf, :id => @id, :idiomas => @idioma, :dias => @dias
+    |
+    =link_to "Generar Excel", :action => :generar_listado_alumnos_por_edificio_excel, :id => @id, :idiomas => @idioma, :dias => @dias
+  %br
+  %table.tablesorter
+    %thead
+      %tr
+        %th{:align => :center} #
+        %th Nombre
+        %th Cédula
+        %th Aula
+        %th Idioma
+        %th Nivel
+        %th Categoría
+    %tbody
+      -@consulta.each_with_index do |c,i|
+        %tr
+          %td{:align => :center}= i+1
+          %td= c.nombre
+          %td= c.cedula
+          %td= c.aula
+          %td= c.idioma
+          %td= c.nivel
+          %td= c.categoria

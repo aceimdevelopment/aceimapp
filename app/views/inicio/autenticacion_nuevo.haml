@@ -1,0 +1,25 @@
+.contenedor
+  #interno
+    -if flash[:mensaje]
+      #mensaje-flash{:style => "display:none;"}
+        %p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+          %span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+          #{flash[:mensaje]}  
+      =javascript_tag "$(document).ready(function(){ $('#mensaje-flash').show('pulsate',{},'fast'); });"
+    Ingrese el usuario y contraseña que indica el instructivo:
+    %br/
+    %p 
+      =form_tag({:action => "validar_nuevo"}, :class => "formulario") do
+        =label :usuario, :usuario, "Usuario"
+        %br/
+        =text_field :usuario, :usuario, :size => 10, :autofocus => "true"
+        %br/
+        %br/
+        =label :usuario, :clave, "Contraseña"
+        %br/
+        =password_field :usuario, :clave, :size => 10
+        %br/
+        %br/
+        =submit_tag "Ingresar"  
+    %p
+      =link_to "<< Regresar", :action => "index"

@@ -1,0 +1,30 @@
+%p  
+  %b= "Curso:"
+  #{@curso}
+  %br
+  %b= "Nivel:" 
+  #{@nivel}
+  %br
+  %b= "Horario:"
+  #{@horario}
+  %br
+  %b= "Sección:" 
+  #{@seccion}
+  %br
+
+- if @periodo.es_mayor_igual_que? @periodo_30
+  =colocar_tabla_30(@usuarios,@historiales,false)
+
+- elsif @periodo.es_menor_que? @periodo_transicion
+  - if session[:idioma_id] != "IN"
+    =colocar_tabla(@usuarios,@historiales,false)
+  - else
+    =colocar_tabla_ingles(@usuarios,@historiales,false)
+- elsif ((session[:idioma_id] != "IT") and (@tipo_nivel_id.eql? 'CB' or  @tipo_nivel_id.eql? 'CI' or @tipo_nivel_id.eql? 'CA')) 
+  =colocar_tabla_ingles(@usuarios,@historiales,false)
+- else
+  =colocar_tabla_general(@usuarios,@historiales,false)
+
+%br
+=link_to "Obtener constancia de calificación" , :action => "generar_pdf"#:action => "buscar_estudiantes", :saltar => 1
+

@@ -1,0 +1,13 @@
+%p#notice= notice
+
+%p
+  %b Identificador:
+  = @tipo_actividad.id
+
+%p
+  %b Descripción:
+  = @tipo_actividad.descripcion
+
+= link_to 'Editar', edit_tipo_actividad_path(@tipo_segmento)
+\|
+= link_to 'Regresar', tipo_actividades_path

@@ -1,0 +1,19 @@
+= form_for @pregunta do |f|
+  -if @pregunta.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pregunta.errors.count, "error")} prohibited this pregunta from being saved:"
+      %ul
+        - @pregunta.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :clave
+    = f.text_field :clave
+  .field
+    = f.label :respuesta
+    = f.text_field :respuesta
+  .field
+    = f.label :siguiente_pregunta_id
+    = f.number_field :siguiente_pregunta_id
+  .actions
+    = f.submit 'Save'

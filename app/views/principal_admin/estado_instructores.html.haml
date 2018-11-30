@@ -1,0 +1,58 @@
+-if @instructores.size > 0
+  -completo = false
+  Filtrar Contenido:
+  =text_field_tag "filtro"
+  %table.tablesorter.tablefilter
+    %thead
+      %th{:align => :center} #
+      %th Instructor
+      %th Cédula
+      %th Calificaciones
+      %th Última Calificación
+      %th Notificación
+      %th Descripción
+    %tbody
+      -@instructores.each_with_index do |ins,i|
+        -corregidos = ins.cursos_corregidos.count
+        -a_corregir = ins.cursos_a_corregir.count
+        %tr
+          %td{:align => :center}= i+1
+          %td= ins.usuario.nombre_completo
+          %td= ins.usuario_ci
+          %td= "#{corregidos}/#{a_corregir}"
+          %td
+            -unless ins.fecha_que_califico(session[:parametros][:periodo_calificacion])
+              = "No ha calificado"
+            -else
+              = ins.fecha_que_califico(session[:parametros][:periodo_calificacion])
+          %td
+            -unless ins.notificacion(session[:parametros][:periodo_calificacion])
+              = "No aplica"
+            -else
+              = ins.notificacion(session[:parametros][:periodo_calificacion])
+          %td
+            %div{:class => ins.estado.downcase}= ins.estado
+            -if ins.estado == "Completo"
+              -completo = true
+  -if completo            
+    =link_to_modal "Enviar Notificación",{:action => "enviar_notificaciones",:title => "Enviar Notificación",:width=>800}
+
+-if @instructores_notificados.size > 0
+  %h1 Instructores notificados
+  %table.tablesorter
+    %thead
+      %tr
+        %th{:align => :center} #
+        %th Nombre
+        %th Cédula
+        %th Secciones Corregidas
+        %th Fecha y Hora de Notificación
+    %tbody
+      -@instructores_notificados.each_with_index do |ins,i|
+        %tr
+          %td{:align => :center}= i+1
+          %td= ins.nombre_completo
+          %td= ins.usuario_ci
+          %td= ins.cursos_corregidos.count
+          %td= ins.fecha_notificacion(session[:parametros][:periodo_calificacion])
+  

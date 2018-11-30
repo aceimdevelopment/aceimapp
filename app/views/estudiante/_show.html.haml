@@ -1,0 +1,39 @@
+%fieldset
+  %legend Datos Personales
+  %p 
+    Estado en el Sistema:
+    %b= @usuario.activo ? "Activo" : "Bloqueado"
+  %p
+    Cédula de Identidad: 
+    %b=@usuario.ci
+    - if session[:administrador].tipo_rol_id and session[:administrador].tipo_rol_id < 3
+      .well
+         
+        %b= "Contraseña: #{@usuario.contrasena}"
+  %p
+    Nombres:
+    %b= @usuario.nombres
+  %p
+    Apellidos:
+    %b= @usuario.apellidos
+  %p
+    Sexo:
+    %b= @usuario.tipo_sexo.descripcion if @usuario.tipo_sexo
+  %p
+    Fecha de Nacimiento:
+    %b= @usuario.fecha_nacimiento
+%fieldset
+  %legend Datos de Contacto
+  %p
+    Correo Electrónico:
+    %b= @usuario.correo
+  %p
+    Teléfono Móvil:
+    %b= @usuario.telefono_movil
+
+  %p
+    Teléfono de Habitación:
+    %b= @usuario.telefono_habitacion
+  %p
+    Dirección de Habitación:
+    %b= @usuario.direccion

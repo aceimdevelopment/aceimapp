@@ -1,0 +1,46 @@
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th{:width => "20%"} Examen
+      %th Estado
+      %th Tiempo Restante
+      %th Preguntas Respondidas
+      %th Calificación
+      %th Opciones
+
+  %tbody
+    -@estudiante_examenes.each do |ee|
+      %tr
+        %td= ee.examen.descripcion_simple
+        %td
+          = ee.estado.nombre if ee.estado
+          - if (ee.estado.id!= 'PREPARADO')
+            = link_to 'detalle', {:controller => 'estudiante_examenes', :action => 'show', :id => ee.id.to_s}, :class => 'btn_agregar small'
+            |
+            =link_to 'Resumen Incorrectas', {:controller => 'estudiante_examenes', :action => 'resultado', :id => ee.id.to_s}, :class => 'small btn'
+
+        %td= ee.tiempo ? "#{ee.tiempo} minutos" : "--"
+        %td= ee.estudiante_examen_respuestas.count
+        %td= total_and_sobre_20 ee
+        %td
+          =link_to "Limpiar Todo", {:controller => 'examenes', :action => 'reseteo_completo', :id => ee.id.to_s}, {:class => 'btn_actualizar small', 'data-confirm' => '¿Está Seguro?'}
+          (
+          =link_to "Habitar Para Presentar", {:controller => 'examenes', :action => 'habilitar_para_presentar', :id => ee.id.to_s}, {:class => 'btn_bandera small', 'data-confirm' => '¿Está Seguro?'}
+          |
+          =link_to "Resetear Tiempo", {:controller => 'examenes', :action => 'resetear_tiempo', :id => ee.id.to_s}, {:class => 'btn_reloj small', 'data-confirm' => '¿Está Seguro?'}
+          |
+          =link_to "Borrar Respuestas", {:controller => 'examenes', :action => 'borrar_respuestas', :id => ee.id.to_s}, {:class => 'btn_calculadora small', 'data-confirm' => '¿Está Seguro?'}
+          )
+          %br
+          = link_to 'Rezagar', 'javascript:void(0)' , :onclick => "$(rezagar_#{ee.examen_id}).show('slow'); $(this).remove();", :class => 'btn_calendario small'
+
+          %div{:id => "rezagar_#{ee.examen_id}", :style => 'display:none;'}
+            = form_tag(:controller => 'examenes', :action => "rezagar") do
+              
+              = hidden_field_tag :id, ee.id.to_s
+              %p
+                = number_field_tag 'horas'
+                horas.
+                %input.small.btn{:type => 'submit', :value => 'Rezagar', :name => 'commit'}
+ 
+

@@ -1,0 +1,23 @@
+=form_tag(url_for(:action => "guardar_nota_individual",:controller => "calificacion"),:method => :post) do
+  %table.tablesorter
+    %thead
+      %tr
+        %th Nota Actual
+        %th Descripción
+        %th Nueva Nota
+        %th Descripción
+    %tbody
+      %tr
+        %td= @historial.nota_final.to_i
+        %td= HistorialAcademico::NOTASPALABRAS[@historial.nota_final.to_i + 2]
+        %td= text_field_tag "nota_individual",nil,{:maxlength => 2}
+        %td
+          %div{:class => "descripcion_nota_individual"} Sin Calificar
+        =hidden_field_tag :ci,@historial.usuario_ci
+        =hidden_field_tag :idioma,@historial.idioma_id
+        =hidden_field_tag :tipo_categoria,@historial.tipo_categoria_id
+        =hidden_field_tag :tipo_nivel,@historial.tipo_nivel_id
+        =hidden_field_tag :periodo,@historial.periodo_id
+        =hidden_field_tag :seccion,@historial.seccion_numero
+  =submit_tag :Modificar
+=javascript_tag "aceim.mostrar_descripcion();"

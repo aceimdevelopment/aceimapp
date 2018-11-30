@@ -1,0 +1,45 @@
+%p  
+  %b= "Curso:"
+  #{@curso}
+  %br
+  %b= "Nivel:" 
+  #{@nivel}
+  %br
+  %b= "Horario:"
+  #{@horario}
+  %br
+  %b= "Sección:" 
+  #{@seccion}
+  %br
+  
+  %p 
+    Para calificar, tome en cuenta los siguientes aspectos:
+    %ul
+      %li Las notas deben estar en un rango del 0 al 20
+      - if session[:idioma_id] != "IN"
+        %li No está permitido el uso de decimales
+      - else
+        %li Está permitido el uso de decimales
+      %li En caso de pérdida por inasistencia, colocar PI
+      %li Los datos se guardarán de forma definitiva una vez que se hayan calificado todos los estudiantes
+  %h3 Tabla de calificaciones 
+- 
+
+- if @periodo.es_mayor_igual_que? @periodo_30
+  =colocar_tabla_30(@usuarios,@historiales,true)
+- elsif @periodo.es_menor_que? @periodo_transicion
+  - if session[:idioma_id] != "IN"
+    =colocar_tabla(@usuarios,@historiales,true)
+  - else
+    =colocar_tabla_ingles(@usuarios,@historiales,true)
+
+- elsif ((session[:idioma_id] != "IT") and (@tipo_nivel_id.eql? 'CB' or  @tipo_nivel_id.eql? 'CI' or @tipo_nivel_id.eql? 'CA')) 
+  =colocar_tabla_ingles(@usuarios,@historiales,true)
+- else
+  =colocar_tabla_general(@usuarios,@historiales,true)
+
+-# elsif @tipo_nivel_id.eql? 'BI' or  @tipo_nivel_id.eql? 'MI' or @tipo_nivel_id.eql? 'AI'
+  =#colocar_tabla_general(@usuarios,@historiales,true)
+-# else
+  =#colocar_tabla_ingles(@usuarios,@historiales,true)
+

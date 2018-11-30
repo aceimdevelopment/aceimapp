@@ -1,0 +1,16 @@
+= form_for @adjunto do |f|
+  -if @adjunto.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@adjunto.errors.count, "error")} prohibited this adjunto from being saved:"
+      %ul
+        - @adjunto.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :archivo
+    = f.text_field :archivo
+  .field
+    = f.label :actividad_id
+    = f.number_field :actividad_id
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,37 @@
+=form_for(@convenio,:url=>{:action => "nuevo_guardar"}) do |a|
+  -if @convenio.errors.any?
+    %div#error_explanation
+      %ul
+        -@convenio.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg
+            
+  %fieldset
+    %legend Registro de Nueva Tipo de Convenio
+    %p
+      %label
+        Identificador
+        %span.req *
+      =a.text_field :id, :autofocus => "true"  
+      Ejemplo: EIM   
+    %p
+      %label 
+        Descripción
+        %span.req *
+      =a.text_field :descripcion
+      Ejemplo: Convenio con la Escuela de Idiomas Modernos
+    %p
+      %label 
+        Decuento
+        %span.req *
+      =a.text_field :descuento
+      Ejemplo: 20.0
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =a.submit "Registrar"
+%br/
+%br/
+=link_to "<Atrás", :action => "index"

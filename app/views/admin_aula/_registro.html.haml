@@ -1,0 +1,32 @@
+-if @aula.errors.any?
+  %div#error_explanation
+    %ul
+      -@aula.errors.full_messages.each do |msg|
+        %li
+          *
+          =msg
+          
+%fieldset
+  %legend Registro Aula
+  %p
+    %label
+      Ubicación
+      %span.req *
+    =a.collection_select :tipo_ubicacion_id, TipoUbicacion.all, :id, :descripcion
+
+  %p
+    %label
+      Número del Aula
+      %span.req *
+    =a.text_field :id, :autofocus => "true"  
+    Ejemplo: 404    
+  %p
+    %label 
+      Descripción
+      %span.req *
+    =a.text_field :descripcion
+    Ejemplo: Escuela Básico - Aula 404
+%p 
+  %span.req *  
+  Campos Obligatorios
+%p

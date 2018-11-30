@@ -1,0 +1,17 @@
+=link_to "Generar PDF",:action => :generar_pdf_alumnos_por_edificio, :id => @ubicacion.id
+%table.tablesorter
+  %thead
+    %tr
+      %th Nombre
+      %th Cédula
+      %th Aula
+      %th Categoría
+      %th Nivel
+  %tbody
+  -@listado.each_with_index do |l,i|
+    %tr
+      %td= l.usuario.nombre_completo
+      %td= l.usuario.ci
+      %td= l.seccion.aula_cortica
+      %td= "#{l.idioma.descripcion} (#{l.tipo_categoria.descripcion})"
+      %td= l.tipo_nivel.descripcion

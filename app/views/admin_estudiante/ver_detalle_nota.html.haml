@@ -1,0 +1,11 @@
+%table.tablesorter
+  %thead
+    %tr
+      - @evaluaciones.each do |eva|
+        %th= eva.tipo_evaluacion.descripcion
+      %th Nota Final
+    %tbody
+      %tr
+        - @evaluaciones.each do |eva|
+          %td= eva.nota
+        %td= @historial.nota_final.to_i

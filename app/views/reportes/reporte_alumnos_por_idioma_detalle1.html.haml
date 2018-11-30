@@ -1,0 +1,26 @@
+=link_to "Generar PDF", :action => "ver_pdf_estudiantes"
+%br
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th
+        Nivel
+      %th
+        Cantidad de Alumnos
+      %th
+        Detalle
+  %tbody
+    -@historiales.each do |h|
+      %tr
+        %td
+          =h.tipo_nivel.descripcion
+        %td
+          =h.cantidad
+        %td
+          =link_to "Ver Detalle", :action => "reporte_alumnos_por_idioma_detalle2", :idioma => params[:idioma], :categoria => params[:categoria], :nivel => h.tipo_nivel_id
+
+
+=link_to "Generar PDF", :action => "ver_pdf_estudiantes"
+%br
+%br
+=link_to "<Atrás", :action => "index_reporte_alumnos_por_idioma"

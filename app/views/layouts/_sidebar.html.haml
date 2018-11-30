@@ -1,0 +1,47 @@
+#content
+  %nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    .container-fluid
+      %button#sidebarCollapse.btn.btn-info{:type => "button"}
+        %i.fas.fa-align-left
+        %span Menú
+
+  / Sidebar
+  %nav#sidebar
+    %ul.list-unstyled.components
+      %li
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", :href => "#Estudiantes"} Estudiantes
+        %ul#Estudiantes.collapse.list-unstyled
+          %li= link_to "Gestionar Estudiante Existente", :controller=> "admin_estudiante"
+          %li= link_to "Confirmar con Código de Barra", :action => "capturar_ci"
+
+          -if @admin and @admin.tipo_rol_id <= 3
+            %li
+              =link_to "Inscribir Estudiante", :controller=> "inscripcion_admin", :action => "paso0"
+          -if @admin and @admin.tipo_rol_id <= 2
+            %li
+              =link_to "Listado de Todos Los Estudiantes", :controller=> "admin_estudiante", :action => "estudiantes"
+      %li
+        %a{:href => "#"} About
+      %li
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", :href => "#pageSubmenu"} Pages
+        %ul#pageSubmenu.collapse.list-unstyled
+          %li
+            %a{:href => "#"} Page 1
+          %li
+            %a{:href => "#"} Page 2
+          %li
+            %a{:href => "#"} Page 3
+      %li
+        %a{:href => "#"} Portfolio
+      %li
+        %a{:href => "#"} Contact
+
+:javascript
+
+  $(document).ready(function () {
+
+      $('#sidebarCollapse').on('click', function () {
+          $('#sidebar').toggleClass('active');
+      });
+
+  });

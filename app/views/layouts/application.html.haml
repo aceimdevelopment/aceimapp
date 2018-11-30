@@ -9,6 +9,7 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+    =# stylesheet_link_tag    '/open-iconic/font/css/open-iconic-bootstrap.css'
 
   %body
     #banner
@@ -21,19 +22,24 @@
           Escuela de Idiomas Modernos
           %br
           ACEIM
+    - if controller_name.eql? 'inicio' and action_name.eql? 'index'
+      .bg-warning
+        = render 'cargar_sesion'
+    - else
+      %nav.navbar.navbar-dark.bg-warning
+        =#image_tag 'aceim.png', class: 'd-inline-block align-top w-auto p-3'
+        =#OJO: Acá debe ir el buscador de usuarios o estudiantes
+    - unless controller_name.eql? 'inicio' and action_name.eql? 'index' and session[:usuario_ci].nil?
+      = render 'layouts/sidebar'
+    .wrapper.container 
+      = render 'layouts/message'
+      = yield
 
-    %nav.navbar.navbar-dark.bg-warning
-      =#image_tag 'aceim.png', class: 'd-inline-block align-top w-auto p-3'
-      .text-light
-        =# link_to '#','Principal'
-
-    = yield
-
-
-    #pie
+    .fixed-bottom#pie
+      
       CIUDAD UNIVERSITARIA DE CARACAS - PATRIMONIO CULTURAL DE LA HUMANIDAD
-      %br/
+      %br 
       Ciudad Universitaria de Caracas, Galpón 7, Frente a Farmacia. Telf.: (0212) 6052982
-      %br/
+      %br 
       Cursos de Extensión EIM-UCV - 2011
 

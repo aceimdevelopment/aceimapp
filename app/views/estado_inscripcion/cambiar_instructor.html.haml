@@ -1,0 +1,28 @@
+=form_tag({:action => "cambiar_instructor_guardar"}, :class => "formulario titulo") do
+  =@seccion.descripcion
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th{:width => "150px"}
+          Instructor Actual
+        %th{:width => "150px"}
+          Nuevo Instructor
+    %tbody
+      %tr
+        %td
+          =hidden_field_tag :seccion_completa, @p[:seccion]
+          =hidden_field_tag :accion, @accion
+          =hidden_field_tag :controlador, @controlador
+          =hidden_field_tag :f, @p[:f]
+          =hidden_field_tag :f2, @p[:f2]
+          =hidden_field_tag :f3, @p[:f3]
+
+          -if @seccion.instructor
+            =@seccion.instructor.descripcion
+          -else
+            NO ASIGNADO
+        %td
+          =collection_select :seccion, :instructor_ci, @instructores, :instructor_ci, :instructor_nombre, :include_blank => "LIBERAR"
+  =submit_tag "Modificar", :disable_with => "Por favor espere..."
+  |
+  =link_to_function "Cancelar","aceim.cerrar_modal()"

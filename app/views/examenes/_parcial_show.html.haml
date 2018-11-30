@@ -1,0 +1,58 @@
+%h1= @titulo
+=link_to_function "Regresar", "history.back()", :class => 'btn_atras'
+.well.factura
+  .well
+    %h3{:style => 'float:left;'}= "Duración: #{@examen.duracion} minutos"
+    .center
+      =#Datos del Examen
+      %h2= @examen.descripcion
+    - @parte_examenes = @examen.parte_examenes.joins(:parte).order('parte.orden ASC')
+    #parte
+      %ul
+        - @parte_examenes.each do |parte_examen|
+          - if parte_examen.actividades.count > 0
+            %li=  link_to parte_examen.parte.nombre, "##{parte_examen.parte_id}", :class => 'btn_idiomas'
+      - @parte_examenes.each do |parte_examen|
+        - if parte_examen.actividades.count > 0     
+          %div{:id => parte_examen.parte_id}
+            =#Actividades
+            - @actividades = parte_examen.actividades
+            - @actividades.each do |actividad|
+              %H2= actividad.descripcion
+              =#Texto Agregado 
+              - if actividad.textos.count > 0
+                .well
+                  %div= raw actividad.textos.first.contenido
+              - @actividad = actividad
+              =#Adjuntos
+              - actividad.adjuntos.each do |adjunto|
+                - ext = adjunto.archivo.split('.').last
+                - imagenes = ['png', 'jpeg', 'jpg']
+                - audios = ['mp3', 'mpeg', 'ogg', 'wav']
+                .well.small
+                  - if imagenes.include? ext
+                    %h2 Imagen:
+                    = image_tag @host+adjunto.archivo, :style => 'padding: 0 130px; width: 70%;' 
+                  - else audios.include? ext
+                    %h2 
+                      Audio:
+                      = audio_tag @host+adjunto.archivo, :class => "audio-play", :controls => true
+              - @preguntas = actividad.preguntas
+              =#Preguntas
+              - if @preguntas.count > 0   
+                %h2= "Preguntas/Ítems:"
+                .well
+                  - case actividad.tipo_actividad_id 
+                    - when 'SEL_MULTIPLE' 
+                      =render :partial => '/preguntas/lista_sel_multiple'
+                    - when 'COMPLETE_ESPACIO'
+                      =render :partial => '/preguntas/lista_completar_espacios'
+                    -else
+                      =render :partial => '/preguntas/lista_general'
+
+
+
+
+:javascript
+  
+  $("#parte").tabs();

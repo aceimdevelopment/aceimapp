@@ -1,0 +1,39 @@
+= form_for(@cliente,:url=>{:action => @accion}) do |f|
+  - if @controlador
+    = hidden_field_tag "controlador", @controlador
+  - if @accion.eql? "actualizar"
+    - @readonly = true
+    = hidden_field_tag :id, @cliente.id
+  -if @cliente.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@cliente.errors.count, "error")} impiden que el cliente sea registrado:"
+      %ul
+        - @cliente.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    %legend Datos del Cliente
+
+    .field
+      = f.label :rif
+      = f.text_field :rif, :readonly => @readonly, :required => true
+      %span.req *
+    .field
+      = f.label :razon_social
+      = f.text_field :razon_social, :required => true
+      %span.req *
+    .field
+      = f.label :domicilio
+      = f.text_field :domicilio, :required => true
+      %span.req *
+    .field
+      = f.label :telefono_fijo
+      = f.text_field :telefono_fijo
+    .field
+      = f.label :telefono_movil
+      = f.text_field :telefono_movil
+    .field
+      = f.label :correo_electronico
+      = f.text_field :correo_electronico
+    .actions
+
+      = f.submit @accion.humanize, :class => 'ui-button ui-widget ui-state-default ui-corner-all'

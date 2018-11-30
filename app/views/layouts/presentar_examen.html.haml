@@ -1,0 +1,71 @@
+!!!
+%html
+  %head
+    %title ACEIM - Escuela de Idiomas Modernos  
+    =stylesheet_link_tag  "/aceim/assets/application"
+    =javascript_include_tag "/aceim/assets/application"
+    =javascript_include_tag "/aceim/assets/examenes"
+  %body
+    = render 'tiempo' if action_name.eql? 'presentar'
+    #banner
+      #banner_barra
+        #banner_contenido
+          Universidad Central de Venezuela
+          %br/
+          Facultad de Humanidades y Educación
+          %br/
+          Escuela de Idiomas Modernos
+          %br/
+          ACEIM
+          %br/
+    #menubar
+      .detalle_derecha
+        :javascript
+          var mydate=new Date()
+          var year=mydate.getYear()
+          if (year < 1000) year+=1900
+          var day=mydate.getDay()
+          var month=mydate.getMonth()
+          var daym=mydate.getDate()
+          if (daym<10)
+            daym="0"+daym
+          var dayarray=new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado")
+          var montharray=new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre")
+          document.write("<small><font color='000000' face='Arial'>"+dayarray[day]+", "+daym+" de "+montharray[month]+" de "+year+"</font></small>")
+      %nav#sitenav 
+        %li
+          =link_to '', 'javascript:void(0)'
+    .contenedor
+      .detalle_derecha
+        %b
+          =session[:usuario].nombre_completo    
+      #interno 
+        %h2
+          =@titulo_pagina
+        -if @subtitulo_pagina
+          .titulo
+            =@subtitulo_pagina
+        -if action_name.eql? "indicaciones" or action_name.eql? "resultado"
+          %p 
+            =link_to "Regresar a principal", {:controller => "principal", :action => "principal"}, :class => 'btn_atras' unless (action_name.eql? 'presentar' and controller_name.eql? 'examenes')
+        -if flash[:mensaje]
+          #mensaje-flash{:style => "display:none;"}
+            %p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+              %span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+              #{flash[:mensaje]}  
+          =javascript_tag "$(document).ready(function(){ $('#mensaje-flash').show('pulsate',{},'fast'); });"
+        =yield
+        -if action_name.eql? "indicaciones" or action_name.eql? "resultado"
+          %p 
+            =link_to "Regresar a principal", {:controller => "principal", :action => "principal"}, :class => 'btn_atras' unless (action_name.eql? 'presentar' and controller_name.eql? 'examenes')
+    #pie
+      CIUDAD UNIVERSITARIA DE CARACAS - PATRIMONIO CULTURAL DE LA HUMANIDAD
+      %br/
+      Ciudad Universitaria de Caracas, Galpón 7, Frente a Farmacia. Telf.: (0212) 6052982
+      %br/
+      Cursos de Extensión EIM-UCV - 2011
+      %br/
+    =#image_tag "bottom.png"
+    #ventana-modal 
+    %div{ :id => "action_#{action_name}" }   
+    

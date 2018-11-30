@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Nombre:
+  = @material_apoyo.nombre
+%p
+  %b Url:
+  = @material_apoyo.url
+%p
+  %b Tipo material apoyo:
+  = @material_apoyo.tipo_material_apoyo
+
+= link_to 'Edit', edit_material_apoyo_path(@material_apoyo)
+\|
+= link_to 'Back', material_apoyos_path

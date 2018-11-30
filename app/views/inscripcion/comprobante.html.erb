@@ -1,0 +1,140 @@
+<table align="center" width="100%" border="1" cellpadding="3" cellspacing="0">
+  <tr>   
+    <td>
+
+<table align="center" width="95%">
+  <tr>
+    <td align="left"><%=image_tag "logo_ucv.png", :height=>"65px"%></td>
+    <td align="center">
+    <h4>Cursos de Extensión EIM-UCV<br/>
+    Planilla de Inscripción (Sede Ciudad Universitaria)<br/>
+    <b>Período: D-2011</b>
+    </h4>
+    </td>
+    <td align="right"><%=image_tag "logo_fhye.png", :height=>"65px"%></td>
+  </tr>
+</table>
+<table align="center" width="95%" border="1" cellpadding="3" cellspacing="0">
+  <tr>
+    <td><b>Curso: </b>Inglés Adultos</td>
+    <td><b>Nivel: </b>Básico II</td>
+    <td><b>Horario: </b>Lunes y Miercoles de 4:15pm a 6:30pm *</td>
+    <td><b>Sec: </b>3</td>
+    <td><b>Aula: </b>FACES - Piso 5 - Aula 524</td>
+  </tr>
+</table>  
+
+<table align="center" width="100%" cellpadding="2">
+  <tr>
+    <td colspan="2">
+    <b>CI: </b>12312312
+    || <b>Estudiante: </b>Pedro Luis Flores (<b>REGULAR</b>)  
+    </td>
+  </tr>
+  <tr>
+    <td><b>Contacto: </b>0426-5555555 || pedroflores@gmail.com<td>
+    <td><b>No depósito: </b>___________________</td>
+  </tr>
+</table>
+<p align="justify">
+  <blockquote>
+  Para formalizar su inscripción, Ud. debe depositar Bs.S <b><u><%=("%.2f"%@curso.monto)%></u></b> UNICAMENTE EN EFECTIVO
+  en el Banco de Venezuela, Cuenta Corriente nro <b><%=@curso.cuenta_nombre%></b>. 
+  A nombre de: <b><%=@curso.cuenta_numero%>.</b><br/>
+  </blockquote>
+  <font size="1.5em">
+  <blockquote>
+  <b><u>LEA CUIDADOSAMENTE LA SIGUIENTE INFORMACIÓN Y NORMATIVA DEL PROGRAMA:</u></b>
+  </blockquote>
+  
+  <ul>
+    <li>
+      La inscripción es válida UNICAMENTE para el período indicado en esta planilla. NO SE CONGELAN CUPOS POR NINGÚN MOTIVO.
+    </li>
+    <li>
+      <b>SOLO SE REINTEGRARÁ EL MONTO DE LA MATRÍCULA EN CASO DE QUE NO SE REUNA EL QUORUM
+      NECESARIO PARA LA APERTURA DEL CURSO.
+      </b>
+    </li>
+    <li>
+      La asistencia a clases es obligatoria: Cursos <b>LUN-MIE</b>: Límite de 3 inasistencias.
+        Cursos <b>MAR-JUE</b>: Límite de 3 inasistencias.
+        Cursos <b>SÁBADOS</b>: Límite de 2 inasistencias.
+    </li>
+    <li>
+      La nota mínima aprobatoria es de 15 puntos. El cupo mínimo es de 15 participantes.
+    </li>
+    <li>
+      NO SE PERMITEN CAMBIOS DE SECCIÓN.
+    </li>                                                       
+  </ul>
+  </font>
+</p> 
+<table align="center" width="95%" cellpadding="0">
+  <tr>
+    <td width="70%" align="right">______________________<br/>Firma Estudiante</td>
+    <td width="30%" align="right">______________________<br/>Firma Autorizada y Sello</td>
+  </tr>
+</table>
+*El horario, sección y aula se reserva hasta hoy a las 6:00pm. (<b>Fecha: </b><%=Time.now.strftime("%d/%m/%Y")%>)
+<p align="center"><font size="1.5em">
+Copia del Estudiante</font>
+</p>
+</td>
+</tr>
+</table>
+<hr size="5"/>
+<table align="center" width="100%" border="1" cellpadding="3" cellspacing="0">
+  <tr>   
+    <td>
+
+<table align="center" width="95%">
+<tr>
+  <td align="left"><%=image_tag "logo_ucv.png", :height=>"65px"%></td>
+  <td align="center">
+  <h4>Cursos de Extensión EIM-UCV<br/>
+  Planilla de Inscripción (Sede Cuidad Universitaria)<br/>
+  <b>Año: </b><%=@periodo.ano%>, <b>Período: <%=@periodo.nombre.upcase%></b>
+  </h4>
+  </td>
+  <td align="right"><%=image_tag "logo_fhye.png", :height=>"65px"%></td>
+</tr>
+</table>
+<table align="center" width="95%" border="1" cellpadding="3" cellspacing="0">
+  <tr>
+    <td><b>Curso: </b><%=@curso.idioma.descripcion%></td>
+    <td><b>Nivel: </b><%=@curso.tipo_nivel.nombre%></td>
+    <td><b>Horario: </b><%=@curso.horario.descripcion%> *</td>
+    <td><b>Sec: </b><%=@curso.unidad%></td>
+    <td><b>Aula: </b><%=@curso.seccion.aula.descripcion%></td>
+  </tr>
+</table>  
+
+<table align="center" width="100%" cellpadding="2">
+  <tr>
+    <td colspan="2"><b>CI: </b><%=@usuario.ci%>
+    || <b>Estudiante: </b><%=@usuario.nombre_completo%> (<b><%=@curso.tipo_ingreso.nombre%></b>)
+    <b>Monto:</b> <%=("%.2f"%@curso.monto)%>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Contacto: </b><%=@usuario.telefono_movil%> || <%=@usuario.correo%><td>
+    <td><b>No depósito: </b>___________________</td>
+  </tr>
+</table>
+<br/>          
+<table align="center" width="95%" cellpadding="0">
+  <tr>
+    <td width="40%" align="right">___________________________<br/>Firma Estudiante</td>
+    <td width="20%"> </td>
+    <td width="40%" align="left">___________________________<br/>Firma Autorizada y Sello</td>
+  </tr>
+</table>
+<p align="center"><font size="1.5em">
+Copia Administración</font>
+</p>
+
+</td>
+</tr>
+</table>     
+<%=javascript_tag "window.print();"%>

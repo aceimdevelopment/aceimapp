@@ -1,0 +1,13 @@
+.titulo
+  %h3
+    -unless @estudiante.preinscrito?
+      =link_to "Preinscribirse", :action => "paso1"
+    -else   
+      =link_to "Emitir comprobante", :action => "index"
+  %div Preinscribirse en curso de Octubre - Diciembre 2011
+.titulo
+  %h3
+    =link_to "Cursos Realizados", :action=> "cursos"
+  %div Consulta el listado de tus Cursos Realizados
+  
+

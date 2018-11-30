@@ -1,0 +1,8 @@
+=form_tag({:action => "generar_constancia_estudio", :tipo_curso=>@p[:tipo_curso]}, :class => "formulario titulo") do
+  Remitente: 
+  =text_field_tag :remitente
+  %br/
+  %br/
+  =submit_tag "Generar"
+  |
+  =link_to_function "Cancelar","aceim.cerrar_modal()"

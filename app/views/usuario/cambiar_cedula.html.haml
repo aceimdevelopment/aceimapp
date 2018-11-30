@@ -1,0 +1,12 @@
+=form_tag url_for(:action => :cambiar_cedula_guardar) do
+  = "C: #{@controlador}"
+  %table
+    %tr
+      %td Nueva cédula Usuario:
+      %td= text_field_tag :cedula
+    %tr
+      = hidden_field_tag :controlador , @controlador
+      = hidden_field_tag :accion , @accion
+      %td Repetir nueva cédula:
+      %td= text_field_tag :repetir_cedula
+  =submit_tag "Cambiar", :confirm => "¿Está seguro de realizar el cambio de cédula?"

@@ -1,0 +1,67 @@
+#idiomas
+  %ul
+    %li= text_field_tag "filtro_particular", nil, :placeholder => "Filtrar contenido..."
+    -@idiomas.each do |idioma|
+      %li
+        =link_to idioma.descripcion, "##{idioma.id}"
+
+  -@idiomas.each do |idioma|
+    %div{:id => idioma.id}
+      - tipo_curso = idioma.tipo_curso.where(:tipo_categoria_id => 'AD').first
+      - @estudiante_nivelaciones = tipo_curso.estudiantes_nivelacion.where(:periodo_id => @periodo_id).sort_by{|x| x.usuario.descripcion}
+      -if @estudiante_nivelaciones.count > 1
+        %table 
+          %tbody
+            %td= button_to "Confirmados #{idioma.descripcion} (PDF)", {:action => "listado_confirmados", :periodo_id => @periodo_id, :idioma_id => idioma.id}, :class => 'ui-button ui-widget ui-state-default ui-corner-all'
+
+            %td= button_to "Confirmados #{idioma.descripcion} (EXCEL)", {:action => "listado_confirmados_excel", :periodo_id => @periodo_id, :idioma_id => idioma.id}, :class => 'ui-button ui-widget ui-state-default ui-corner-all'
+
+        %table.tablesorter.tablefilter{:id => "tabla_#{idioma.id}"}
+          %thead
+            %tr             
+              %th Nro
+              %th Estudiante
+              %th Datos de Contacto
+              %th Idioma    
+              %th Estado
+              %th Observaciones
+              %th Opciones
+          %tbody
+            - @estudiante_nivelaciones.each_with_index do |en,i| 
+              %tr
+                %td #{i+1}
+                %td=link_to en.usuario.descripcion, :action => "planilla_nivelacion", :id => en.id
+                %td #{en.usuario.datos_contacto}
+                %td #{en.tipo_curso.descripcion}
+                %td 
+                  #{en.estado_confirmado} 
+                  %br/
+                  #{en.estado}
+                %td #{en.observaciones}
+                -if session[:administrador].tipo_rol_id <= 3
+                  %td
+                    =link_to 'Eliminar', {:action => "eliminar", :id => en.id}, :confirm => 'Está seguro de eliminar al estudiante?'
+                    %br/
+                    %br/
+                    -if en.confirmado == 0
+                      =link_to 'Confirmar', {:action => "confirmar", :id => en.id}, :confirm => 'Está seguro de confirmar al estudiante?'
+                      %br/
+                      %br/
+
+                    =link_to 'Planilla', :action => "planilla_nivelacion", :id => en.id
+                    -if en.estado != "Inscrito"
+                      %br/
+                      %br/
+                      =link_to 'Inscribir', {:action => "inscribir_paso1", :id => en.usuario_ci, :idioma => en.tipo_curso.id}
+
+%table 
+  %tbody
+    %td= button_to "Confirmados (PDF)", {:action => "listado_confirmados", :periodo_id => @periodo_id}, :class => 'ui-button ui-widget ui-state-default ui-corner-all'
+
+    %td= button_to "Confirmados (EXCEL)", {:action => "listado_confirmados_excel", :periodo_id => @periodo_id}, :class => 'ui-button ui-widget ui-state-default ui-corner-all'
+
+%br/
+= button_to 'Agregar estudiante', {:action => "new"}, :class => 'ui-button ui-widget ui-state-default ui-corner-all'
+
+:javascript
+  $("#idiomas").tabs();

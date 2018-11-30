@@ -1,0 +1,83 @@
+%br/
+%br/
+= form_tag "../admin_instructor/guardar_horario_disponible_instructores" do
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th
+          Instructor
+        %th
+          Idioma
+        -@bloques_horarios.each do |bh|     
+          %th
+            =bh.descripcion
+    %tbody
+      %tr
+        %td
+          =collection_select :instructor, :ci, Instructor.where(["usuario_ci != ?", "-----"]).sort_by{|x|x.nombre_completo}, :id, :descripcion
+        %td
+          =collection_select :instructor,:idioma, @idiomas,:id, :descripcion
+        -@bloques_horarios.each do |bh|    
+          -if bh.id == "H3" || bh.id == "H4"
+            -estilo = "background-color: #A0C0F0"
+          -else
+            -if bh.id != "H5"
+              -estilo = "background-color: #F3F781"
+            -else
+              -estilo = "background-color: #A9F5A9" 
+          %td{:style => "#{estilo}"} 
+            =check_box_tag "horarios_instructor[#{bh.id}]", 1
+
+  %p= submit_tag 'Guardar'
+
+%br/
+%br/
+%br/
+Filtrar Contenido:
+=text_field_tag "filtro"
+%br/
+Filtro por Idioma: 
+=collection_select :tipo_curso, :id, @tipos_curso, :descripcion, :descripcion, {:prompt => "-- Todos --", :selected => @filtro}
+%br/
+%br/
+
+-i = @cant_horarios
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th{:width => "20%"}
+        Instructor
+      %th{:width => "10%"}
+        Idioma
+      -@bloques_horarios.each do |bh|     
+        %th
+          =bh.descripcion
+      %th
+        ="Modificar"
+  %tbody
+    -@instructores_disponibles.each do |id|
+      -if i == @cant_horarios
+        %tr
+      -if i == @cant_horarios
+        %td
+          =id.instructor.descripcion
+        %td
+          =id.idioma.descripcion
+      -i = i - 1
+      -if id.bloque_horario_id== "H3" || id.bloque_horario_id == "H4"
+        -estilo = "background-color: #A0C0F0"
+      -else
+        -if id.bloque_horario_id != "H5"
+          -estilo = "background-color: #F3F781"
+        -else
+          -estilo = "background-color: #A9F5A9" 
+          
+      %td{:style => "#{estilo}"} 
+        -if id.disponible == 1
+          =check_box_tag "horarios_instructor_vista[#{id.bloque_horario_id}]", 1, true
+        -else
+          =check_box_tag "horarios_instructor_vista[#{id.bloque_horario_id}]", 1, false
+      -if i == 0
+        -i = @cant_horarios
+        %td
+          =link_to_modal "Modificar",:action => "modal_modificar_horario_disponible_instructores",:title =>"Modificar Horarios Instructor",:width=>700, :params => {:controlador => controller_name, :accion => action_name, :ci => id.instructor_ci, :idioma => id.idioma_id}

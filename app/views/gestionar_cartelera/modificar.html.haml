@@ -1,0 +1,21 @@
+%h3="Modificar Cartelera"
+%br
+-if flash[:mensaje]
+  =flash[:mensaje]
+=javascript_include_tag "elrte.min.js"
+=javascript_include_tag "/aceim/assets/elrte.min"
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $().ready(function() {
+  var opts = {
+  lang         : 'es',
+  styleWithCSS : false,
+  height       : 400,
+  toolbar      : 'complete',        // Se pueden usar las siguientes opciones: 'tiny', 'compact', 'normal', 'complete', 'maxi'
+  allowSource  : false,
+  };
+ 
+  var editor = new elRTE(document.getElementById('content'), opts);
+  });
+=form_tag "../gestionar_cartelera/guardar" do
+  =text_area_tag('content', @content.contenido)
+  %p=submit_tag 'Guardar'  

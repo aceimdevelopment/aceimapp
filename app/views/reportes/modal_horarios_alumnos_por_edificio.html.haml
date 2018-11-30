@@ -1,0 +1,15 @@
+=form_tag url_for(:action => :generar_listado_html_por_edificio) do
+  %p= "Para seleccionar todos los días o idiomas, presione Aceptar"
+  #dias_cb{:style => "width: 200px;float:left"}
+    %h4 Seleccione los días
+    -@dias.each_with_index do |dia,i|
+      =check_box("dia","seleccionado",{:multiple => true},dia.id,nil)
+      =dia.descripcion
+      %br
+  #idiomas_cb{:style => "width: 200px;float: right;"}
+    %h4 Selecciones los idiomas
+    -@idiomas.each_with_index do |idi,i|
+      =check_box("idioma","seleccionado",{:multiple => true},idi.id,nil)
+      =idi.descripcion
+      %br
+  =submit_tag :Aceptar

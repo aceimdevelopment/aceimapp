@@ -1,0 +1,88 @@
+- @desactivar =  action_name.eql? 'show'
+= form_for(@factura,:url=>{:action => @accion}) do |f|
+
+  %table
+    %tr
+      %td.raw7
+        %p Universidad Central de Venezuela
+        %p Facultad de Humanidades y Educación
+        %p Escuela de Idiomas Modernos
+        %p Fundación de la Escuela de Idiomas Modernos
+      %td.raw3
+        .well.factura
+          - unless @desactivar
+            %p 
+              %b Cliente:
+              = f.collection_select :cliente_rif, Cliente.all, :rif, :descripcion, {:prompt => true}, :required => true, :onchange => "completar_cliente();", :autofocus => true, :style => "width:40%;", :disabled => @desactivar
+              - display = (action_name.eql? 'editar') ? '' : 'none' 
+              = button_to_modal_v2 "Editar",{:controller => 'clientes',:action => 'editar', :id => @factura.cliente_rif,  :title => 'Editar Cliente',:width => 500}, {:class => 'ui-button ui-widget small ui-state-default ui-corner-all', :style => "border-color:lightseagreen;display:#{display};", :id => 'editar_cliente'}
+       
+              ó
+              =button_to_modal_v2 "Nuevo Cliente",{:controller => 'clientes',:action => 'nuevo',:title => 'Registrar Cliente',:width => 500}, :class => 'ui-button ui-widget small ui-state-default ui-corner-all'
+
+        .well.factura  
+          %table
+            %tr
+              %th Código Factura
+              %th No. Control
+              - @solo_lectura = ! (action_name.eql? 'nueva' or action_name.eql? 'registrar')
+            %tr
+              %td= f.text_field :codigo, :placeholder => "código...", :required => true, :disabled => @solo_lectura
+              %td= f.text_field :numero_control, :placeholder => "# control...", :required => true, :disabled => @desactivar
+        .well.factura
+          %p
+            %b Fecha:
+            = f.date_select :fecha, :disabled => @desactivar
+  .cliente.well.factura
+
+    %p 
+      %b Nombre o razon_social:
+      = text_field_tag 'cliente_razon_social', (@factura.cliente.razon_social if @factura.cliente), { :class => 'raw4', :disabled => true}
+      %b Rif:
+      = text_field_tag 'cliente_rif', (@factura.cliente.rif if @factura.cliente), { :class => 'raw3', :disabled => true}
+    %p 
+      %b Domicilio Fiscal:
+      = text_field_tag 'cliente_domicilio', (@factura.cliente.domicilio if @factura.cliente), { :class => 'raw8', :disabled => true}
+    %p 
+      %b Teléfono Fijo:
+      = text_field_tag 'cliente_telefono_fijo', (@factura.cliente.telefono_fijo if @factura.cliente), {:class => 'raw1', :disabled => true}
+      %b Teléfono movil:
+      = text_field_tag 'cliente_telefono_movil', (@factura.cliente.telefono_movil if @factura.cliente), {:class => 'raw1', :disabled => true}
+      %b Correo electrónico:
+      = text_field_tag 'cliente_correo', (@factura.cliente.correo_electronico if @factura.cliente), {:class => 'raw2', :disabled => true}
+
+  - unless @desactivar
+    .actions
+      = f.submit 'Guardar datos y agregar cursos', :class => 'boton_commit ui-button ui-widget ui-state-default ui-corner-all'
+
+
+  / <div class="control-group">
+  /   <%#= f.label :municipio_id, :class => 'control-label' %>
+  /   <div class="controls">
+  /     <%#= f.grouped_collection_select :municipio_id, Estado.all, :municipios, :nombre, :id, :nombre, {:prompt => "Tema"}, {:required => true, :class => 'selects2', :style => 'width: 600px;'} %>
+      
+  /   </div>
+  / </div>
+
+:javascript
+  function completar_cliente(){
+    var rif = $("#factura_cliente_rif :selected").val();
+    if (rif !=''){
+      jQuery.getJSON(
+         "/aceim/clientes/ver/"+rif,
+        function(data){
+          $('#cliente_razon_social').val(data['razon_social'])
+          $('#cliente_domicilio').val(data['domicilio'])
+          $('#cliente_rif').val(data['rif'])
+          $('#cliente_telefono_fijo').val(data['telefono_fijo'])
+          $('#cliente_telefono_movil').val(data['telefono_movil'])
+          $('#cliente_correo').val(data['correo_electronico'])
+
+
+      });
+
+      var onclick = "aceim.modal_remota('/aceim/clientes/editar/"+rif+"','Modificar Cliente','500');"
+      $('#editar_cliente').fadeIn("slow");
+      $('#editar_cliente').attr('onclick', onclick);
+    }else {$('#editar_cliente').fadeOut("slow");}
+  }

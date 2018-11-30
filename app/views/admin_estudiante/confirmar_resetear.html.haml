@@ -1,0 +1,12 @@
+%h3
+  Resetear la contraseña de:
+  =@usuario.descripcion
+%br/
+%b
+  Nota:
+La Contraseña será igual a la cédula
+%br/
+%br/
+=link_to "Reinicializar", :action=>"resetear_contrasena" 
+|
+=link_to_function "Cancelar","aceim.cerrar_modal()"

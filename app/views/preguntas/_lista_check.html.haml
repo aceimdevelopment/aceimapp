@@ -1,0 +1,16 @@
+- @repuestas = @preguntas.collect{|p| p.respuesta}.uniq
+%table.likert{:style => 'width:90%; border:1px solid rgba(101, 99, 91, 0.45)'}
+	%thead
+		%tr
+			%th
+			- @repuestas.each do |respuesta|
+				%th= respuesta
+
+	%tbody
+		- @preguntas.each do |pregunta|
+			%tr
+				%td.border= "#{pregunta.clave}"
+				- @repuestas.each do |respuesta|
+					- val = (respuesta.eql? pregunta.respuesta) ? "X" : ""
+					%td.center.border= val
+.division			

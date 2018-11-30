@@ -1,0 +1,22 @@
+=form_tag({:action => "cambiar_aula_guardar"}, :class => "formulario titulo") do
+  =@seccion_horario.seccion.descripcion
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th{:width => "150px"}
+          Aula Actual
+        %th{:width => "150px"}
+          Nueva Aula
+    %tbody
+      %tr
+        %td
+          =hidden_field_tag :seccion_completa, @p[:seccion_horario]
+          -if @seccion_horario.aula
+            =@seccion_horario.aula.descripcion_completa
+          -else
+            NO ASIGNADO
+        %td
+          =collection_select :seccion_horario, :aula_id, @aulas, :aula_id, :descripcion_completa_del_aula, :include_blank => "liberar"
+  =submit_tag "Modificar", :disable_with => "Por favor espere..."
+  |
+  =link_to_function "Cancelar","aceim.cerrar_modal()"

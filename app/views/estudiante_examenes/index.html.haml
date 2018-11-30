@@ -1,0 +1,28 @@
+=link_to_function "Regresar", "history.back()", :class => 'btn_atras'
+%h2= @titulo
+
+%h3= "Total de Listos para Presentar: #{@total_preparados}"
+%h3= "Total de Iniciados: #{@total_iniciados}"
+%h3= "Total de Completados: #{@total_completados}"
+.well
+	%p
+		= text_field_tag "filtro_particular", nil, :placeholder => "Filtrar Exámenes..."
+
+	%table.tablesorter.tablefilter.likert
+		%thead
+			%tr
+				%th Sección
+				%th Estudiante
+				%th Calificación del examen
+				%th Estado
+		%tbody
+			- @estudiante_examenes.each do |ee|
+				%tr
+					- if ee.examen.prueba
+						%td= "N/A"
+					- else 
+						%td= "##{ee.historial_academico.seccion_numero}" if ee.historial_academico
+					%td= ee.estudiante.usuario.descripcion
+					%td= ee.total_puntos_correctos_base_20
+					%td= ee.tipo_estado_estudiante_examen.nombre
+

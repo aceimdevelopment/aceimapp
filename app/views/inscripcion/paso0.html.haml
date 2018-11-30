@@ -1,0 +1,20 @@
+=form_tag(:action => "paso0_guardar") do 
+  %p
+    %label
+      Cédula de Identidad
+      %span.req *
+    %br/
+    =text_field :usuario, :ci, :autofocus => true
+    Ejemplo: 19123321
+  %p
+    %label
+      Idioma
+      %span.req * 
+    %br/
+    =collection_select :seleccion, :idioma_id, @idiomas, :id, :descripcion
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =submit_tag "Siguiente"  
+%br/    

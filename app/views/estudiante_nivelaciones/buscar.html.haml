@@ -1,0 +1,72 @@
+=form_for(@usuario,:url=>{:action => "agregar"}) do |f|
+  -if @usuario.errors.any?
+    %p
+      %div#error-explanation
+        %b
+          =pluralize(@usuario.errors.count, "error") 
+          en el formulario impiden que éste usuario sea registrado:
+        %ul
+          -@usuario.errors.full_messages.each do |msg|
+            %li
+              =msg
+  %fieldset
+    %legend Datos Personales
+    %p
+      %label
+        Cédula de Identidad
+      =@usuario.ci
+      =f.hidden_field :ci 
+    %p
+      %label 
+        Nombres
+        %span.req *
+      =f.text_field :nombres, :autofocus => true
+      Ejemplo: Maria del Carmen
+    %p
+      %label
+        Apellidos
+        %span.req *
+      =f.text_field :apellidos
+      Ejemplo: Da Silva
+    %p
+      %label
+        Sexo
+        %span.req *
+      =f.radio_button :tipo_sexo_id, "F"
+      Femenino  
+      %br/
+      =f.radio_button :tipo_sexo_id, "M"
+      Masculino    
+  %fieldset
+    %legend Datos de Contacto
+    %p
+      %label
+        Correo Electrónico  
+        %span.req *
+      =f.text_field :correo
+      Ejemplo: pedroperez@gmail.com
+    %p
+      %label
+        Teléfono Móvil
+        %span.req *
+      =f.text_field :telefono_movil
+      Ejemplo: 04261234567
+  %fieldset
+    %legend Idioma
+    %p
+      %label
+        Idioma
+      =collection_select :varios, :tipo_curso_id, @tipo_curso, :id, :descripcion
+  %fieldset
+    %legend Otros
+    %p
+      %label
+        Observaciones
+      =text_area :varios, :observaciones
+
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =f.submit "Siguiente"
+%br/

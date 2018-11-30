@@ -1,0 +1,28 @@
+=form_tag({:action => "cambiar_seccion_guardar"}, :class => "formulario titulo") do
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th{:width => "150px"}
+          Curso
+        %th{:width => "150px"}
+          Nivel
+        %th{:width => "150px"}
+          Seccion Actual
+        %th{:width => "150px"}
+          Secciones (preinscritos/inscritos)
+    %tbody
+      %tr
+        %td
+          =@historial.tipo_curso.descripcion
+        %td
+          =@historial.tipo_nivel.descripcion
+          =hidden_field :historial, :usuario_ci        
+        %td
+          ="#{"%002i"%@historial.seccion_numero}"
+        %td
+          =collection_select :historial, :seccion, @secciones, :id, :descripcion_inscritos
+  %br/
+  %br/
+  =submit_tag "Modificar"
+  |
+  =link_to_function "Cancelar","aceim.cerrar_modal()"

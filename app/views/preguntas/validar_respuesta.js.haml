@@ -1,0 +1,9 @@
+
+$(".mensaje").html("")
+$(".mensaje").removeClass("ui-state-highlight ui-corner-all")
+var ele = $("#respuesta_#{@respuesta.id}")
+ele.addClass('ui-state-highlight ui-corner-all')
+ele.html("Respuesta #{@correcta}")
+ele.parent().css({"background-color":"#b3ccff"})
+
+ele.parent().addClass('ui-corner-all')

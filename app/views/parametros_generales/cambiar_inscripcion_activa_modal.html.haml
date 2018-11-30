@@ -1,0 +1,16 @@
+=form_tag url_for(:action => "cambiar_inscripcion_activa", :controller => "parametros_generales") do
+  %h4 Seleccione tipo Periodo
+  Periodo:
+  %br
+  =radio_button_tag "inscripcion_activa", "POR DEFINIR", (@inscripcion_activa.eql? "POR DEFINIR")
+  Por Definir
+  =radio_button_tag "inscripcion_activa", "SABATINOS", (@inscripcion_activa.eql? "SABATINOS")
+  Sabatinos
+  =radio_button_tag "inscripcion_activa", "SEMANAL", (@inscripcion_activa.eql? "SEMANAL")
+  Semanal
+  =radio_button_tag "inscripcion_activa", "AMBOS", (@inscripcion_activa.eql? "AMBOS")
+  Ambos
+  %br
+  %br
+  =submit_tag :Aceptar
+  =button_to_function "Cancelar","aceim.cerrar_modal();"

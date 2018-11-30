@@ -1,0 +1,20 @@
+=@horario
+=form_tag :action => "paso1_guardar" do
+  =hidden_field_tag :id, @inscripcion.id.to_a
+  %fieldset
+    %legend Horarios
+    %p
+      %label
+        Curso - Nivel
+      =@historial.curso.descripcion
+    %p
+      %label
+        Horarios Disponibles
+        %span.req *
+      =select :usuario, :horario, @horarios
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =submit_tag "Preinscribir", :confirm => "¿Está seguro de preinscribir este horario?"
+%br/

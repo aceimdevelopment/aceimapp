@@ -1,0 +1,121 @@
+%br/
+=form_for(@usuario,:url=>{:action => "paso1_actualizar_datos"}, :class => "formulario titulo" ) do |f|
+
+  -if @usuario.errors.any?
+    %div#error_explanation
+      %b
+        =pluralize(@usuario.errors.count, "error") 
+        en el formulario impiden que éste Usuario sea registrado:
+      %ul
+        -@usuario.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg
+
+  %div.titulo
+    %h2 Actualizar Datos: Paso 1 de 3
+    %div Curso de Extensión de Idiomas Modernos
+  %ul
+  
+    %li.seccion.primera
+      %h3 Contraseña
+
+    %li
+      %label.desc
+        Contraseña
+        %span.req *
+      %div
+        =f.password_field :contrasena, :class=>"field text medium"
+      %p.instruccion Ingrese su contraseña
+      
+    %li
+      %label.desc 
+        Confirmación
+        %span.req *
+      %div
+        =f.password_field :contrasena_confirmation, :class=>"field text medium"
+      %p.instruccion Reescriba su contraseña
+      %br/
+      
+    %li.seccion.primera
+      %h3 Datos Personales
+      %div Detalles de los Datos Personales
+
+    %li
+      %label.desc
+        Cédula de Identidad
+      %div
+        %b
+          =f.label @usuario.ci, :class=>"field"
+        =f.hidden_field :ci
+
+    %li
+      %label.desc 
+        Nombres
+        %span.req *
+      %div
+        =f.text_field :nombres, :class=>"field text large"
+      %p.instruccion Ingrese su(s) Nombre(s)
+
+    %li
+      %label.desc
+        Apellidos
+        %span.req *
+      %div
+        =f.text_field :apellidos, :class=>"field text large"
+      %p.instruccion Ingrese su(s) Apellido(s)
+      
+    %li
+      %label.desc
+        Sexo
+        %span.req *
+      %div
+        =f.radio_button :tipo_sexo_id, "F"
+        Femenino
+        =f.radio_button :tipo_sexo_id, "M"
+        Masculino
+    
+    %li
+      %label.desc
+        Correo Electrónico  
+        %span.req *
+      %div
+        =f.text_field :correo, :class=>"field text large"
+      %p.instruccion Ingrese su Correo Electrónico
+      %a.ej ej.: pedroperez@gmail.com
+    
+    %li.focused
+      %label.desc
+        Teléfono Móvil
+        %span.req *
+      %div
+        =f.text_field :telefono_movil, :class=>"field text medium"
+      %p.instruccion Ingrese su Teléfono Móvil
+      %a.ej ej.: 04125554433
+
+    %li
+      %label.desc
+        Teléfono de Habitación
+      %div
+        =f.text_field :telefono_habitacion, :class=>"field text medium"
+      %p.instruccion Ingrese su Teléfono de Habitación
+      %a.ej ej.: 02125554433
+
+    %li
+      %label.desc
+        Dirección de Habitación
+      %div
+        =f.text_area :direccion, :class=>"field textarea medium"
+
+    %li
+      %label.desc
+        Fecha de Nacimiento
+      %div
+        =f.text_field :fecha_nacimiento, :class=>"field text medium", :id=>"campofecha"
+      %a.ej ej.: 28/02/1982
+      
+           
+  %div
+    =f.submit "Siguiente", :class=>"btTxt"
+%br/    
+=link_to "Regresar", :action=>"index"

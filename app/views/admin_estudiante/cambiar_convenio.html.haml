@@ -1,0 +1,24 @@
+=form_tag({:action => "cambiar_convenio_guardar"}, :class => "formulario titulo") do
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th{:width => "150px"}
+          Curso
+        %th{:width => "150px"}
+          seccion
+    %tbody
+      %tr
+        %td
+          =@estudiante_curso.tipo_curso.descripcion
+          =hidden_field :estudiante_curso, :idioma_id
+          =hidden_field :estudiante_curso, :tipo_categoria_id
+          =hidden_field :estudiante_curso, :usuario_ci
+        %td
+          =collection_select :estudiante_curso, :tipo_convenio_id, TipoConvenio.all, :id, :descripcion
+  %br/
+  %br/
+  =submit_tag "Modificar"
+  |
+  =link_to_function "Cancelar","aceim.cerrar_modal()"
+
+  

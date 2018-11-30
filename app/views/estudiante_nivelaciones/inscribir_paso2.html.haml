@@ -1,0 +1,49 @@
+=form_for(@estudiante_curso,:url=>{:action => "paso2_guardar"}) do |f|
+  -if @estudiante_curso.errors.any?
+    %div#error_explanation
+      %b
+        =pluralize(@estudiante_curso.errors.count, "error") 
+        en el formulario impiden que éste Usuario sea registrado:
+      %ul
+        -@estudiante_curso.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg 
+  %fieldset
+    %legend Datos del curso
+
+    %p
+      %label
+        Estudiante:
+      =@estudiante_curso.usuario.descripcion
+      =f.hidden_field :usuario_ci
+
+    %p
+      %label
+        Curso:
+
+      =@estudiante_curso.tipo_curso.descripcion
+      =f.hidden_field :idioma_id
+      =f.hidden_field :tipo_categoria_id
+    %p
+      %label
+        Nivel:
+      =collection_select :nivel, :id, @niveles, :id, :descripcion 
+      %span.req *
+
+    %p
+      %label
+        Número de Recibo:
+      = text_field_tag :recibo
+    %p
+      %label
+        Convenio:
+      =f.collection_select :tipo_convenio_id, @convenios, :id, :descripcion ,{:selected=>"REG"}
+      %span.req *
+
+
+    %p 
+      %span.req *  
+      Campos Obligatorios
+  %p
+    =submit_tag "Siguiente"

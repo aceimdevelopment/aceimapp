@@ -1,0 +1,120 @@
+- total_ins = total_pre = 0
+- @seccion.each do |s|     
+  - total_ins += s.inscritos
+  - total_pre += s.preinscritos
+%p
+  Total Inscritos: #{total_ins}, Total Preinscritos: #{total_pre}
+
+%div.titulo
+  Filtrar Contenido:
+  =text_field_tag "filtro_particular"
+  =#link_to "Generar PDF", :action=>"ver_pdf_secciones", :filtrar => @filtro, :filtrar2 => @filtro2, :filtrar3 => @filtro3
+  =link_to_function "Generar PDF","aceim.recolectar('ver_pdf_secciones_2','filtrar4')"
+  |
+  =link_to_function "Enviar Correo","aceim.recolectar_enviar_correo('datos_enviar_correo','correos')"
+  %br/
+  Filtro por Inscripción: 
+  =collection_select :tipo, :inscripcion, @tipo_inscripcion, :to_s, :to_s, {:prompt => "-- Ambos --", :selected => @filtro5}
+  %br/
+  Filtro por Idioma: 
+  =collection_select :tipo_curso, :id, @tipos_curso, :id, :descripcion, {:prompt => "-- Todos --", :selected => @filtro}#, {multiple: true}
+  %br/
+  Filtro por Nivel: 
+  =collection_select :tipo_nivel, :id, @tipos_nivel, :id, :descripcion, {:prompt => "-- Todos --", :selected => @filtro4}
+  %br/
+  Filtro por Ubicación: 
+  =collection_select :ubicacion, :id, @ubicaciones, :id, :descripcion_corta, {:prompt => "-- Todas --", :selected => @filtro2}
+  - if @horarios and @horarios.count > 1
+    %br/
+    Filtro por Horario: 
+    =collection_select :horario, :id2, @horarios, :to_s, :to_s, {:prompt => "-- Todos --", :selected => @filtro3}
+  %br/
+  %div{:style=>"color:red"}
+    
+    Secciones Cerradas
+  %table.tablesorter.tablefilter.likert
+    %thead
+      %tr
+        %th{:width => "5%"}
+          =@seccion.count
+        %th{:width => "5%"}
+          PRE
+        %th{:width => "5%"}
+          INS
+        %th{:width => "10%"}
+          Idioma
+        %th{:width => "15%"}
+          Nivel
+        %th{:width => "5%"}
+          Sec
+        %th{:width => "20%"}
+          Horario
+        %th{:width => "15%"}
+          Aula
+        %th{:width => "20%"}
+          Instructor
+        -if session[:administrador].tipo_rol_id < 3
+          %th{:width => "5%"}
+            Calificada?
+          %th{:width => "5%"}
+            Opcion
+
+    %tbody
+      -@seccion.each_with_index do |s,i|
+        -if s.esta_abierta
+          -estilo = ""
+        -else
+          -estilo = "color: red"
+        %tr
+          %td
+            = i+1
+          %td{:style => "#{estilo}", :id => "ins#{i}"} 
+            .oculto-param{ :style => "display:none;"}
+              =s.id
+            =s.preinscritos
+          %td{:style => "#{estilo}",:anchor => i}
+            =s.inscritos
+          %td{:style => "#{estilo}"}
+            ="#{s.idioma.descripcion} (#{s.tipo_categoria.descripcion})"
+          %td{:style => "#{estilo}"}
+            =s.tipo_nivel.descripcion
+          %td{:style => "#{estilo}"}
+            =link_to s.seccion_numero, :action=>"nivel4", :seccion => s
+          %td{:style => "#{estilo}"}
+            =s.horario
+          %td{:style => "#{estilo}"}
+            -hor = s.horario_seccion
+            -hor = hor.sort_by{|x| x.dia.orden}
+
+            -hor.each do |hs| 
+              -if hs.aula_id
+                - aula_id = "#{hs.aula_id}"
+              -else
+                - aula_id = "-- NO ASIGNADA --"
+
+              -if session[:administrador].tipo_rol_id <= 3 
+                =link_to_modal aula_id,{:action => "cambiar_aula",:title =>"Modificar Aula",:width=>920, :params => {:seccion_horario => hs, :controlador => controller_name, :accion => action_name, :indice => i, :f => @filtro, :f2 => @filtro2, :f3 => @filtro3}}
+              -else
+                =aula_id
+              %br/
+          %td{:style => "#{estilo}"}
+            -if s.instructor
+              - instructor_id = s.instructor.descripcion
+            -else
+              - instructor_id = "-- NO ASIGNADO --"
+
+            -if session[:administrador].tipo_rol_id <= 3
+              =link_to_modal instructor_id,{:action => "cambiar_instructor",:title =>"Modificar Instructor",:width=>700, :params => {:seccion => s, :controlador => controller_name, :accion => action_name, :indice => i, :f => @filtro, :f2 => @filtro2, :f3 => @filtro3}}
+            -else
+              =instructor_id
+          -if session[:administrador].tipo_rol_id < 3
+            %td= 'Calificada' if s.esta_calificada 
+            %td{:style => "#{estilo}"}
+              =link_to_modal "Eliminar", {:action => "confirmar_eliminar",:title =>"Eliminar Sección",:width=>700, :params => {:seccion => s, :controlador => controller_name, :accion => action_name}}
+
+%p
+  Total Inscritos: #{total_ins}, Total Preinscritos: #{total_pre}
+%p
+  =link_to_function "Generar PDF","aceim.recolectar()"
+  =#link_to "Generar PDF", :action=>"ver_pdf_secciones", :filtrar => @filtro, :filtrar2 => @filtro2, :filtrar3 => @filtro3
+  

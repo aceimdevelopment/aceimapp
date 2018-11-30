@@ -1,0 +1,19 @@
+=form_tag :action => "seleccionar_horario_guardar" do # Agregar onsubmit validate que se acepten los terminos y condiciones del curso
+  %fieldset
+    %legend Horarios
+    %p
+      %label
+        Curso 
+      =@inscripcion.descripcion
+    %p
+      %label
+        Horarios Disponibles
+        %span.req *
+      =select :usuario, :horario, @horarios
+
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =submit_tag "Preinscribir", :confirm => "¿Está seguro de preinscribir este horario?"
+%br/

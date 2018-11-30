@@ -1,0 +1,41 @@
+=link_to "Generar PDF", :action => "ver_pdf_congelados"
+%br
+Filtrar Contenido:
+=text_field_tag "filtro"
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th
+        ="#"
+      %th
+        Nombres
+      %th
+        Cédula
+      %th
+        Correo Electrónico
+      %th
+        Teléfono Móvil
+      %th
+        Idioma
+      %th
+        Nivel
+  %tbody
+    -@historiales.each_with_index do |h,i|
+      %tr
+        %td
+          =i+1
+        %td
+          =h.usuario.nombre_completo
+        %td
+          =h.usuario.ci
+        %td
+          =h.usuario.correo
+        %td
+          =h.usuario.telefono_movil
+        %td
+          =h.tipo_curso.descripcion
+        %td
+          =h.tipo_nivel.descripcion
+
+=link_to "Generar PDF", :action => "ver_pdf_congelados"
+

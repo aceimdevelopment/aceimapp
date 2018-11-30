@@ -1,0 +1,9 @@
+%h3
+  Se procederá a Eliminar definitivamente el Curso:
+  %br/
+  ="#{@historial.tipo_curso.descripcion} - #{@historial.tipo_nivel.descripcion}"
+%br/
+%br/
+=link_to "Eliminar", :action=>"eliminar_curso", historial_id: @historial.id
+|
+=link_to_function "Cancelar","aceim.cerrar_modal()"

@@ -1,0 +1,40 @@
+%br/
+Filtrar Contenido:
+=text_field_tag "filtro"
+%br/
+Filtro por Ubicación: 
+=collection_select :ubicacion, :id, @ubicaciones, :desc, :descripcion_corta, {:prompt => "-- Todas --"}
+%br/
+-i=-1
+%br
+= form_tag "../admin_aula/guardar_aulas_planificacion" do
+  %table.tablesorter.tablefilter.likert
+    %thead
+      %tr
+        %th{:width => "15%"}
+          Código
+        %th
+          Ubicación
+        %th
+          ¿Está disponible?
+    %tbody
+    
+      -@aulas_disponibles.each do |a|
+        -i=i+1
+        %tr
+          %td
+            =a.id
+          %td
+            =a.descripcion_completa
+          %td
+            -if a.usada == 1
+              =check_box_tag "aula_marcada[][#{a.id}]", 1, true
+            -else
+              =check_box_tag "aula_marcada[][#{a.id}]", 1
+
+
+  %p= submit_tag 'Guardar'
+    
+%br/
+%br/
+

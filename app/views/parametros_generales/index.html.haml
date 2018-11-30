@@ -1,0 +1,240 @@
+#inscripciones
+  %ul
+    - @tipo_inscripciones.each do |tipo_inscripcion|
+      %li= link_to tipo_inscripcion.descripcion, "##{tipo_inscripcion.id}"
+
+  - if false
+    #NI
+      %h3=  "Programar Nivelaciones"
+      %table.tablesorter.likert
+        %thead
+          %tr
+            %th
+              Descripción del Curso
+            %th
+              Fecha y hora de Prueba Oral
+            %th
+              Fecha y hora de Prueba Escrita
+            %th
+              Opciones
+        %tbody
+          - @inscripciones = Inscripcion.where(:tipo_inscripcion_id => 'NI').sort_by{|i| i.tipo_curso}
+          - @inscripciones.each do |curso|
+            - estado = curso.tipo_estado_inscripcion_curso
+            - estado_clase = estado.nil? ? "" : estado.descripcion
+            - @submit = 'Programar'
+            - @submit = 'Actualizar' if (estado and estado.id.eql? 'PR')
+            - @submit = 'Modificar' if (estado and estado.id.eql? 'AB')
+
+            %tr{:class => estado_clase}
+              %td= curso.tipo_curso.descripcion
+              = form_for(curso,:url=>{:action => 'guardar_inscripcion_idioma'}) do |c|
+                = hidden_field_tag :id, curso.id
+                %td= c.datetime_select :apertura
+                %td= c.datetime_select :cierre
+                %td= button_to @submit
+
+
+  -@tipo_inscripciones.each do |tipo_inscripcion|
+    %div{:id => tipo_inscripcion.id}
+      %h3=  "Programar Inscripciones para #{tipo_inscripcion.descripcion}"
+      %table
+        %tbody.likert
+          %tr
+            %td.abierta Abierta
+            %td.programada Programada
+            %td.cerrada Cerrada
+            %td Sin Información
+
+      %table.tablesorter.likert
+        %thead
+          %tr
+            %th
+              Descripción del Curso
+            %th
+              Fecha y hora de Apertura
+            %th
+              Fecha y hora de Cierre
+            %th
+              Fecha y hora de Apertura Entrega Planilla
+            %th
+              Fecha y hora de Cierre Entrega de Planilla
+            %th
+              Opciones
+        %tbody
+          - @inscripciones = tipo_inscripcion.inscripciones.sort_by{|i| i.tipo_curso}
+          - @inscripciones.each do |curso|
+            - estado = curso.tipo_estado_inscripcion_curso
+            - estado_clase = estado.nil? ? "" : estado.descripcion
+            - @submit = 'Programar'
+            - @submit = 'Actualizar' if (estado and estado.id.eql? 'PR')
+            - @submit = 'Modificar' if (estado and estado.id.eql? 'AB')
+
+            %tr{:class => estado_clase}
+              %td= curso.tipo_curso.descripcion
+              = form_for(curso,:url=>{:action => 'guardar_inscripcion_idioma'}) do |c|
+                = hidden_field_tag :id, curso.id
+                %td= c.datetime_select :apertura
+                %td= c.datetime_select :cierre
+                %td= c.datetime_select :apertura_entrega_planilla
+                %td= c.datetime_select :cierre_entrega_planilla                                
+                %td= button_to @submit
+
+%h3 Variables de Entorno
+= form_tag({:action => "guardar_parametros"}) do
+  %table.tablesorter.tablefilter.likert
+    %thead
+      %tr
+        %th
+          Acción
+        %th
+          SI
+        %th
+          NO
+    %tbody
+      %tr
+        %td
+          ¿Permitir descarga de Planilla de Inscripcion?
+        %td
+
+          =radio_button_tag "descargar_planilla_inscripcion", "SI", (@descargar_planilla_inscripcion.eql? "SI")
+        %td
+          =radio_button_tag "descargar_planilla_inscripcion", "NO", (@descargar_planilla_inscripcion.eql? "NO")
+
+      %tr
+        %td
+          ¿Calificación Abierta?
+        %td
+          -if @califiacion_abierta == "SI"
+            =radio_button_tag "calificacion_abierta","SI",true
+          -else
+            =radio_button_tag "calificacion_abierta","SI",false
+        %td
+          -if @califiacion_abierta == "NO"
+            =radio_button_tag "calificacion_abierta","NO",true
+          -else
+            =radio_button_tag "calificacion_abierta","NO",false
+      %tr
+        %td
+          ¿Listados Abiertos?
+        %td
+          -if @listados_abiertos == "SI"
+            =radio_button_tag "listados_abiertos","SI",true
+          -else
+            =radio_button_tag "listados_abiertos","SI",false
+        %td
+          -if @listados_abiertos == "NO"
+            =radio_button_tag "listados_abiertos","NO",true
+          -else
+            =radio_button_tag "listados_abiertos","NO",false
+      
+  %p= submit_tag 'Guardar', class: :btn
+
+%br
+/ %h3 Programar Apertura inscripción Alumnos Nuevos
+/ %p En construcción
+-#form_tag({:action => "programar_inscripcion_nuevos"}) do
+
+  -# datetime_select ('programar', 'hora')
+  -# submit_tag 'programar'
+
+
+%br
+
+%h3 Capacidad de los Cursos
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th{:width => "40%"}
+        Parámetro
+      %th{:width => "40%"}
+        Valor
+      %th{:width => "20%"}
+        Acción
+  %tbody
+    %tr
+      %td
+        Capacidad Actual
+      %td
+        =@capacidad_cursos
+      %td
+        =link_to_modal "Cambiar",{:action => "cambiar_capacidad_curso_modal",:title =>"Cambiar Capacidad Cursos",:width=>300}
+
+%br/
+%br/
+
+
+%h3 
+  Períodos:
+
+  =button_to_modal_v2 "Nuevo Periodo Mismo Año",{:action => "crear_nuevo_periodo_modal",:title =>"Crear Nuevo Período Mismo Año",:width=>300}, {class: 'btn small'}
+  =" | "
+  =link_to_modal_v2 "Nuevo Periodo Nuevo Año",{:action => "crear_nuevo_periodo_nuevo_ano_modal",:title =>"Crear Nuevo Período Nuevo Año",:width=>300}, {class: 'btn small'}
+  
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th{:width => "40%"}
+        Parámetro
+      %th{:width => "40%"}
+        Valor
+      %th{:width => "20%"}
+        Acción
+  %tbody
+    %tr
+      %td
+        Periodo Inscripción
+      %td
+        =@periodo_inscripcion
+      %td
+        =link_to_modal "Cambiar",{:action => "cambiar_periodo_modal",:title =>"Cambiar Período de Inscripción",:width=>300,:params => {:invocador => "cambiar_periodo_inscripcion"}}
+    %tr
+      %td
+        Horario Inscripción Activo
+      %td
+        =@inscripcion_activa
+      %td
+        =link_to_modal "Cambiar",{:action => "cambiar_inscripcion_activa_modal",:title =>"Cambiar Inscripción Actva",:width=>400}
+    %tr
+      %td
+        Periodo Actual Sabatino
+      %td
+        =@periodo_actual_sabatino
+      %td
+        =link_to_modal "Cambiar",{:action => "cambiar_periodo_modal",:title =>"Cambiar Período Actual Sabatino",:width=>300,:params => {:invocador => "cambiar_periodo_sabatino"}}
+        =#" | "
+        =#link_to_modal "Nuevo Periodo Mismo Año",{:action => "crear_nuevo_periodo_modal",:title =>"Crear Nuevo Período Mismo Año",:width=>300}
+        =#" | "
+        =#link_to_modal "Nuevo Periodo Nuevo Año",{:action => "crear_nuevo_periodo_nuevo_ano_modal",:title =>"Crear Nuevo Período Nuevo Año",:width=>300}
+
+    %tr
+      %td
+        Periodo Actual Semanal
+      %td
+        =@periodo_actual
+      %td
+        =link_to_modal "Cambiar",{:action => "cambiar_periodo_modal",:title =>"Cambiar Período Actual Semanal",:width=>300,:params => {:invocador => "cambiar_periodo_general"}}
+
+
+
+    %tr
+      %td
+        Periodo Anterior
+      %td
+        =@periodo_anterior
+      %td
+        ="-----"
+
+    %tr
+      %td
+        Periodo Calificación
+      %td
+        =@periodo_calificacion
+      %td
+        =link_to_modal "Cambiar",{:action => "cambiar_periodo_modal",:title =>"Cambiar Período de Calificación",:width=>300,:params => {:invocador => "cambiar_periodo_calificacion"}}
+
+
+
+:javascript
+  $("#inscripciones").tabs();
+  $('.btn').button();

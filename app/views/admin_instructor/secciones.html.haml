@@ -1,0 +1,43 @@
+Filtrar Contenido:
+=text_field_tag "filtro"
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th
+        No.
+      %th
+        Nivel
+      %th
+        Idioma
+      %th{:width => "150px"}
+        Curso
+      %th{:width => "150px"}
+        Horario
+      %th{:width => "150px"}
+        Aula
+      %th
+        Sec
+      %th
+        INS
+  %tbody
+    -@secciones.each_with_index do |s,i|
+      %tr
+        %td
+          =i+1
+        %td
+          =s.curso.grado
+        %td
+          =s.idioma.descripcion  
+        %td
+          ="#{s.tipo_nivel.descripcion} (#{s.tipo_categoria.descripcion})"
+        %td
+          =s.horario
+        %td
+          =s.aula_corta  
+        %td
+          =link_to s.seccion_numero, :action=>"nivel4", :controller=> "estado_inscripcion", :seccion => s
+        %td
+          =s.inscritos
+  %br/
+  %br/
+=link_to "<Atrás", :action=>"index"

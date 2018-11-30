@@ -1,0 +1,102 @@
+
+%br/
+Filtrar Contenido:
+=text_field_tag "filtro_particular"
+%br/
+Filtro por Idioma: 
+=collection_select :tipo_curso, :id, @tipos_curso, :descripcion, :descripcion, {:prompt => "-- Todos --", :selected => @filtro}
+%br/
+Filtro por Ubicación: 
+=collection_select :ubicacion, :id, @ubicaciones, :descripcion_corta, :descripcion_corta, {:prompt => "-- Todas --", :selected => @filtro2}
+%br/
+Filtro por Horario: 
+=collection_select :horario, :id, @horarios, :to_s, :to_s, {:prompt => "-- Todos --", :selected => @filtro3}
+
+%br/
+%br/
+%div{:style=>"color:red"}
+    
+  Secciones Cerradas
+%br
+%p= link_to_if (@total_no_confirmados > 0), "liberar todos los cupos del periodo #{session[:parametros][:periodo_actual]} -(#{@total_no_confirmados})", {action: 'liberar_todo', controller: 'estado_inscripcion'}
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th{:width => "5%"}
+        PRE
+      %th{:width => "5%"}
+        INS
+      %th{:width => "10%"}
+        Idioma
+      %th
+        Nivel
+      %th
+        Número de Sección
+      %th{:width => "21%"}
+        Horario
+      %th
+        Operación
+      %th
+        Aula
+      %th
+        Instructor
+  %tbody
+    -@secciones.each do |sec|
+      -if sec.esta_abierta
+        -estilo = "vertical-align:middle"
+      -else
+        -estilo = "color: red;vertical-align:middle"
+      %tr
+        %td{:style => "#{estilo}"}  
+          =sec.preinscritos
+        %td{:style => "#{estilo}"}
+          =sec.inscritos
+        %td{:style => "#{estilo}"} 
+          =sec.tipo_curso.descripcion
+        %td{:style => "#{estilo}"} 
+          =sec.tipo_nivel.descripcion
+        %td{:style => "#{estilo}"} 
+          =sec.seccion_numero
+        %td{:style => "#{estilo}"} 
+          =sec.horario
+        %td{:style => "#{estilo}"} 
+          -if sec.esta_abierta
+            =link_to_modal "Cerrar Sección", {:action => "confirmar_cerrar_seccion",:controller => "admin_seccion", :title =>"Cerrar Sección",:width=>700,:params => {:seccion => sec, :periodo_id => "#{sec.periodo_id}", :idioma_id => "#{sec.idioma_id}", :tipo_categoria_id => "#{sec.tipo_categoria_id}", :tipo_nivel_id => "#{sec.tipo_nivel_id}", :seccion_numero => "#{sec.seccion_numero}", :bloque_horario_id => "#{sec.bloque_horario_id}", :controlador => controller_name, :accion => action_name}}
+          -else
+            =link_to_modal "Abrir Sección", {:action => "confirmar_abrir_seccion",:controller => "admin_seccion", :title =>"Abrir Sección",:width=>700,:params => {:seccion => sec, :periodo_id => "#{sec.periodo_id}", :idioma_id => "#{sec.idioma_id}", :tipo_categoria_id => "#{sec.tipo_categoria_id}", :tipo_nivel_id => "#{sec.tipo_nivel_id}", :seccion_numero => "#{sec.seccion_numero}", :bloque_horario_id => "#{sec.bloque_horario_id}", :controlador => controller_name, :accion => action_name}}
+          %br
+          %br
+          =link_to_modal "Modificar",{:action => "modificar", :controller => "admin_seccion", :title =>"Modificar Sección",:width=>500, :params => {:periodo_id => "#{sec.periodo_id}", :idioma_id => "#{sec.idioma_id}", :tipo_categoria_id => "#{sec.tipo_categoria_id}", :tipo_nivel_id => "#{sec.tipo_nivel_id}", :seccion_numero => "#{sec.seccion_numero}", :bloque_horario_id => "#{sec.bloque_horario_id}"}}
+          %br
+          %br
+          =link_to_modal "Liberar Cupos", {:action => "confirmar_liberar_cupos",:controller => "estado_inscripcion", :title =>"Liberar Cupos",:width=>700, :params => {:seccion => sec, :controlador => controller_name, :accion => action_name}}
+          %br
+          %br
+          =link_to_modal "Eliminar", {:action => "confirmar_eliminar",:controller => "estado_inscripcion", :title =>"Eliminar Sección",:width=>700, :params => {:seccion => sec, :controlador => controller_name, :accion => action_name}}
+
+
+
+
+          
+        %td{:style => "#{estilo}"} 
+
+          -hor = sec.horario_seccion
+          -hor = hor.sort_by{|x| x.dia.orden}
+
+          -hor.each do |hs|
+            -if hs.aula_id
+              =link_to_modal "#{hs.dia_aula}",{:action => "cambiar_aula", :controller => "estado_inscripcion",:title =>"Modificar Aula",:width=>920, :params => {:seccion_horario => hs, :periodo => @periodo, :idioma => @idioma_cat, :categoria => @categoria_id, :controlador => controller_name, :accion => action_name}}
+            -else
+              =link_to_modal "-- NO ASIGNADA --",{:action => "cambiar_aula",:title =>"Modificar Aula",:width=>920, :params => {:seccion_horario => hs, :periodo => @periodo, :idioma => @idioma_cat, :categoria => @categoria_id, :controlador => controller_name, :accion => action_name}}
+            %br/
+        %td{:style=> "vertical-align:middle"}
+          -if sec.instructor
+            =link_to_modal sec.instructor.descripcion,{:action => "cambiar_instructor", :controller => "estado_inscripcion", :title =>"Modificar Instructor",:width=>700, :params => {:seccion => sec, :controlador => controller_name, :accion => action_name}}
+          -else
+            =link_to_modal "-- NO ASIGNADO --",{:action => "cambiar_instructor", :controller => "estado_inscripcion", :title =>"Modificar Instructor",:width=>700, :params => {:seccion => sec, :controlador => controller_name, :accion => action_name}}
+
+
+
+
+%br/
+%br/

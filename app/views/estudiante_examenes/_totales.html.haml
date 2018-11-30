@@ -1,0 +1,13 @@
+.well
+	%h2= @titulo
+	%table.well
+		%thead
+			=# @estudiante_examen.tiempo.min if @estudiante_examen.tiempo
+			=# @total_actividades
+			=# @total_preguntas
+			=#d @total_puntos
+			=# @total_respuestas_correctas
+			%tr
+				%td Puntaje Total Obtenido:
+				%td
+					%b= total_and_sobre_20 @estudiante_examen

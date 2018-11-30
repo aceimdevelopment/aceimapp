@@ -1,0 +1,49 @@
+.contenedor
+  .subcontenedorizquierdo
+    -if flash[:mensaje]
+      #mensaje-flash{:style => "display:none;"}
+        %p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+          %span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+          #{flash[:mensaje]}  
+      =javascript_tag "$(document).ready(function(){ $('#mensaje-flash').show('pulsate',{},'fast'); });"
+    %div
+      .titulo
+        #mensaje-flash{:style => "display:none;"}
+          %p{ :class => "ui-state-highlight ui-corner-all", :style => "margin-top: 20px; padding: 3px 3px" }
+            %span.ui-icon.ui-icon-info{ :style =>"display:inline-block;" }
+            #{"VISUALIZACIÓN DE LA CARTELERA"}  
+        =javascript_tag "$(document).ready(function(){ $('#mensaje-flash').show('pulsate',{},'fast'); });"
+        =@content.contenido.html_safe
+        %br/
+        =link_to "Seguir Editando", :action=>"modificar"
+        %br/
+        %br/
+        =link_to "Ir a Principal", :action=>"index", :controller => "principal_admin"
+
+  .subcontenedorderecho
+    =form_tag({:action => "validar"}, :class => "formulario") do
+      %div{:class => "titulo center"}
+        %h2 Inicio de Sesión
+        -if flash[:mensaje_login]
+          #error-login
+            =flash[:mensaje_login]
+      =label :usuario, :cedula, "Cédula de Identidad"
+      %br/
+      =text_field :usuario, :cedula, :size => 10, :autofocus => "true"
+      %br/
+      %br/
+      =label :usuario, :clave, "Contraseña"
+      %br/
+      =password_field :usuario, :clave, :size => 10
+      %br/
+      %br/
+      =submit_tag "Ingresar", :disabled => true      
+    %br/
+    %br/  
+    %br/
+    %br/
+    -if ParametroGeneral.inscripcion_nuevos_abierta
+      %div{:class => "titulo center"}
+        %h2 Inscripciones Nuevos
+      
+      =button_to "Nuevo usuario",{ :action => "autenticacion_nuevo", :controller => "inicio"}, :disabled => true

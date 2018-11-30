@@ -1,0 +1,8 @@
+=form_tag url_for(:action => "reporte_estadisticas_generales_por_idioma", :controller => "reportes") do
+  %h4 Seleccione un Idioma
+  Idiomas:
+  =collection_select :idioma,nil, @idiomas,:id, :descripcion
+  %br
+  %br
+  =submit_tag :Aceptar
+  =button_to_function "Cancelar","aceim.cerrar_modal();"

@@ -1,0 +1,7 @@
+
+
+$(".span1").html("")
+$(".span1").removeClass("ui-state-highlight ui-corner-all")
+var ele = $("#pregunta_#{@pregunta.id}")
+ele.addClass('ui-state-highlight ui-corner-all')
+ele.html("Preguta actualizado. Total de Puntos del Examen: #{@examen.puntaje_total} / 80")

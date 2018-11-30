@@ -1,0 +1,8 @@
+= form_tag({:controller => 'adjuntos',:action => 'create'}, {:multipart => true, :class => 'form'}) do
+	=hidden_field_tag "actividad_id", @actividad.id
+	=hidden_field_tag "examen_id", @examen_id
+	%fieldset
+		%legend Carga de Archivo
+		%label Seleccione el archivo a importar (recuerde que sólo se permiten archivos de audios e imágenes):
+		= file_field 'archivo', 'datafile', {:required => true, :class => 'btn small', :accept => "image/*,audio/*"}
+		= submit_tag "Cargar", {:class => 'btn small', :disable_with => "Cargando..."}

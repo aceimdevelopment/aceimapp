@@ -1,0 +1,16 @@
+%h3
+  Se procederá a Eliminar la Pareja:
+  %br/
+  %br/
+  =@aula1.tipo_dia.descripcion+": "
+  ="("+@aula1.aula_id+")"
+  =@aula1.aula.descripcion+" - "
+  =@aula1.tipo_bloque.tipo_hora.descripcion_hora2
+  %br/
+  =@aula2.tipo_dia.descripcion+": "
+  ="("+@aula2.aula_id+")"
+  =@aula2.aula.descripcion+" - "
+  =@aula2.tipo_bloque.tipo_hora.descripcion_hora2
+
+=link_to "Eliminar", :action=>"eliminar_pareja", :pareja =>@aula1.pareja, :tipo_dia => @aula1.tipo_dia_id, :tipo_hora => @aula1.tipo_hora_id, :aula_id => @aula1.aula_id
+=link_to_function "Cancelar","aceim.cerrar_modal()"

@@ -1,0 +1,187 @@
+=form_for(@seccion,:url=>{:action => "nuevo_guardar"}) do |s|
+  -if @seccion.errors.any?
+    %div#error_explanation
+      %ul
+        -@seccion.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg
+            
+  %fieldset
+    %legend Registro de Nueva Sección para el período #{@periodo}
+    %p
+      %label
+        Idioma
+        %span.req *
+      -if (@idioma_id=="IN")
+        =@idioma.descripcion + " - " + @categoria.descripcion
+      -else
+        =@idioma.descripcion
+
+      =s.hidden_field :periodo, :value => @periodo
+      =s.hidden_field :idioma, :value => @idioma_id
+      =s.hidden_field :categoria, :value => @categoria_id
+      =s.hidden_field :idioma_cat, :value => @idioma_cat.to_param
+
+
+    %p
+      %label
+        Nivel
+        %span.req *
+      =s.collection_select :tipo_nivel_id, TipoNivel.select("curso.*, tipo_nivel.*").joins(:curso).where(["curso.idioma_id = ? AND curso.tipo_categoria_id = ? AND curso.tipo_nivel_id != 'NI' AND curso.tipo_nivel_id != 'BBVA' AND curso.grado != ?", @idioma_id, @categoria_id, 0]).order("grado"), :id, :descripcion
+
+    %p
+      %label
+        Horario
+      =select("horario","id", @horarios.collect{|h| [h["total"], h["dias"]]}, :include_blank => "Seleccione...", :class => 'mostrar_ubicacion_segun_horario ubicacion' )
+     
+    %p
+      %label
+        Ubicación
+        #ubicacion
+          =select("ubicacion", "ubicacion_id", [], :include_blank => "Seleccione...", :class => 'mostrar_ubicacion_segun_horario ubicacion')
+
+
+    %p
+      %label
+        Cantidad de Secciones
+        %span.req *
+      =select( "cantidad", "id", { 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5,6 => 6, 7 => 7, 8 => 8, 9 => 9,10 => 10, 11 => 11, 12 => 12, 13 => 13, 14 => 14, 15 => 15}.sort)
+
+
+
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =s.submit "Registrar"
+
+%br/
+%br/
+
+
+
+
+%fieldset
+  -if (@idioma_id=="IN")
+
+    %legend= "Total de secciones creadas para " + @idioma.descripcion + " - " + @categoria.descripcion
+  -else
+
+    %legend= "Total de secciones creadas para " + @idioma.descripcion
+
+
+  %table.tablesorter.likert
+    %thead
+      %tr
+        %th{:width => "17%"}
+          Nivel
+
+        -@horarios.each do |h|
+          %th{:width => "13%"}
+            =h["total"]
+
+        %th
+          Número Total de Secciones
+    
+
+    %tbody
+      -@niveles.each do |n|
+
+        -total_secciones = 0
+
+        %tr
+          %td
+            =n.descripcion
+
+          -total_secciones = 0
+
+          -@horarios.each do |h|
+
+            -dia1, resto = h["dias"].split(".")
+
+            -if(dia1 == "SA") 
+              -hora = resto
+              -dia2 = dia1
+            -else
+              -dia1, dia2, hora = h["dias"].split(".")
+
+            -bloque = BloqueHorario.where(:tipo_dia_id1 => dia1, :tipo_dia_id2 => dia2, :tipo_hora_id => hora).first
+
+            -total = Seccion.where(:periodo_id => @periodo, :idioma_id => @idioma_id, :tipo_categoria_id => @categoria, :tipo_nivel_id => n.id, :bloque_horario_id => bloque.id).count
+
+            -total_secciones = total_secciones + total
+
+            -if total != 0
+              -estilo = ""
+            -else
+              -estilo = "color: red"
+
+            %td{:style => "#{estilo}"} 
+            
+              -if (total == 1)
+                =total.to_s + " sección"
+              -else
+                =total.to_s + " secciones"   
+
+
+          -if total_secciones != 0
+            -estilo = ""
+          -else
+            -estilo = "color: red"
+
+          %td{:style => "#{estilo}"} 
+            =total_secciones
+          
+%br/
+%br/
+
+
+
+Filtrar Contenido:
+=text_field_tag "filtro"
+%br/
+%br/
+
+
+-if (@idioma_id=="IN")
+  ="Secciones creadas para " + @idioma.descripcion + " - " + @categoria.descripcion
+-else
+  ="Secciones creadas para " +@idioma.descripcion
+
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th{:width => "25%"}
+        Idioma
+      %th
+        Nivel
+      %th
+        Número de Sección
+      %th
+        Horario
+      %th
+        Aula
+
+
+  %tbody
+
+    -@secciones.each do |sec|
+      %tr
+        %td
+          =sec.tipo_curso.descripcion
+        %td
+          =sec.tipo_nivel.descripcion
+        %td
+          =sec.seccion_numero
+        %td
+          =sec.horario
+        %td
+          -sec.horario_seccion.each do |hs|
+            -if hs.aula_id
+              =link_to_modal "#{hs.dia_aula}",{:action => "cambiar_aula", :controller => "estado_inscripcion",:title =>"Modificar Aula",:width=>920, :params => {:seccion_horario => hs, :periodo => @periodo, :idioma => @idioma_cat, :categoria => @categoria_id, :controlador => controller_name, :accion => action_name}}
+            -else
+              =link_to_modal "-- NO ASIGNADA --",{:action => "cambiar_aula",:title =>"Modificar Aula",:width=>920, :params => {:seccion_horario => hs, :periodo => @periodo, :idioma => @idioma_cat, :categoria => @categoria_id, :controlador => controller_name, :accion => action_name}}
+            %br/
+
+

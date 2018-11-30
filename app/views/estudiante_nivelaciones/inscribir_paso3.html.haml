@@ -1,0 +1,41 @@
+=form_for(@historial,:url=>{:action => "paso3_guardar"}) do |f|
+  -if @historial.errors.any?
+    %div#error_explanation
+      %b
+        =pluralize(@historial.errors.count, "error") 
+        en el formulario impiden que éste Usuario sea registrado:
+      %ul
+        -@historial.errors.full_messages.each do |msg|
+          %li
+            *
+            =msg 
+
+  %fieldset
+    %legend Datos de la Inscripcion
+    %p
+      %label
+        Estudiante:
+      =@historial.usuario.descripcion
+    %p
+      %label
+        Curso:
+      =@historial.estudiante_curso.tipo_curso.descripcion
+      =@historial.tipo_nivel.descripcion
+      =f.hidden_field :periodo_id
+      =f.hidden_field :usuario_ci
+      =f.hidden_field :idioma_id
+      =f.hidden_field :tipo_categoria_id
+      =f.hidden_field :tipo_nivel_id
+      =f.hidden_field :tipo_convenio_id
+      =f.hidden_field :numero_deposito
+
+    %p
+      %label
+        Secciones Disponibles:        
+      = f.collection_select :seccion_numero, @secciones, :seccion_numero, :descripcion_inscritos
+      %span.req *
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =submit_tag "Preinscribir", :confirm => "¿Está seguro de preinscribir esta sección?"

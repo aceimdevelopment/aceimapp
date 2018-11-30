@@ -1,0 +1,84 @@
+#instructores
+  %ul
+    %li= text_field_tag "filtro_particular", nil, :placeholder => "Filtrar contenido..."
+    %li
+      = link_to "Con cursos en el Período Actual", "#actual"
+    %li
+      = link_to "Otros", "#otros"
+
+  %div{:id => "actual"}
+
+    %table.tablesorter.tablefilter.likert
+      %thead
+        %tr
+          %th No.
+          %th Nombre y Apellido
+          %th Cédula
+          %th Correo Electrónico
+          %th Teléfono Móvil
+          %th Domina
+          - if session[:administrador].tipo_rol_id < 3
+            %th Contraseña
+          %th Secciones
+      %tbody
+        -@instructor_con_cursos_periodo_actual.each_with_index do |s,i|
+          %tr
+            %td=i+1
+            %td=link_to s.usuario.nombre_completo, :action => "modificar", :ci => s.usuario_ci
+            %td=s.usuario.ci
+            %td=s.usuario.correo
+            %td=s.usuario.telefono_movil
+            %td=s.domina_descripcion
+            - if session[:administrador].tipo_rol_id < 3
+              %td= s.usuario.contrasena
+
+            %td
+              =link_to "#{s.secciones_que_dicta(@periodo_actual.id).count}", :action => "secciones", :ci => s.usuario_ci
+
+
+
+  %div{:id => "otros"}
+
+    %table.tablesorter.tablefilter.likert
+      %thead
+        %tr
+          %th
+            No.
+          %th
+            Nombre y Apellido
+          %th
+            Cédula
+          %th
+            Correo Electrónico
+          %th
+            Teléfono Móvil
+          %th
+            Domina
+          %th
+            Secciones
+      %tbody
+        -@instructor_sin_cursos_periodo_actual.each_with_index do |s,i|
+          %tr
+            %td
+              =i+1
+            %td
+              =link_to s.usuario.nombre_completo, :action => "modificar", :ci => s.usuario_ci
+            %td
+              =s.usuario.ci
+            %td
+              =s.usuario.correo
+            %td
+              =s.usuario.telefono_movil
+            %td
+              =s.domina_descripcion
+            %td
+              =link_to "#{s.secciones_que_dicta(@periodo_actual.id).count}", :action => "secciones", :ci => s.usuario_ci
+
+
+=button_to "Agregar nuevo instructor", :action=>"nuevo"
+=link_to "Generar pdf", :action=>"generar_pdf_instructor"
+=link_to "Generar xls", :action=>"generar_xls_instructor"
+
+
+:javascript
+  $("#instructores").tabs();

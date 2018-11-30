@@ -1,0 +1,9 @@
+%h3
+  Se procederá a cerrar la sección:
+  %br/
+  =" - #{@seccion.descripcion}"
+
+%br/
+%br/
+=link_to "Cerrar Sección", :action=>"cerrar", :seccion => @p, :horario => @bloque_horario_id, :accion => @accion, :controlador => @controlador
+=link_to_function "Cancelar","aceim.cerrar_modal()"

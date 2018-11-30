@@ -1,0 +1,18 @@
+%p{:style => "color:red"}
+  =@alerta
+%h3
+  Se procederá a liberar cupos de la sección:
+  %br/
+  =" - #{@seccion.descripcion}"
+  %br/
+  - unless @historiales.size==0
+    %br/
+    = "Quitando del curso a los siguientes estudiantes preinscritos:"
+    %br/
+    - @historiales.each do |h|
+      = " - #{h.usuario.descripcion}"
+      %br/
+%br/
+%br/
+=link_to "Liberar", :action=>"liberar_cupos", :seccion => @seccion, :accion => @accion, :controlador => @controlador
+=link_to_function "Cancelar","aceim.cerrar_modal()"

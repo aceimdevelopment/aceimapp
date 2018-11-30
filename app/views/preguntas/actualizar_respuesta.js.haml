@@ -1,0 +1,7 @@
+
+$("#puntaje_total").html("Puntaje Total: #{@examen.puntaje_total} / 80")
+$(".span2").html("")
+$(".span2").removeClass("ui-state-highlight ui-corner-all")
+var ele = $("#respuesta_#{@respuesta.id}")
+ele.addClass('ui-state-highlight ui-corner-all')
+ele.html("Respuesta actualizada. Total de Puntos del Examen: #{@examen.puntaje_total} / 80")

@@ -1,0 +1,41 @@
+%table.tablesorter.tablefilter.likert
+  %thead
+    %tr
+      %th{:width => "7%"}
+        PRE
+      %th{:width => "7%"}
+        INS
+      %th{:width => "16%"}
+        Idioma
+      %th{:width => "20%"}
+        Nivel
+      %th{:width => "10%"}
+        Número de Sección
+      %th{:width => "25%"}
+        Horario
+      %th{:width => "15%"}
+        Ver
+  %tbody
+    -@secciones.each do |sec|
+      %tr
+        %td
+          =sec.preinscritos
+        %td
+          =sec.inscritos
+        %td 
+          =sec.tipo_curso.descripcion
+        %td
+          =sec.tipo_nivel.descripcion
+        %td
+          =sec.seccion_numero
+        %td
+          =sec.horario
+        %td
+          -if sec.inscritos > 0
+            =link_to "Ver Alumnos", :controller=>"estado_inscripcion",:action=>"nivel4", :seccion => sec
+          -else
+            ="------"
+
+
+%br/
+%br/

@@ -1,0 +1,66 @@
+%table.tablesorter.liker
+  %thead
+    %tr
+      %th
+        Período
+      %th
+        Descripción
+      %th
+        Aula
+      %th
+        Horarios
+      %th
+        Instructor
+      %th{:width => "10%"}
+        Convenio
+      %th{:width => "12%"}
+        Estado
+      %th{:width => "40%"}
+        Opciones
+  %tbody
+    -@historial_actual.each do |h|
+      -session[:tipo_curso]="#{h.tipo_curso.id}"
+      %tr
+        %td
+          =h.periodo_id
+        %td
+          =h.descripcion_completa
+        %td
+          - if h.seccion.aula
+            =h.seccion.aula_corta
+          - else
+            No Asignada
+        %td
+          =h.seccion.horario
+        %td
+          - if h.seccion.instructor
+            =h.seccion.instructor.descripcion
+          - else
+            No Asignado
+        %td
+          =h.tipo_convenio.descripcion
+        %td
+          =h.tipo_estado_inscripcion.descripcion
+        %td
+
+          -if h.tipo_estado_inscripcion_id=="PRE"
+            
+            =link_to_modal_v2 "Confirmar",{:action => "confirmar_inscripcion",:title =>"Confirmar Inscripcion",:width=>600, :params=>{:idioma_id=>"#{h.idioma_id}", :tipo_categoria_id=>"#{h.tipo_categoria_id}", :usuario_ci=>"#{h.usuario_ci}", periodo_id: h.periodo_id}}, {:class => 'btn small'}
+          -else
+            = raw h.descripcion_pago
+          =link_to_modal_v2 "Modificar Seccion",{:action => "cambiar_seccion",:title =>"Modificar Seccion",:width=>600, :params=>{:idioma_id=>"#{h.idioma_id}", :tipo_categoria_id=>"#{h.tipo_categoria_id}", :usuario_ci=>"#{h.usuario_ci}", periodo_id: h.periodo_id}}, {:class => 'btn_editar small'}
+          =link_to_modal_v2 "Eliminar",{:action => "confirmar_eliminar",:title =>"Confirmar Eliminación",:width=>500, :params=>{historial_id: h.id}}, {:class => 'btn_eliminar small'}
+          =link_to " Planilla", {:action => "planilla_inscripcion", :controller => "inscripcion_admin", :historial => h.id.to_s}, {:class => 'btn_descargar small'}
+          = link_to_modal_v2 " Constancia", {:action => "remitente",:title =>"Generar Constancia de Estudio",:width=>600, :params=>{:tipo_curso => h.tipo_curso}}, {:class => 'btn_descargar small'}
+          = link_to_modal_v2 "Congelar",{:action => "confirmar_congelar_curso",:title =>"Confirmar Eliminación",:width=>500, :params=>{:idioma_id=>"#{h.idioma_id}", :tipo_categoria_id=>"#{h.tipo_categoria_id}", :usuario_ci=>"#{h.usuario_ci}"}}, {:class => 'btn_calendario small'}
+          - @posibles_examenes = h.curso.examenes.where(:periodo_id => h.periodo_id)
+
+          -if @posibles_examenes.count > 0
+            %br
+            - @estudiante = h.usuario.estudiante
+            - @posibles_examenes.each do |pe|
+              -id = "#{@estudiante.usuario_ci},#{pe.id}" 
+              - unless EstudianteExamen.exists? id
+                %br
+                = link_to "Generar #{pe.descripcion_simple}", "/aceim/estudiante_examenes/create/#{id}", {:class => 'btn small'}
+

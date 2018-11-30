@@ -1,0 +1,10 @@
+=form_tag url_for(:action => "cambiar_periodo", :controller => "parametros_generales") do
+  %h4 Seleccione un Periodo
+  Periodos:
+  =collection_select :periodo,:id,@periodos,:id,:id, :selected => session[:parametros][:periodo_actual]
+  =hidden_field_tag :metodo_invocador, @metodo_invocador
+  %br  
+  %br
+  %br
+  =submit_tag :Aceptar
+  =button_to_function "Cancelar","aceim.cerrar_modal();"

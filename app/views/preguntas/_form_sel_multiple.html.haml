@@ -1,0 +1,50 @@
+%div.well.well_small{:id => "form_pregunta_#{@actividad.id}", :class => 'form', :style => 'display:none;'}
+	%h2= "Nueva Preguta/Ítem:"
+	= form_tag "/aceim/preguntas/agregar_sel_multiple" do
+		=  hidden_field_tag :actividad_id, @actividad.id 
+		=  hidden_field_tag :examen_id, @examen.id if @examen
+		=  hidden_field_tag "pregunta[actividad_id]", @actividad.id 
+		%table
+			%tr.req
+				%td.derecha.separado
+					%b= "*Pregunta/Ítem:"
+				%td{:style => 'width: 100%;'}
+					= text_area_tag "pregunta[valor]", nil, {:style => 'width: 100%;', :required => true}
+			%tr
+				%td.separado
+					%b Opciones:
+				%td
+
+					.div{:id => "input_fields_wrap_multisel_#{@actividad.id}"}
+						%div
+							= text_field_tag nil, nil, {:placeholder => 'Opción', :name => "opciones[]", :style => 'width: 300px;'}
+							= link_to " Opciones" , 'javascript:void(0)' , :class => "btn_agregar small", :onclick => "agregar_opcion_multisel(#{@actividad.id});"
+
+			%tr.req
+				%td.derecha.separado
+					%b= "*Respuesta Correcta:"
+				%td{:style => 'width: 100%;'}
+					= text_field_tag "respuesta[valor]", nil, {:placeholder => 'Respuesta Correcta', :style => 'width: 300px;', :required => true}
+
+			%tr.req
+				%td.derecha.separado
+					%b= "*Puntaje:"
+				%td
+					= number_field_tag "respuesta[puntaje]", 2, {:min => 1, :max => 20, :step => 0.5, :required => true}
+
+		%table
+			%tr
+				%td
+					%input.btn_agregar.small{:type => 'submit', :value => 'Agregar Pregunta/Ítem', :name => 'commit'}
+	
+.division
+= link_to "Agregar Pregunta/Ítem" , 'javascript:void(0)' , :class => "btn_agregar small", :onclick => "$(form_pregunta_"+@actividad.id.to_s+").show('slow'); $(this).remove();" 
+
+
+:javascript
+
+	function agregar_opcion_multisel(actividad_id){
+
+		$("#input_fields_wrap_multisel_"+actividad_id).append('<div><input type="text" style="width: 300px;" placeholder="Opción" name="opciones[]"/></div>'); //add input box
+
+	};

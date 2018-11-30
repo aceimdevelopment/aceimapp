@@ -1,0 +1,32 @@
+=form_tag :action => "paso2_guardar" do
+  %fieldset
+    %legend Horarios
+    %p
+      %label
+        Curso
+      =@ec.tipo_curso.descripcion
+    %p
+      %label
+        Nivel
+      =@tipo_nivel.descripcion
+    %p
+      %label
+        Secciones Disponibles
+        %span.req *
+        
+      =#collection_select :datos, :seccion, @secciones, :id, :descripcion_inscritos, {prompt: true}, {class: 'red'}
+
+      .req (Secciones en rojo pertenecen a horario de inscripción distinto al activo en este momento)
+      %select#datos_seccion{:name => "datos[seccion]"}
+        %option{value: ""} Por favor seleccione
+        - @secciones.each do |s| 
+          - clase = ""
+          - clase = "red" unless (s.es_horario_inscripcion? @horario_inscripcion_activo)
+          %option{value: "#{s.id}", class: clase}= s.descripcion_inscritos 
+
+  %p 
+    %span.req *  
+    Campos Obligatorios
+  %p
+    =submit_tag "Preinscribir", :confirm => "¿Está seguro de preinscribir esta sección?"
+%br/

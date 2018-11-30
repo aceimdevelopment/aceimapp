@@ -1,0 +1,36 @@
+%p Elija las aulas que forman pareja (de dos en dos) y presione el botón guardar para ir formando los pares de aulas.
+%br
+%table.tablesorter.tablefilter.likert
+	%thead
+		%tr
+			%th{:width => "15%"}
+				Aula
+			%th
+				Día
+			%th
+				Horario
+			%th
+				Pareja
+
+	%tbody
+		= form_tag "../admin_aula/emparejar_aulas_manualmente" do
+			-@aulas_sin_pareja.each do |asp|
+				%tr  
+					%td
+						=asp.aula_id
+					%td
+						=asp.tipo_dia_id
+					%td
+						=asp.tipo_hora_id
+					%td
+						=check_box_tag "pareja_aula[][#{asp.aula_id}][#{asp.tipo_dia_id}][#{asp.tipo_hora_id}]", 1
+
+			%p= submit_tag 'Guardar'
+
+%br/
+%br/
+
+=link_to "<Atrás", :action => "index"
+
+
+

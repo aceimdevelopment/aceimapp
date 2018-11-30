@@ -1,0 +1,16 @@
+%div{:id => "segmento_#{@segmento.id}"}
+
+	%ol
+		- @preguntas.each_with_index do |pregunta,i|
+
+			%li
+				%p
+					= "#{pregunta.clave}"
+					= link_to 'Eliminar pregunta', {:action => 'eliminar_pregunta',:id => pregunta.id}, :data =>  { :confirm => '¿Está seguro?' }, :class => "btn small", :style => 'background-color: lightsalmon;'
+				%p= "".ljust(80, '_')
+
+				%p{:style=> 'text-decoration: underline;'}
+					= #{}"R= #{pregunta.respuesta.to_s.ljust(50, '_')}"
+					=# link_to 'Eliminar pregunta', '#', :data =>  { :confirm => '¿Está seguro?' }, :class => "btn small", :onclick => "return eliminar_pregunta(#{pregunta.id}, #{@segmento.id})"
+					
+.division

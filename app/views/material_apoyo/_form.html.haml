@@ -1,0 +1,24 @@
+= form_tag({:action => 'create'}, :multipart => true) do
+
+  %fieldset
+    %legend Carga de Archivo:
+
+    %label Seleccione el archivo a importar:
+    = file_field 'archivo', 'datafile', {:required => true, :class => 'btn'}
+
+  %fieldset
+    = "Selecione Cursos a los cuales quiere que esté disponible este material"
+    %table.likert
+      %thead
+        %tr
+          %th Curso
+          %th
+
+      %tbody
+        - @cursos.each do |curso|
+          %tr
+            %td= curso.descripcion
+            %td= check_box_tag "curso_ids[#{curso.id}]", true
+  .actions
+    = submit_tag 'Save', {:class => 'btn btn-success', :disable_with => "Cargando..."}
+
