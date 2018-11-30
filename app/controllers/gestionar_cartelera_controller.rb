@@ -24,4 +24,8 @@ class GestionarCarteleraController < ApplicationController
 		render :layout => 'visitante'
 	end
 
+  def validar
+    
+  end
+
 end

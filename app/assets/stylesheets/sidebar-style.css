@@ -28,10 +28,11 @@ a, a:hover, a:focus {
 
 #sidebar {
     /* don't forget to add all the previously mentioned styles here too */
-	background: url(encabezado_bg.gif) repeat-x center bottom;
-    /*background: #ffc107 !important;*/
+	/*background: url(encabezado_bg.gif) repeat-x center bottom;*/
+    background: #ffc107 !important;
     color: #fff;
     transition: all 0.3s;
+    font-size: smaller;
 }
 
 #sidebar .sidebar-header {
@@ -54,17 +55,34 @@ a, a:hover, a:focus {
     font-size: 1.1em;
     display: block;
 }
+#sidebar ul li ul li a {
+    color: #ffc107;
+}
+
 #sidebar ul li a:hover {
     color: #7386D5;
     background: #fff;
+    font-size: larger;
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #007bff;
 }
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: #007bff;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
 }

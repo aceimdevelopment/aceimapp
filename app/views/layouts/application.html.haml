@@ -3,6 +3,8 @@
   %head
     %title ACEIM - Escuela de Idiomas Modernos  
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %meta{:name => 'viewport', :content =>  "width=device-width, initial-scale=1, shrink-to-fit=no"}
+
     %meta{:charset => "utf-8"}
     %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
     = favicon_link_tag 'logo.ico'
@@ -22,21 +24,24 @@
           Escuela de Idiomas Modernos
           %br
           ACEIM
-    - if controller_name.eql? 'inicio' and action_name.eql? 'index'
+    .flash= render 'layouts/message'
+    - unless controller_name.eql? 'inicio' and action_name.eql? 'index' and session[:usuario_ci].nil?
+      .wrapper 
+        = render 'layouts/sidebar'
+        #content
+          %nav.navbar.navbar-dark.bg-light
+            .container-fluid
+              %button#sidebarCollapse.btn.btn-info{:type => "button"}
+                %i.fas.fa-align-left
+                %span Menú
+          = yield
+    - else
       .bg-warning
         = render 'cargar_sesion'
-    - else
-      %nav.navbar.navbar-dark.bg-warning
-        =#image_tag 'aceim.png', class: 'd-inline-block align-top w-auto p-3'
-        =#OJO: Acá debe ir el buscador de usuarios o estudiantes
-    - unless controller_name.eql? 'inicio' and action_name.eql? 'index' and session[:usuario_ci].nil?
-      = render 'layouts/sidebar'
-    .wrapper.container 
-      = render 'layouts/message'
-      = yield
+      .container    
+        = yield
 
     .fixed-bottom#pie
-      
       CIUDAD UNIVERSITARIA DE CARACAS - PATRIMONIO CULTURAL DE LA HUMANIDAD
       %br 
       Ciudad Universitaria de Caracas, Galpón 7, Frente a Farmacia. Telf.: (0212) 6052982

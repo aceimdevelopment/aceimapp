@@ -1,7 +1,13 @@
-%div
+.well
 	%h1.bd-title Cartelera
 	= form_tag({:controller => "cartelera", :action => "save"},{:class => 'form'}) do
 		.form-group
 			=text_area_tag :text, @cartelera.contenido, {'data-provider': :summernote, class: 'form-control'}
 			%br
 			= submit_tag 'Guardar', class: 'btn btn-primary'
+
+%br			
+%br			
+%br
+
+%span.btn.lg-btn Hola
