@@ -40,13 +40,12 @@ class ParametroGeneral < ApplicationRecord
   end
 
   def self.capacidad_curso
-    ide = ParametroGeneral.first(:conditions=>["id = ?", "CAPACIDAD_CURSO"]).valor.to_i
+    ide = (ParametroGeneral.find 'CAPACIDAD_CURSO').valor.to_i
   end
 
   def self.periodo_inscripcion
     ide = ParametroGeneral.find "PERIODO_INSCRIPCION"
     Periodo.find ide.valor
-
   end
 
   def self.periodo_anterior
@@ -80,7 +79,8 @@ class ParametroGeneral < ApplicationRecord
   end
 
   def self.monto_planilla
-     monto_planilla = ParametroGeneral.first(:conditions=>["id = ?", "COSTO_PLANILLA"]).valor.to_i
+    monto_planilla = (ParametroGeneral.find 'COSTO_PLANILLA').valor.to_i
+
   end
 
   def self.inscripcion_ninos_abierta                                          
@@ -89,27 +89,27 @@ class ParametroGeneral < ApplicationRecord
 
 
   def self.costo_ninos_i
-    ide = ParametroGeneral.first(:conditions=>["id = ?", "COSTO_NINOS"]).valor.to_i
+    ide = (ParametroGeneral.find 'COSTO_NINOS').valor.to_i
   end
 
   def self.costo_examen_i
-    ide = ParametroGeneral.first(:conditions=>["id = ?", "COSTO_EXAMEN"]).valor.to_i
+    ide = (ParametroGeneral.find 'COSTO_EXAMEN').valor.to_i
   end
 
   def self.costo_nuevos_i
-    ide = ParametroGeneral.first(:conditions=>["id = ?", "COSTO_NUEVOS"]).valor.to_i
+    ide = (ParametroGeneral.find 'COSTO_NUEVOS').valor.to_i
   end
 
   def self.costo_ninos
-    ide = ParametroGeneral.first(:conditions=>["id = ?", "COSTO_NINOS"]).valor.to_f
+    ide = (ParametroGeneral.find 'COSTO_NUEVOS').valor.to_f
   end
 
   def self.costo_examen
-    ide = ParametroGeneral.first(:conditions=>["id = ?", "COSTO_EXAMEN"]).valor.to_f
+    ide = (ParametroGeneral.find 'COSTO_EXAMEN').valor.to_f
   end
 
   def self.costo_nuevos
-    ide = ParametroGeneral.first(:conditions=>["id = ?", "COSTO_NUEVOS"]).valor.to_f
+    ide = (ParametroGeneral.find 'COSTO_NUEVOS').valor.to_f
   end
 
   def self.programar_apertura_nuevos (minutos)

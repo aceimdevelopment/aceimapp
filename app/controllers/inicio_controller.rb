@@ -6,7 +6,6 @@ class InicioController < ApplicationController
 # layout "visitante"
   
   def index
-
 		reg = ContenidoWeb.where(:id => 'INI_CONTENT').first
     @content = reg.contenido
     @tipo_cursos = TipoCurso.where("idioma_id != 'OR' or idioma_id != 'BBVA' or idioma_id != 'NI'")
@@ -52,7 +51,7 @@ class InicioController < ApplicationController
 
       if roles.size == 0
         info_bitacora "No tiene roles el usuario #{login}"
-        flash[:error] = "Usuario sin rol"
+        flash[:danger] = "Usuario sin rol"
         redirect_to :action => "index"          
         return
       elsif roles.size == 1 
@@ -71,11 +70,11 @@ class InicioController < ApplicationController
     @usuario = Usuario.where(:ci => login).first
 
     if @usuario and !@usuario.activo
-      flash[:mensaje] = "Usuario Bloqueado. Las Autoridades sarán notificadas de su intento de ingreso."
+      flash[:danger] = "Usuario Bloqueado. Las Autoridades sarán notificadas de su intento de ingreso."
     end
 
     info_bitacora "Error en el login o clave #{login}"
-    flash[:error] = "Error en login o clave"
+    flash[:danger] = "Error en cédula o contraseña"
 
     redirect_to :action => "index"
   end  

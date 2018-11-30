@@ -1,3 +1,4 @@
+
 html{
 	background: #ACCEF3;	
 }
@@ -62,11 +63,21 @@ footer, header, nav, section, video, object, output {
 
 #pie {	
 	padding: 10px 0 10px 0;
-	display:block;
 	background: url(encabezado_bg.gif) repeat-x center bottom;
 	color: white;
 	font-size: 10px;
 	letter-spacing: 3px;
-	border-bottom: 2px solid black;
+    text-align: center;
+}
+
+.centersw{
   	text-align: center;
+    padding: 10px 0 10px 0;
+    width: "80%";
+    background: url(encabezado_bg.gif) repeat-x center bottom;
+    color: white;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-align: center;
+
 }

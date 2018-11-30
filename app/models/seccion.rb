@@ -24,10 +24,10 @@ class Seccion < ApplicationRecord
   :class_name => 'TipoNivel',
   :foreign_key => ['tipo_nivel_id']
 
-  has_many :historial_academico,
+  has_many :historiales_academicos,
   :class_name => 'HistorialAcademico',
   :foreign_key => ['periodo_id','idioma_id','tipo_categoria_id','tipo_nivel_id', 'seccion_numero']
-  accepts_nested_attributes_for :historial_academico
+  accepts_nested_attributes_for :historiales_academicos
 
   has_one :horario_seccion2,
   :class_name => 'HorarioSeccion',
@@ -74,7 +74,8 @@ class Seccion < ApplicationRecord
   end
 
   def cupo
-    cantidad = historial_academico.size
+    # cantidad = historiales_academicos.count
+    cantidad = HistorialAcademico.where(:periodo_id => periodo_id, :idioma_id => idioma_id, :tipo_categoria_id => tipo_categoria_id, :tipo_nivel_id => tipo_nivel_id, :seccion_numero => seccion_numero).count
     resto = ParametroGeneral.capacidad_curso - cantidad     
     return 0 if resto<=0
     resto

@@ -20,14 +20,11 @@
           - secciones.each{|s| cupo += s.cupo}
           %li{:style => "display:inline-block; margin-bottom:10px;"}
             - if cupo <= 0
-              = button_to "Cupos agotados para #{curso.tipo_curso.descripcion}",nil ,{:disabled => true,  :class => 'ui-button'}
+              = button_to "Cupos agotados para #{curso.tipo_curso.descripcion}",nil ,{:disabled => true,  class: 'btn'}
             - else
-              = button_to "#{curso.tipo_curso.descripcion} - Cupos: #{cupo} (En #{catidad_secciones} Seccion(es))", {:action => "ingrese_ci", :controller => "inscripcion", :id => curso.id}, { :class => 'ui-button'}
+              = button_to "#{curso.tipo_curso.descripcion} - Cupos: #{cupo} (En #{catidad_secciones} Seccion(es))", {:action => "ingrese_ci", :controller => "inscripcion", :id => curso.id}, { :class => 'btn btn-lg btn-primary center'}
 
 
-    / .titulo
-    /   -@secciones.each do |s|
-    /     = "cupo: #{s.cupo}, horario: #{s.horario}"
   .titulo
     =@content.html_safe
   - @por_definir = 'Por definir'

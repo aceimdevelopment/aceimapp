@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 	get '/gestionar_cartelera/modificar'
 
 	resources :facturas #get '/gestionar_cartelera/modificar'
+	resources :cartelera
 
 	get '/admin_estudiante/index'
 	get '/admin_estudiante/estudiantes'

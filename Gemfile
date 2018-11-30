@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.3.1'
 
+gem 'glyphicons-rails'
 
 gem 'haml'
 gem 'haml-rails'

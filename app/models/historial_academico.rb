@@ -5,6 +5,7 @@ class HistorialAcademico < ApplicationRecord
   # CLAVE PRIMARIA COMPUESTA
   self.primary_keys = :usuario_ci,:idioma_id,:tipo_categoria_id,:tipo_nivel_id,:periodo_id,:seccion_numero
 
+  # CONSTANTES
   NOTAS = (-2..20).to_a
   NOTASSTRING = ("0".."20").to_a + ("00".."09").to_a + ("-1".."-1").to_a 
   #("0".."20").to_a + ("00".."09").to_a  + "-1".to_a
@@ -21,10 +22,11 @@ class HistorialAcademico < ApplicationRecord
   OTRAS = "OTRAS"
   REDACCION = "REDACCION"
   
-
+  # RELACIONES
   has_many :notas_en_evaluaciones,
-    foreign_key: 'usuario_ci', 'idioma_id', 'tipo_categoria_id', 
-                     'tipo_nivel_id', 'periodo_id', 'seccion_numero'
+    class_name: 'NotaEnEvaluacion',
+    foreign_key: ['usuario_ci', 'idioma_id', 'tipo_categoria_id', 
+                     'tipo_nivel_id', 'periodo_id', 'seccion_numero']
   accepts_nested_attributes_for :notas_en_evaluaciones
   
   belongs_to :tipo_convenio
@@ -33,105 +35,56 @@ class HistorialAcademico < ApplicationRecord
   belongs_to :tipo_estado_inscripcion
   belongs_to :tipo_estado_calificacion
 
+  belongs_to :curso,
+    foreign_key: [:idioma_id,:tipo_categoria_id,:tipo_nivel_id]
+
   belongs_to :seccion,
-    foreign_key: 'periodo_id','idioma_id','tipo_categoria_id','tipo_nivel_id','seccion_numero'
+    foreign_key: [:periodo_id,:idioma_id,:tipo_categoria_id,:tipo_nivel_id,:seccion_numero]
     
   #autogenerado por db2models
   belongs_to :estudiante_curso,
-  foreign_key: 'usuario_ci','idioma_id','tipo_categoria_id'
+  foreign_key: [:usuario_ci,:idioma_id,:tipo_categoria_id]
   
   belongs_to :usuario,
-  foreign_key: 'usuario_ci'  
+  foreign_key: :usuario_ci  
     
   belongs_to :tipo_curso,
-    :class_name => 'TipoCurso',
-    :foreign_key => ['idioma_id','tipo_categoria_id']  
+    foreign_key: [:idioma_id,:tipo_categoria_id]
     
-  belongs_to :periodo,
-    :class_name => 'Periodo',
-    :foreign_key => ['periodo_id']
+  belongs_to :periodo
+  belongs_to :tipo_nivel
+  belongs_to :tipo_categoria
+  belongs_to :idioma
+  belongs_to :tipo_nivel
 
-  belongs_to :tipo_nivel,
-    :class_name => 'TipoNivel',
-    :foreign_key => ['tipo_nivel_id']
-  
+# SCOPES
+  scope :sin_calificar, -> {where("tipo_estado_inscripcion_id = 'INS' AND nota_final = ?", SC)}
+  # scope :notas_en_evaluaciones_sin_calificar, -> {notas_en_evaluaciones.where(nota: SC)}
 
+# FUNCIONES
   def descripcion_completa
     "#{tipo_curso.descripcion} - #{tipo_nivel.descripcion} - Sección: #{"%002i"%seccion_numero}"
     
   end
-  
-  def tipo_categoria
-    curso.tipo_curso.tipo_categoria
-  end
-  
-  def idioma
-    #Idioma.find(idioma_id)
-    curso.tipo_curso.idioma
-  end
-  
-  def tipo_nivel
-    curso.tipo_nivel
-  end
-
-
-    
+ 
   def aprobo_curso?  
     return true if nota_final >= 10 && (tipo_categoria_id == "NI" || tipo_categoria_id == "TE")
     return true if nota_final >= 15 && (tipo_categoria_id != "NI" && tipo_categoria_id != "TE")
     return false
   end  
 
-
   def sin_calificar?
-     HistorialAcademico.where(:periodo_id => periodo_id,
-                              :idioma_id => idioma_id,
-                              :tipo_categoria_id => tipo_categoria_id,
-                              :tipo_nivel_id => tipo_nivel_id,
-                              :seccion_numero => seccion_numero,
-                              :tipo_estado_inscripcion_id => 'INS',
-                              :nota_final => SC
-                              ).limit(1).count > 0
+    self.seccion.historiales_academicos.sin_calificar.count > 0
   end
-
-
-  def sin_calificar
-     HistorialAcademico.where(:periodo_id => periodo_id,
-                              :idioma_id => idioma_id,
-                              :tipo_categoria_id => tipo_categoria_id,
-                              :tipo_nivel_id => tipo_nivel_id,
-                              :tipo_estado_inscripcion_id => 'INS',
-                              :seccion_numero => seccion_numero,
-                              :nota_final => SC
-                              )
-  end
-  
+ 
   def nota_en_evaluacion_sin_calificar?
-    NotaEnEvaluacion.where(:idioma_id => idioma_id, 
-                           :tipo_categoria_id => tipo_categoria_id, 
-                           :tipo_nivel_id => tipo_nivel_id, 
-                           :periodo_id => periodo_id, 
-                           :seccion_numero => seccion_numero, 
-                           :nota => SC
-                           ).limit(1).count > 0
+    notas_en_evaluaciones.where(nota: SC).count > 0
+    
   end
   
   def nota_en_evaluacion_sin_calificar
-    NotaEnEvaluacion.where(:idioma_id => idioma_id, 
-                           :tipo_categoria_id => tipo_categoria_id, 
-                           :tipo_nivel_id => tipo_nivel_id, 
-                           :periodo_id => periodo_id, 
-                           :seccion_numero => seccion_numero, 
-                           :nota => SC
-                           )
+    notas_en_evaluaciones.where(nota: SC)
   end  
-  
-  def curso
-    Curso.first(:conditions => ["idioma_id = ? AND tipo_categoria_id = ? AND tipo_nivel_id = ?",
-      idioma_id, tipo_categoria_id, tipo_nivel_id])
-      #seccion.curso_periodo.curso
-      #tipo_curso.curso
-  end
 
   def seccion_tentativa 
     secciones = Seccion.all(:conditions => ["tipo_nivel_id = ? AND idioma_id = ? AND \
@@ -145,36 +98,6 @@ class HistorialAcademico < ApplicationRecord
     }
     nil
   end
-=begin 
-  def horarios_disponibles
-    secciones = Seccion.all(:conditions => ["tipo_nivel_id = ? AND idioma_id = ? AND \
-      tipo_categoria_id = ? AND periodo_id = ? AND esta_abierta",
-      tipo_nivel_id,idioma_id,
-      tipo_categoria_id, periodo_id, 1])
-    
-    horarios_hay = []
-    horarios_hay << HorarioSeccion.where(:seccion => secciones.first)
-    
-    secciones.each do |s|
-      horario_seccion = HorarioSeccion.where(:seccion => s)
-      if s.hay_cupo?
-        horario_seccion.each do |h|
-          no_esta = false
-          horarios_hay.each do |hay|
-            
-            unless ((hay.tipo_bloque == h.tipo_bloque) and no_esta) 
-            no_esta = true
-            end
-          end
-          horarios_hay << horario_seccion if no_esta
-        end
-      end
-      
-    end
-        
-    return horario_seccion
-  end
-=end  
   def horarios_disponibles(permitir_cambios=true)   
     if permitir_cambios
       if seccion_numero
@@ -244,24 +167,11 @@ class HistorialAcademico < ApplicationRecord
   end
   
   def tiene_notas_adicionales?
-
-    # "usuario_ci = ? AND idioma_id = ? AND tipo_categoria_id AND "
-    NotaEnEvaluacion.where(:usuario_ci => usuario_ci, :idioma_id => idioma_id, 
-                           :tipo_categoria_id => tipo_categoria_id, 
-                           :tipo_nivel_id => tipo_nivel_id,
-                           :periodo_id => periodo_id, 
-                           :seccion_numero => seccion_numero,
-                           :tipo_evaluacion_id => EXAMENESCRITO1).limit(1).count > 0   
-   
+    notas_en_evaluaciones.where(tipo_evaluacion_id: EXAMENESCRITO1).count > 0
   end
 
   def notas_adicionales
-    # "usuario_ci = ? AND idioma_id = ? AND tipo_categoria_id AND "
-    NotaEnEvaluacion.where(:usuario_ci => usuario_ci, :idioma_id => idioma_id, 
-                           :tipo_categoria_id => tipo_categoria_id, 
-                           :tipo_nivel_id => tipo_nivel_id,
-                           :periodo_id => periodo_id, 
-                           :seccion_numero => seccion_numero)
+    notas_en_evaluaciones
   end
 
   def generar_buscar_calificaciones
@@ -275,7 +185,6 @@ class HistorialAcademico < ApplicationRecord
       nee.save
     }
   end
-
 
   def crear_notas_adicionales
     arreglo = [EXAMENESCRITO1,EXAMENESCRITO2,EXAMENORAL,OTRAS, REDACCION]
@@ -300,12 +209,7 @@ class HistorialAcademico < ApplicationRecord
 # temporal para verificar y crear notas de redaccion
 # --------------------------------------------------------------------------
   def tiene_nota_redaccion?
-    NotaEnEvaluacion.where(:usuario_ci => usuario_ci, :idioma_id => idioma_id, 
-                           :tipo_categoria_id => tipo_categoria_id, 
-                           :tipo_nivel_id => tipo_nivel_id,
-                           :periodo_id => periodo_id, 
-                           :seccion_numero => seccion_numero,
-                           :tipo_evaluacion_id => REDACCION).limit(1).count > 0
+    notas_en_evaluaciones.where(tipo_evaluacion_id: REDACCION).count > 0
   end
 
   def crear_nota_redaccion
