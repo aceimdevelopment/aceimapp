@@ -1,40 +1,62 @@
-#content
-  %nav.navbar.navbar-expand-lg.navbar-light.bg-light
-    .container-fluid
-      %button#sidebarCollapse.btn.btn-info{:type => "button"}
-        %i.fas.fa-align-left
-        %span Menú
+/ Sidebar
+%nav#sidebar.bg-warning
+  %ul.list-unstyled.components
+    %li
+      %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", href: "#Estudiantes"} Estudiantes
+      %ul#Estudiantes.collapse.list-unstyled
+        %li= link_to "Gestionar Estudiante Existente", controller: "admin_estudiante"
+        %li= link_to "Confirmar con Código de Barra", controller: "principal_admin", action: "capturar_ci"
 
-  / Sidebar
-  %nav#sidebar
-    %ul.list-unstyled.components
-      %li
-        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", :href => "#Estudiantes"} Estudiantes
-        %ul#Estudiantes.collapse.list-unstyled
-          %li= link_to "Gestionar Estudiante Existente", :controller=> "admin_estudiante"
-          %li= link_to "Confirmar con Código de Barra", :action => "capturar_ci"
+        -if @admin and @admin.tipo_rol_id <= 3
+          %li
+            =link_to "Inscribir Estudiante", :controller=> "inscripcion_admin", :action => "paso0"
+        -if @admin and @admin.tipo_rol_id <= 2
+          %li
+            =link_to "Listado de Todos Los Estudiantes", :controller=> "admin_estudiante", :action => "estudiantes"
+    %li=link_to "Estudiantes con Nivelación", :controller => "estudiante_nivelaciones", :action=> "index"
 
-          -if @admin and @admin.tipo_rol_id <= 3
-            %li
-              =link_to "Inscribir Estudiante", :controller=> "inscripcion_admin", :action => "paso0"
-          -if @admin and @admin.tipo_rol_id <= 2
-            %li
-              =link_to "Listado de Todos Los Estudiantes", :controller=> "admin_estudiante", :action => "estudiantes"
+    - if false # hide examen 
       %li
-        %a{:href => "#"} About
-      %li
-        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", :href => "#pageSubmenu"} Pages
-        %ul#pageSubmenu.collapse.list-unstyled
-          %li
-            %a{:href => "#"} Page 1
-          %li
-            %a{:href => "#"} Page 2
-          %li
-            %a{:href => "#"} Page 3
-      %li
-        %a{:href => "#"} Portfolio
-      %li
-        %a{:href => "#"} Contact
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", href: "#Examenes"} Exámenes
+        
+        %ul#Examenes.collapse.list-unstyled
+          %li= link_to 'Nuevo Examen', new_examen_path  
+          %li= link_to "Gestión General de Examenes", {:controller => 'examenes', :action => 'set_idioma', :id => 'ALL'} 
+          %li= link_to "Gestión de Examenes de Alemán", {:controller => 'examenes', :action => 'set_idioma', :id => 'AL'} 
+          %li= link_to "Gestión de Examenes de Francés", {:controller => 'examenes', :action => 'set_idioma', :id => 'FR'} 
+          %li= link_to "Gestión de Examenes de Inglés", {:controller => 'examenes', :action => 'set_idioma', :id => 'IN'} 
+          %li= link_to "Gestión de Examenes de Italiano", {:controller => 'examenes', :action => 'set_idioma', :id => 'IT'} 
+          %li= link_to "Gestión de Examenes de Portugués", {:controller => 'examenes', :action => 'set_idioma', :id => 'PG'} 
+
+    %li=link_to "Archivos", :controller=>"archivos"       
+
+    %li= link_to "Gestionar Cursos (Estado de la Inscripción)", :controller => "estado_inscripcion", :action=> "ver_secciones" 
+
+    %li
+      %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", href: "#Instructores"} Exámenes  
+      %a.desplegable{:href=>"#"} Instructores 
+      %ul#Instructores.collapse.list-unstyled
+        %li= link_to "Gestionar Instructores Existentes", :controller=>"admin_instructor", :action=>"index" 
+        -if @admin and @admin.tipo_rol_id <= 3 
+          %li= link_to "Ingresar Horarios Disponibles Instructores", :controller=> "admin_instructor", :action=>"ingresar_horario_disponible_instructores" 
+          %li= link_to "Enviar Correo a Instructores", :action=>"redactar_correo" 
+          %li= link_to "Agregar Nuevo Instructor", :controller=> "admin_instructor", :action=>"nuevo" 
+
+
+    %li
+      %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", :href => "#pageSubmenu"} Pages
+      %ul#pageSubmenu.collapse.list-unstyled
+        %li
+          %a{:href => "#"} Page 1
+        %li
+          %a{:href => "#"} Page 2
+        %li
+          %a{:href => "#"} Page 3
+    %li
+      %a{:href => "#"} Perfil
+    %li= link_to "Contactar a desarrollo", "mailto:aceim.development@gmail.com"
+    %hr
+    %li= link_to 'Salir', controller: 'inicio', action: 'cerrar_sesion'
 
 :javascript
 

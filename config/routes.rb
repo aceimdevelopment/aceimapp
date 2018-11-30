@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 	post '/inicio/validar'
 	get '/inicio/un_rol'
 	get '/inicio/olvido_clave'
+	get '/inicio/cerrar_sesion'
 	
 	get '/principal_admin/index'
 	get '/principal_admin/capturar_ci'
@@ -28,9 +29,15 @@ Rails.application.routes.draw do
 
 	get '/gestionar_cartelera/visualizar'
 	get '/gestionar_cartelera/modificar'
+	get '/gestionar_cartelera/validar'
+
+	get '/cartelera/show'
+	get '/cartelera/edit'
+	post '/cartelera/save'
+
 
 	resources :facturas #get '/gestionar_cartelera/modificar'
-	resources :cartelera
+	# resources :cartelera
 
 	get '/admin_estudiante/index'
 	get '/admin_estudiante/estudiantes'

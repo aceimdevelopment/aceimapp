@@ -63,28 +63,23 @@ class ParametroGeneral < ApplicationRecord
   end                       
   
   def self.inscripcion_nuevos_abierta                                          
-    ParametroGeneral.first(:conditions=>["id = ?", "INSCRIPCION_NUEVOS_ABIERTA"]).valor == "SI"
+    (ParametroGeneral.find 'INSCRIPCION_NUEVOS_ABIERTA').valor == 'SI'
   end
 
   def self.inscripcion_regulares_abierta                                          
-    ParametroGeneral.first(:conditions=>["id = ?", "INSCRIPCION_ABIERTA"]).valor == "SI"
+    (ParametroGeneral.find 'INSCRIPCION_ABIERTA').valor == 'SI' 
   end
 
-  # def self.inscripcion_abierta_ingles_adulto                                          
-  #   ParametroGeneral.first(:conditions=>["id = ?", "INSCRIPCION_ABIERTA_INGLES_ADULTO"]).valor == "SI"
-  # end
-
   def self.inscripcion_cambio_abierta                                          
-    ParametroGeneral.first(:conditions=>["id = ?", "INSCRIPCION_PERMITIR_CAMBIO_HORARIO"]).valor == "SI"
+    (ParametroGeneral.find 'INSCRIPCION_PERMITIR_CAMBIO_HORARIO').valor == 'SI' 
   end
 
   def self.monto_planilla
     monto_planilla = (ParametroGeneral.find 'COSTO_PLANILLA').valor.to_i
-
   end
 
   def self.inscripcion_ninos_abierta                                          
-    ParametroGeneral.first(:conditions=>["id = ?", "INSCRIPCION_MODO_NINOS"]).valor == "SI"
+    (ParametroGeneral.find 'INSCRIPCION_MODO_NINOS').valor == 'SI' 
   end
 
 
