@@ -28,30 +28,51 @@
           %li= link_to "Gestión de Examenes de Italiano", {:controller => 'examenes', :action => 'set_idioma', :id => 'IT'} 
           %li= link_to "Gestión de Examenes de Portugués", {:controller => 'examenes', :action => 'set_idioma', :id => 'PG'} 
 
-    %li=link_to "Archivos", :controller=>"archivos"       
-
-    %li= link_to "Gestionar Cursos (Estado de la Inscripción)", :controller => "estado_inscripcion", :action=> "ver_secciones" 
+    %li= link_to "Archivos", :controller=>"archivos"
+    / %span= image_tag("glyphicons/glyphicons-1-glass.png")
+    %li= link_to "Cursos (Estado de la Inscripción)", :controller => "estado_inscripcion", :action=> "ver_secciones" 
 
     %li
-      %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", href: "#Instructores"} Exámenes  
-      %a.desplegable{:href=>"#"} Instructores 
+      %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", href: "#Instructores"} Instructores
       %ul#Instructores.collapse.list-unstyled
         %li= link_to "Gestionar Instructores Existentes", :controller=>"admin_instructor", :action=>"index" 
         -if @admin and @admin.tipo_rol_id <= 3 
           %li= link_to "Ingresar Horarios Disponibles Instructores", :controller=> "admin_instructor", :action=>"ingresar_horario_disponible_instructores" 
-          %li= link_to "Enviar Correo a Instructores", :action=>"redactar_correo" 
+          %li= link_to "Enviar Correo a Instructores", :controller => 'principal_admin', :action => 'redactar_correo'
           %li= link_to "Agregar Nuevo Instructor", :controller=> "admin_instructor", :action=>"nuevo" 
 
+    %li= link_to "Estado de la Calificación - Período #{session[:parametros][:periodo_calificacion]}", controller: "principal_admin", :action=> "estado_instructores"
+    
+    -if @admin and @admin.tipo_rol_id <= 2
+      %li= link_to "Calificar Sección", :controller=>"calificacion", :action => "seleccionar_curso"
 
     %li
-      %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", :href => "#pageSubmenu"} Pages
-      %ul#pageSubmenu.collapse.list-unstyled
-        %li
-          %a{:href => "#"} Page 1
-        %li
-          %a{:href => "#"} Page 2
-        %li
-          %a{:href => "#"} Page 3
+      %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", href: "#Reportes"} Reportes
+      %ul#Reportes.collapse.list-unstyled
+        %li= link_to "Alumnos con Convenios", :controller=>"reportes", :action=>"index_reportes_convenios",  :controlador => controller_name
+        %li= link_to "Alumnos Congelados", :controller=>"reportes", :action=>"index_reporte_congelados", :controlador => controller_name
+        %li= link_to "Alumnos por Edificio", :controller => "reportes", :action => "alumnos_por_edificio"
+        %li= link_to "Nómina Instructores", :controller => "reportes", :action => "nomina_instructores"
+        %li= link_to "Secciones Cerradas", :controller=>"reportes", :action=>"index_reporte_secciones_cerradas"
+
+    -if @admin and @admin.tipo_rol_id <= 2  
+      %li
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", href: "#Cartelera"} Cartelera Virtual
+        %ul#Cartelera.collapse.list-unstyled
+          %li= link_to "Ver Cartelera Principal", :controller=>"cartelera", :action=>"show"
+          %li= link_to "Editar Cartelera Principal", :controller=>"cartelera", :action=>"edit"
+
+      %li
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "collapse", href: "#Preguntas"} Banco de Preguntas Virtual
+        %ul#Preguntas.collapse.list-unstyled
+          %li= link_to "Agregar pregunta", "#{session[:parametros][:direccion_atest]}"
+    -if @admin and @admin.tipo_rol_id <= 3  
+      %li= link_to "Generar Carnets de Instructores", controller: "principal_admin", :action=> "generar_carnets"
+      %li= link_to "Facturación", :controller=> "facturas"
+
+
+
+
     %li
       %a{:href => "#"} Perfil
     %li= link_to "Contactar a desarrollo", "mailto:aceim.development@gmail.com"
