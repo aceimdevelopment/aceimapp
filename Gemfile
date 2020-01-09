@@ -13,7 +13,7 @@ gem 'jquery-rails', '~> 4.3.1'
 # gem 'bootstrap', '~> 4.1.1'
 gem 'bootstrap', '~> 4.0.0'
 gem 'summernote-rails', '~> 0.8.10.0'
-gem 'pdf-writer', :git => 'git://github.com/metaskills/pdf-writer.git'
+gem 'pdf-writer', :git => 'https://github.com/metaskills/pdf-writer.git'
 gem 'spreadsheet' #, '0.6.8'
 gem 'composite_primary_keys', :git => 'https://github.com/composite-primary-keys/composite_primary_keys.git' #, '4.0.0'
 
@@ -24,7 +24,7 @@ gem 'rails', '~> 5.2.0'
 gem 'mysql2'#, '~> 0.3.18'
 
 
-gem 'pg', '>= 0.18', '< 2.0'
+gem 'pg'#, '>= 0.18', '< 2.0'
 # Use Puma as the app server
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -77,4 +77,4 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
