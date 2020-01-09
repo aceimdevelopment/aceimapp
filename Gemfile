@@ -11,7 +11,7 @@ gem 'haml-rails'
 gem 'jquery-rails', '~> 4.3.1'
 
 # gem 'bootstrap', '~> 4.1.1'
-gem 'bootstrap', '~> 4.0.0'
+gem 'bootstrap', '~> 4.1.3'
 gem 'summernote-rails', '~> 0.8.10.0'
 gem 'pdf-writer', :git => 'https://github.com/metaskills/pdf-writer.git'
 gem 'spreadsheet' #, '0.6.8'
